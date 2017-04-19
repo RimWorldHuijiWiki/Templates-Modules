@@ -1,0 +1,141 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>==基本信息==
+{|class="wikitable" style="width:100%;"
+|-
+! &nbsp; !! &nbsp;
+|-
+| defName || {{#show:{{{data|}}}|?defName}}
+|-
+| 名称（英文）|| {{#show:{{{data|}}}|?BiomeDef.label}}
+|-
+| 名称（简中）|| {{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}
+|-
+| 名称（繁中）|| {{#show:{{{data|}}}|?BiomeDef.label.zh-tw}}
+|-
+| 描述（英文）|| {{#show:{{{data|}}}|?BiomeDef.description}}
+|-
+| 描述（简中）|| {{#show:{{{data|}}}|?BiomeDef.description.zh-cn}}
+|-
+| 描述（繁中）|| {{#show:{{{data|}}}|?BiomeDef.description.zh-tw}}
+|}
+
+<hr/>
+<div class="row">
+
+<div class="col-md-4">
+==基础参数==
+<table class="wikitable" style="width:100%;">
+<tr><th style="width:60%;">参数</th><th style="width:40%;">值</th></tr>
+<tr><td>是否已实现</td><td>{{#switch:{{#show:{{{data|}}}|?BiomeDef.implemented}}|false=否|#default=是}}</td></tr>
+<tr><td>可否建造基地</td><td> {{#switch:{{#show:{{{data|}}}|?BiomeDef.canBuildBase}}|false=否|#default=是}}</td></tr>
+<tr><td>可否自动选择</td><td> {{#switch:{{#show:{{{data|}}}|?BiomeDef.canAutoChoose}}|false=否|#default=是}}</td></tr>
+<tr><td>动物密度</td><td>{{#show:{{{data|}}}|?BiomeDef.animalDensity}}</td></tr>
+<tr><td>植被密度</td><td>{{#show:{{{data|}}}|?BiomeDef.plantDensity}}</td></tr>
+<tr><td>疾病最大间隔时间（天）</td><td>{{#show:{{{data|}}}|?BiomeDef.diseaseMtbDays}}</td></tr>
+<tr><td>派系基地选择权重</td><td>{{#show:{{{data|}}}|?BiomeDef.factionBaseSelectionWeight}}</td></tr>
+<tr><td>可否通行</td><td>{{#switch:{{#show:{{{data|}}}|?BiomeDef.impassable}}|true=否|#default=是}}</td></tr>
+<tr><td>可否放牧动物</td><td>{{#switch:{{#show:{{{data|}}}|?BiomeDef.hasVirtualPlants}}|false=否|#default=是}}</td></tr>
+</table>
+</div>
+
+<div class="col-md-4">
+==基础天气共性==
+<table class="wikitable sortable" style="width:100%;">
+<tr><th style="width:60%;">天气</th><th>共性</th style="width:40%;"></tr>
+{{#arraymap:{{#show:{{{data|}}}|?BiomeDef.baseWeatherCommonalities}}|;|@@|
+{{#arraydefine:weather|@@|,}}
+<tr><td>{{#show:Core:Defs_WeatherDef_{{#replace:{{#arrayindex:weather|0}}|"|}}|?WeatherDef.label.zh-cn}}</td><td>{{#replace:{{#arrayindex:weather|1}}|"|}}</td></tr>
+|}}
+</table>
+</div>
+
+<div class="col-md-4">
+==地面（根据肥沃度）==
+<table class="wikitable sortable" style="width:100%;">
+<tr><th style="width:60%;">地面</th><th>阈值</th style="width:40%;"></tr>
+{{#if:{{#show:{{{data|}}}|?BiomeDef.terrainsByFertility}}|
+{{#arraymap:{{#invoke:ArrayHelper|indexs|{{#show:{{{data|}}}|?BiomeDef.terrainsByFertility.Count}}}}|,|@@|
+<tr>
+<td>{{#show:Core:Defs_TerrainDef_{{#show:{{{data|}}}|?BiomeDef.terrainsByFertility.@@.terrain}}|?TerrainDef.label.zh-cn}}</td>
+<td>{{#show:{{{data|}}}|?BiomeDef.terrainsByFertility.@@.min}} ~ {{#show:{{{data|}}}|?BiomeDef.terrainsByFertility.@@.max}}</td>
+</tr>
+|}}
+}}
+</table>
+==地面（补全制定器）==
+<table class="wikitable sortable" style="width:100%;">
+<tr><th style="width:20%;">序号</th><th>地面</th style="width:60%;"><th style="width:20%;">贴图频率</th></tr>
+{{#if:{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers}}|
+{{#arraymap:{{#invoke:ArrayHelper|indexs|{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.Count}}}}|,|@@|
+<tr><td>@@</td>
+<td>
+<table class="wikitable sortable" style="width:100%">
+<tr><th style="width:60%">地面</th><th style="width:40%">阈值</th></tr>
+{{#arraymap:{{#invoke:ArrayHelper|indexs|{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.@@.thresholds.Count}}}}|,|@@@|
+<tr>
+<td>{{#show:Core:Defs_TerrainDef_{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.@@.thresholds.@@@.terrain}}|?TerrainDef.label.zh-cn}}</td>
+<td>{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.@@.thresholds.@@@.min}} ~ {{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.@@.thresholds.@@@.max}}</td>
+</tr>
+|}}
+</table>
+</td>
+<td>{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.@@.perlinFrequency}}</td></tr>
+|}}
+}}
+</table>
+</div>
+
+</div><!--row end-->
+
+<hr/>
+<div class="row">
+
+<div class="col-md-4">
+==野生植物==
+<table class="wikitable sortable" style="width:100%;">
+<tr><th style="width:60%;">植物种类</th><th>共性</th style="width:40%;"></tr>
+{{#arraymap:{{#show:{{{data|}}}|?BiomeDef.wildPlants}}|;|@@|
+{{#arraydefine:plant|@@|,}}
+<tr><td>{{#show:Core:Defs_ThingDef_{{#replace:{{#arrayindex:plant|0}}|"|}}|?ThingDef.label.zh-cn}}</td><td>{{#replace:{{#arrayindex:plant|1}}|"|}}</td></tr>
+|}}
+</table>
+</div>
+
+<div class="col-md-4">
+==野生动物==
+<table class="wikitable sortable" style="width:100%;">
+<tr><th style="width:60%;">动物种类</th><th>共性</th style="width:40%;"></tr>
+{{#arraymap:{{#show:{{{data|}}}|?BiomeDef.wildAnimals}}|;|@@|
+{{#arraydefine:animal|@@|,}}
+<tr><td>{{#show:Core:Defs_PawnKindDef_{{#replace:{{#arrayindex:animal|0}}|"|}}|?PawnKindDef.label.zh-cn}}</td><td>{{#replace:{{#arrayindex:animal|1}}|"|}}</td></tr>
+|}}
+</table>
+</div>
+
+<div class="col-md-4">
+==疾病==
+<table class="wikitable sortable" style="width:100%">
+<tr><th style="width:60%;">疾病事件</th><th style="width:40%;">共性</th></tr>
+{{#if:{{#show:{{{data|}}}|?BiomeDef.diseases}}|
+{{#arraymap:{{#invoke:ArrayHelper|indexs|{{#show:{{{data|}}}|?BiomeDef.diseases.Count}}}}|,|@@|
+<tr>
+<td>{{#show:Core:Defs_IncidentDef_{{#show:{{{data|}}}|?BiomeDef.diseases.@@.diseaseInc}}|?IncidentDef.label.zh-cn}}</td>
+<td>{{#show:{{{data|}}}|?BiomeDef.diseases.@@.commonality}}</td>
+</tr>
+|}}
+}}
+</table>
+</div>
+
+</div><!--row end-->
+
+
+
+
+
+
+{{DISPLAYTITLE:{{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:生态区]]
+</includeonly>
