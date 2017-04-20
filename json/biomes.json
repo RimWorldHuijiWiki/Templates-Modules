@@ -1,0 +1,96 @@
+{
+    "color": ["#0e77ca", "#00924c", "#533eb4"],
+    "title": {
+        "text": "所有生态区数据对比"
+    },
+    "tooltip": {
+        "trigger": "axis",
+        "axisPointer": {
+            "type": "cross"
+        }
+    },
+    "grid": {
+        "top": "20%",
+        "right": "20%"
+    },
+    "toolbox": {
+        "feature": {
+            "dataView": {
+                "show": "true",
+                "readOnly": "false"
+            },
+            "saveAsImage": { "show": "true" }
+        }
+    },
+    "legend": {
+        "data": ["动物密度", "植被密度", "疾病最大间隔时间"]
+    },
+    "xAxis": [{
+        "type": "category",
+        "axisLabel": {
+            "interval": 0,
+            "rotate": 30
+        },
+        "data": ["冰原", "冻土苔原", "寒带森林", "干旱灌木原", "极端沙漠", "沙漠", "海洋", "海洋冰盖", "温带森林", "热带雨林"]
+    }],
+    "yAxis": [{
+            "type": "value",
+            "name": "动物密度",
+            "min": 0,
+            "max": 10.0,
+            "position": "right",
+            "axisLine": {
+                "lineStyle": {
+                    "color": "#0e77ca"
+                }
+            }
+        },
+        {
+            "type": "value",
+            "name": "植被密度",
+            "min": 0,
+            "max": 1.0,
+            "position": "right",
+            "offset": 80,
+            "axisLine": {
+                "lineStyle": {
+                    "color": "#00924c"
+                }
+            }
+        },
+        {
+            "type": "value",
+            "name": "疾病最大间隔时间",
+            "min": 0,
+            "max": 100,
+            "position": "left",
+            "axisLine": {
+                "lineStyle": {
+                    "color": "#533eb4"
+                }
+            },
+            "axisLabel": {
+                "formatter": "{value} 天"
+            }
+        }
+    ],
+    "series": [{
+            "name": "动物密度",
+            "type": "bar",
+            "barGap": "10%",
+            "data": [0.4, 1.0, 3.0, 3.6, 0.4, 0.8, 0, 0.1, 5.5, 7.2]
+        },
+        {
+            "name": "植被密度",
+            "type": "bar",
+            "yAxisIndex": 1,
+            "data": [0, 0.25, 0.5, 0.5, 0.006, 0.14, 0, 0, 0.83, 1.0]
+        },
+        {
+            "name": "疾病最大间隔时间",
+            "type": "line",
+            "yAxisIndex": 2,
+            "data": [90, 80, 50, 60, 90, 80, 0, 80, 45, 30]
+        }
+    ]
+}

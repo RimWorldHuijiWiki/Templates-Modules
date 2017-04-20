@@ -1,5 +1,7 @@
 <noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
-<includeonly>==基本信息==
+<includeonly>'''{{#show:{{{data|}}}|?BiomeDef.label}}（{{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}，{{#show:{{{data|}}}|?BiomeDef.label.zh-tw}}）'''：{{#show:{{{data|}}}|?BiomeDef.description.zh-cn}}
+
+==基本信息==
 {|class="wikitable" style="width:100%;"
 |-
 ! &nbsp; !! &nbsp;
@@ -131,8 +133,24 @@
 
 
 
-
-
+<!--SWM-->
+{{#set:
+|viewType=BiomeDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+<!---->
+|defName={{#show:{{{data|}}}|?defName}}
+|label={{#show:{{{data|}}}|?BiomeDef.label}}
+|label.zh-cn={{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}
+|label.zh-tw={{#show:{{{data|}}}|?BiomeDef.label.zh-tw}}
+|description={{#show:{{{data|}}}|?BiomeDef.description}}
+|description.zh-cn={{#show:{{{data|}}}|?BiomeDef.description.zh-cn}}
+|description.zh-tw={{#show:{{{data|}}}|?BiomeDef.description.zh-tw}}
+<!---->
+|animalDensity={{#if:{{#show:{{{data|}}}|?BiomeDef.animalDensity}}|{{#show:{{{data|}}}|?BiomeDef.animalDensity}}|0}}
+|plantDensity={{#if:{{#show:{{{data|}}}|?BiomeDef.plantDensity}}|{{#show:{{{data|}}}|?BiomeDef.plantDensity}}|0}}
+|diseaseMtbDays={{#if:{{#show:{{{data|}}}|?BiomeDef.diseaseMtbDays}}|{{#show:{{{data|}}}|?BiomeDef.diseaseMtbDays}}|0}}
+}}
 
 {{DISPLAYTITLE:{{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}}}
 __NOTOC__

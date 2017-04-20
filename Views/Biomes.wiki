@@ -1,0 +1,148 @@
+'''Biome'''，'''生态区'''。创建世界时，由程序根据温度、降雨量而生成不同的动植物群落。
+<div class="row">
+<div class="col-md-6">
+===温和===
+{{Button Biome|Ocean}}
+{{Button Biome|TemperateForest}}
+{{Button Biome|TropicalRainforest}}
+===干旱===
+{{Button Biome|AridShrubland}}
+{{Button Biome|Desert}}
+{{Button Biome|ExtremeDesert}}
+===寒冷===
+{{Button Biome|BorealForest}}
+{{Button Biome|Tundra}}
+{{Button Biome|IceSheet}}
+{{Button Biome|SeaIce}}
+</div><!--col-xs-6-->
+<div class="col-md-6 rw-exhibition">[[File:biomes_exhibition.png|590px|link=]]</div>
+</div>
+
+<hr/>
+
+<!--{{#vardefine:biomes|{{#ask:[[viewType::BiomeDef]]|?path|headers=hide|mainlabel=-|link=none}}}}-->
+{{#vardefine:biomes|
+Biomes_Ocean,
+Biomes_TemperateForest,
+Biomes_TropicalRainforest,
+Biomes_AridShrubland,
+Biomes_Desert,
+Biomes_ExtremeDesert,
+Biomes_BorealForest,
+Biomes_Tundra,
+Biomes_IceSheet,
+Biomes_SeaIce
+}}
+{{ECharts|option=
+{
+  "color": [ "#0e77ca", "#00924c", "#533eb4" ],
+  "title": {
+    "text": "所有生态区数据对比"
+  },
+  "backgroundColor": "rgba(255,255,255,0.3)",
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "cross"
+    }
+  },
+  "grid": {
+    "top":  "20%",
+    "right": "20%"
+  },
+  "toolbox": {
+    "feature": {
+      "dataView": {
+        "show": "true",
+        "readOnly": "false"
+      },
+      "saveAsImage": { "show": "true" }
+    }
+  },
+  "legend": {
+    "data": [ "动物密度", "植被密度", "疾病最大间隔时间" ]
+  },
+  "xAxis": [
+    {
+      "type": "category",
+      "axisLabel":{
+        "interval": 0,
+        "rotate": 30
+      },
+      "data": [ {{#arraymap:{{#var:biomes}}|,|@@|"{{#show:@@|?label.zh-cn}}"|,}} ]
+    }
+  ],
+  "yAxis": [
+    {
+      "type": "value",
+      "name": "动物密度",
+      "min": 0,
+      "max": 10.0,
+      "position": "right",
+      "axisLine": {
+        "lineStyle": {
+          "color": "#0e77ca"
+        }
+      }
+    },
+    {
+      "type": "value",
+      "name": "植被密度",
+      "min": 0,
+      "max": 1.0,
+      "position": "right",
+      "offset": 80,
+      "axisLine": {
+        "lineStyle": {
+          "color": "#00924c"
+        }
+      }
+    },
+    {
+      "type": "value",
+      "name": "疾病最大间隔时间",
+      "min": 0,
+      "max": 100,
+      "position": "left",
+      "axisLine": {
+        "lineStyle": {
+          "color": "#533eb4"
+        }
+      },
+      "axisLabel": {
+        "formatter": "{value} 天"
+      }
+    }
+  ],
+  "series": [
+    {
+      "name": "动物密度",
+      "type": "bar",
+      "barGap": "10%",
+      "data": [ {{#arraymap:{{#var:biomes}}|,|@@|{{#show:@@|?animalDensity}}|,}} ]
+    },
+    {
+      "name": "植被密度",
+      "type": "bar",
+      "yAxisIndex": 1,
+      "data": [ {{#arraymap:{{#var:biomes}}|,|@@|{{#show:@@|?plantDensity}}|,}} ]
+    },
+    {
+      "name": "疾病最大间隔时间",
+      "type": "line",
+      "yAxisIndex": 2,
+      "data": [ {{#arraymap:{{#var:biomes}}|,|@@|{{#show:@@|?diseaseMtbDays}}|,}} ]
+    }
+  ]
+}
+}}
+
+{{DISPLAYTITLE:生态区}}
+{{#set:
+|viewType=Def
+|path={{FULLPAGENAME}}
+|title=生态区
+|revisiontime={{REVISIONTIMESTAMP}}
+}}
+__NOTOC__
+__NOREC__

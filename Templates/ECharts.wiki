@@ -1,0 +1,2 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly><div class="echarts" style="width:{{{width|809px}}};height:{{{height|500px}}};">{{#tag:nowiki|{{{option|}}}}}</div></includeonly>

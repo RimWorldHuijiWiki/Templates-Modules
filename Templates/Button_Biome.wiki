@@ -3,5 +3,5 @@
 <div class="rw-icon">
 <div class="hexagon hexagon-{{{1|}}}"></div>
 </div>
-<div class="rw-button-label">[[Biomes_{{{1|}}}|{{#show:Core:Defs_BiomeDef_{{{1|}}}|?BiomeDef.label.zh-cn}}]]</div>
+<div class="rw-button-label">{{#show:Core:Defs_BiomeDef_{{{1|}}}|?BiomeDef.label.zh-cn}}</div>[[Biomes_{{{1|}}}|&nbsp;]]
 </div></includeonly>
