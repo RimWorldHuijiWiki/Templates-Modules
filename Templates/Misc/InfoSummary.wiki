@@ -1,0 +1,8 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{#vardefine:defType|{{#show:{{{data|}}}|?defType}}}}<!--
+-->'''{{ucfirst:{{#show:{{{data|}}}|?{{#var:defType}}.label}}}}（{{#show:{{{data|}}}|?{{#var:defType}}.label.zh-cn}}，{{#show:{{{data|}}}|?{{#var:defType}}.label.zh-tw}}）'''<!--
+-->{{#vardefine:description|{{#show:{{{data|}}}|?{{#var:defType}}.description.zh-cn}}}}<!--
+-->{{#if:{{#var:description}}
+|：{{#var:description}}
+|{{#if:{{{defaultDesc|}}}|：{{{defaultDesc}}}}}
+}}</includeonly>

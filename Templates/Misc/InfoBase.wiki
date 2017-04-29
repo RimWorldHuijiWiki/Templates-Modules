@@ -1,0 +1,17 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{Navbox
+|name=InfoBase
+|title=基本信息
+|group1=名称（英文）
+|list1={{#show:{{{data|}}}|?{{{defType|}}}.label}}
+|group2=名称（简中）
+|list2={{#show:{{{data|}}}|?{{{defType|}}}.label.zh-cn}}
+|group3=名称（繁中）
+|list3={{#show:{{{data|}}}|?{{{defType|}}}.label.zh-tw}}
+|group4=描述（英文）
+|list4={{#show:{{{data|}}}|?{{{defType|}}}.description}}
+|group5=描述（简中）
+|list5={{#show:{{{data|}}}|?{{{defType|}}}.description.zh-cn}}
+|group6=描述（繁中）
+|list6={{#show:{{{data|}}}|?{{{defType|}}}.description.zh-tw}}
+}}</includeonly>

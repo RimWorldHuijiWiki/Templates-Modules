@@ -1,0 +1,95 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>
+<div style="overflow: hidden; width: 128px; height: 128px; position: relative;">[[File:{{#invoke:TexHelper|GetFile|{{#show:{{{data|}}}|?TerrainDef.texturePath}}}}|link=]]
+<div class="rw-icon-blend" style="{{#invoke:ColorHelper|getBackground|{{#vardefineecho:color|{{#show:{{{data|}}}|?TerrainDef.color}}}}}}"></div>
+</div>
+
+{{InfoSummary|data={{{data|}}}|defaultDesc={{{defaultDesc|}}}}}
+
+{{InfoBase|data={{{data|}}}|defType=TerrainDef}}
+
+<hr/>
+<div class="row">
+
+<div class="col-md-4">
+<h3>基础属性</h3>
+{{TableHelper
+|header1=属性
+|header2=值
+|data={{{data|}}}
+|prop=TerrainDef.statBases
+|propDefType=StatDef
+|linkHeader=Stats_
+}}
+<h3>基础参数</h3>
+<table class="wikitable" style="width:100%;">
+<tr><th style="width:60%;">参数</th><th style="width:40%;">值</th></tr>
+<tr><td>可通行性</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.passability|default=Standable}}|Standable=可站立|PassThroughOnly=仅通行|Impassable=不可通行}}</td></tr>
+<tr><td>通行消耗（移动减速）</td><td>{{#show:{{{data}}}|?TerrainDef.pathCost|default=0}}</td></tr>
+<tr><td>肥沃度</td><td>{{#show:{{{data}}}|?TerrainDef.fertility|default=0}}</td></tr>
+<tr><td>是否阻止闲逛</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.avoidWander}}|true=是|false=否|#default=否}}</td></tr>
+<tr><td>可否积雪</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.holdSnow}}|true=是|false=否|#default=是}}</td></tr>
+<tr><td>产生污物</td><td>{{#vardefine:terrainFilthDef|{{#show:{{{data}}}|?TerrainDef.terrainFilthDef}}}}{{#if:{{#var:terrainFilthDef}}|[[Filth_{{#var:terrainFilthDef}}|{{#show:Core:Defs_ThingDef_{{#var:terrainFilthDef}}|?ThingDef.label.zh-cn}}]]}}</td></tr>
+<tr><td>是否接受污物（地面源）</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.acceptTerrainSourceFilth}}|true=是|false=否|#default=否}}</td></tr>
+<tr><td>是否接受污物</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.acceptFilth}}|true=是|false=否|#default=是}}</td></tr>
+</table>
+</div><!--col-md-4-->
+
+<div class="col-md-4">
+<h3>建造花费</h3>
+{{TableHelper
+|header1=材料
+|header2=数量
+|data={{{data|}}}
+|prop=TerrainDef.costList
+|propDefType=ThingDef
+|linkHeader=Stuffs_
+}}
+<h3>建造相关</h3>
+<table class="wikitable" style="width:100%;">
+<tr><th style="width:60%;">参数</th><th style="width:40%;">值</th></tr>
+<tr><td>工作量</td><td>{{#expr:{{#invoke:StatHelper|Getter|{{#show:{{{data|}}}|?defType}}|{{#show:{{{data|}}}|?defName}}|WorkToBuild}}/60}} 秒</td></tr>
+<tr><td>所需研究</td><td>{{#arraymap:{{#show:{{{data}}}|?TerrainDef.researchPrerequisites}}|,|@@|[[Researches_{{#replace:@@|"|}}|{{#show:Core:Defs_ResearchProjectDef_{{#replace:@@|"|}}|?ResearchProjectDef.label.zh-cn}}]]|、}}</td></tr>
+<tr><td>命令分类</td><td>{{#vardefine:designationCategory|{{#show:{{{data}}}|?TerrainDef.designationCategory}}}}{{#if:{{#var:designationCategory}}|[[DesignationCategories_{{#var:designationCategory}}|{{#show:Core:Defs_DesignationCategoryDef_{{#var:designationCategory}}|?DesignationCategoryDef.label.zh-cn}}]]}}</td></tr>
+<tr><td>命令热键</td><td>{{#vardefine:designationHotKey|{{#show:{{{data}}}|?TerrainDef.designationHotKey}}}}{{#if:{{#var:designationHotKey}}|[[KeyBindings_{{#var:designationHotKey}}|{{#show:Core:Defs_KeyBindingDef_{{#var:designationHotKey}}|?KeyBindingDef.label.zh-cn}}]]}}</td></tr>
+<tr><td>建造所需的地面预设性</td><td>{{#show:{{{data}}}|?TerrainDef.terrainAffordanceNeeded}}</td></tr>
+<tr><td>提供的地面预设性</td><td>{{#arraymap:{{#show:{{{data}}}|?TerrainDef.affordances}}|,|@@|{{#replace:@@|"|}}|、}}</td></tr>
+<tr><td>可否移除</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.layerable}}|true=是|false=否|#default=否}}</td></tr>
+<tr><td>可否改变</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.changeable}}|true=是|false=否|#default=是}}</td></tr>
+<tr><td>干燥后的地面</td><td>{{#vardefine:driesTo|{{#show:{{{data}}}|?TerrainDef.driesTo}}}}{{#if:{{#var:driesTo}}|[[Terrains_{{#var:driesTo}}|{{#show:Core:Defs_TerrainDef_{{#var:driesTo}}|?TerrainDef.label.zh-cn}}]]}}</td></tr>
+<tr><td>标签</td><td>{{#arraymap:{{#show:{{{data}}}|?TerrainDef.tags}}|,|@@|{{#replace:@@|"|}}|、}}</td></tr>
+<tr><td>打磨后的地面</td><td>{{#vardefine:smoothedTerrain|{{#show:{{{data}}}|?TerrainDef.smoothedTerrain}}}}{{#if:{{#var:smoothedTerrain}}|[[Terrains_{{#var:smoothedTerrain}}|{{#show:Core:Defs_TerrainDef_{{#var:smoothedTerrain}}|?TerrainDef.label.zh-cn}}]]}}</td></tr>
+<tr><td>烧毁后的地面</td><td>{{#vardefine:burnedDef|{{#show:{{{data}}}|?TerrainDef.burnedDef}}}}{{#if:{{#var:burnedDef}}|[[Terrains_{{#var:burnedDef}}|{{#show:Core:Defs_TerrainDef_{{#var:burnedDef}}|?TerrainDef.label.zh-cn}}]]}}</td></tr>
+</table>
+</div><!--col-md-4-->
+
+<div class="col-md-4">
+<h3>图像相关</h3>
+<table class="wikitable" style="width:100%;">
+<tr><th style="width:60%;">参数</th><th style="width:40%;">值</th></tr>
+<tr><td>贴图</td><td>[[File:{{#invoke:TexHelper|GetFile|{{#show:{{{data|}}}|?TerrainDef.texturePath}}}}|left|128px]]</td></tr>
+<tr><td>颜色</td><td>{{#invoke:ColorHelper|getIcon|{{#var:color}}}}</td></tr>
+<tr><td>边缘类型</td><td>{{#switch:{{#show:{{{data|}}}|?TerrainDef.edgeType|default=Hard}}|Hard=固实|Fade=淡出|FadeRough=粗糙淡出}}</td></tr>
+<tr><td>渲染优先级</td><td>{{#show:{{{data|}}}|?TerrainDef.renderPrecedence}}</td></tr>
+<tr><td>是否留下脚印</td><td>{{#switch:{{#show:{{{data}}}|?TerrainDef.takeFootprints}}|true=是|false=否|#default=否}}</td></tr>
+</table>
+</div><!--col-md-4-->
+
+</div><!--row end-->
+
+<hr/>
+
+{{Navbox Terrain}}
+
+<!--SWM-->
+{{#set:
+|viewType=TerrainDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+|button={{Button Terrain|{{#show:{{{data|}}}|?defName}}}}
+}}
+{{DISPLAYTITLE:地面 {{#show:{{{data|}}}|?TerrainDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:地面]]
+</includeonly>

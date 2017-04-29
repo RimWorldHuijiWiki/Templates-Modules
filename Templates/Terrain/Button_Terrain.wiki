@@ -1,0 +1,11 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude><!--
+--><includeonly><div class="rw-button"><!--
+-->{{#if:{{{1|}}}<!--
+-->|<div class="rw-icon" {{#switch:{{{1|}}}|Underwall=style="background-color:#212121;"}}><!--
+   -->[[File:{{#invoke:TexHelper|GetFile|{{#show:Core:Defs_TerrainDef_{{{1|}}}|?TerrainDef.texturePath}}}}|link=]]<!--
+   -->{{#if:{{#show:Core:Defs_TerrainDef_{{{1|}}}|?TerrainDef.color}}|<div class="rw-icon-blend" style="{{#invoke:ColorHelper|getBackground|{{#show:Core:Defs_TerrainDef_{{{1|}}}|?TerrainDef.color}}}}"></div>}}<!--
+ --></div><!--
+   --><div class="rw-button-label">{{#show:Core:Defs_TerrainDef_{{{1|}}}|?TerrainDef.label.zh-cn}}</div>[[Terrains_{{{1|}}}|&nbsp;]]<!--
+-->|<div class="rw-icon">[[File:rw_icon_terrains.svg|64px|link=]]</div><div class="rw-button-label">{{#show:Terrains|?title}}</div>[[Terrains|&nbsp;]]<!--
+-->}}<!--
+--></div></includeonly>

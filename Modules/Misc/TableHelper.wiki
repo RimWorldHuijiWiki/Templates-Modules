@@ -1,0 +1,5 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly><table class="wikitable" style="width:100%;">
+<tr><th style="width:60%;">{{{header1|}}}</th><th style="width:40%;">{{{header2}}}</th></tr>
+{{#invoke:TableHelper|getRows|{{{data|}}}|{{{prop}}}|{{{propDefType|}}}|{{{linkHeader|}}}}}
+</table></includeonly>

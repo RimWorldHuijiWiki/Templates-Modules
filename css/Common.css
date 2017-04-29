@@ -22,12 +22,27 @@
     white-space: nowrap;
 }
 
+hr {
+    border-top-color: rgba(0, 0, 0, .1);
+}
+
 th a {
     color: #e6e6e6;
 }
 
 table.wikitable {
     font-size: 14px;
+}
+
+table.wikitable>tr>th,
+table.wikitable>tr>td,
+table.wikitable>*>tr>th,
+table.wikitable>*>tr>td {
+    padding: 0.3em 0.6em;
+}
+
+td.navbox-list {
+    line-height: 1.6em;
 }
 
 .thumbinner {
@@ -105,9 +120,19 @@ table.tdnoborder tbody {
 
 .rw-icon {
     display: inline-block;
+    overflow: hidden;
     width: 64px;
     height: 64px;
     position: relative;
+}
+
+.rw-icon-blend {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    mix-blend-mode: multiply;
 }
 
 .rw-button {
@@ -153,6 +178,13 @@ table.tdnoborder tbody {
 }
 
 
+/*RW Table*/
+
+.rw-infobase {
+    width: 100%;
+}
+
+
 /*Hexagon icon for Biomes*/
 
 .hexagon {
@@ -176,12 +208,14 @@ table.tdnoborder tbody {
 
 .hexagon::before {
     left: -16px;
-    border-right: 16px solid #967136;
+    border-right: 16px solid #3c485b;
+    /*border-right: 16px solid #967136;*/
 }
 
 .hexagon::after {
     right: -16px;
-    border-left: 16px solid #967136;
+    border-left: 16px solid #3c485b;
+    /*border-left: 16px solid #967136;*/
 }
 
 .hexagon-AridShrubland {
@@ -240,6 +274,16 @@ table.tdnoborder tbody {
 
 .hexagon-Ocean::before,
 .hexagon-Ocean::after {
+    border-left-color: #3c485b;
+    border-right-color: #3c485b;
+}
+
+.hexagon-Lake {
+    background-color: #3c485b;
+}
+
+.hexagon-Lake::before,
+.hexagon-Lake::after {
     border-left-color: #3c485b;
     border-right-color: #3c485b;
 }

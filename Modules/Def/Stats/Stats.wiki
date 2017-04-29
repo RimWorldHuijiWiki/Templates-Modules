@@ -1,0 +1,18 @@
+<i class="fa fa-5x fa-bar-chart" aria-hidden="true"></i>
+
+'''Stat'''，'''属性'''：对事物的抽象刻画。
+
+'''Stat Category'''，'''属性 分类'''：在物体详细信息中显示属性时，对属性进行分组。
+
+----
+{{RW StatNav}}
+{{DISPLAYTITLE:属性}}
+{{#set:
+|viewType=Def
+|path={{FULLPAGENAME}}
+|title=属性
+|revisiontime={{REVISIONTIMESTAMP}}
+}}
+__NOTOC__
+__NOREC__
+[[Category:属性]]

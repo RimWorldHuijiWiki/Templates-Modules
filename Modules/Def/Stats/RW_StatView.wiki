@@ -1,0 +1,7 @@
+local StatView = {}
+
+function StatView.view(frame)
+    
+end
+
+return StatView

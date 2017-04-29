@@ -1,0 +1,32 @@
+[[File:rw_icon_weathers.svg|128px|link=]]
+
+'''Wether'''，'''天气'''：发生在大气层中的自然现象。
+
+----
+
+{{RW WeatherButton|Clear}}
+{{RW WeatherButton|DryThunderstorm}}
+{{RW WeatherButton|Fog}}
+{{RW WeatherButton|FoggyRain}}
+{{RW WeatherButton|Rain}}
+{{RW WeatherButton|RainyThunderstorm}}
+{{RW WeatherButton|SnowGentle}}
+{{RW WeatherButton|SnowHard}}
+
+----
+
+{{#ask:[[dataType::Def]][[defType::WeatherDef]]|?WeatherDef.label.zh-cn=天气|?WeatherDef.description.zh-cn=描述|mainlabel=-|headers=plain|link=none}}
+
+
+
+{{DISPLAYTITLE:天气}}
+{{#set:
+|viewType=Def
+|path={{FULLPAGENAME}}
+|title=天气
+|button={{RW WeatherButton}}
+|revisiontime={{REVISIONTIMESTAMP}}
+}}
+__NOTOC__
+__NOREC__
+[[Category:天气]]

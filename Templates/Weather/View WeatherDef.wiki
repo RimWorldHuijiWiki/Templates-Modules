@@ -1,0 +1,20 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{Navbar Weather}}
+
+'''{{ucfirst:{{#show:{{{data|}}}|?WeatherDef.label}}}}（{{#show:{{{data|}}}|?WeatherDef.label.zh-cn}}，{{#show:{{{data|}}}|?WeatherDef.label.zh-tw}}）'''：{{#show:{{{data|}}}|?WeatherDef.description.zh-cn}}
+
+{{InfoBase|data={{{data|}}}|defType=WeatherDef}}
+
+<!--SWM-->
+{{#set:
+|viewType=WeatherDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+|button={{Button Weather|{{#show:{{{data|}}}|?defName}}}}
+}}
+
+{{DISPLAYTITLE:天气 {{#show:{{{data|}}}|?WeatherDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:天气]]
+</includeonly>

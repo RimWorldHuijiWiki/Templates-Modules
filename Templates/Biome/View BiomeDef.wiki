@@ -1,0 +1,130 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{Navbar Biome}}
+
+'''{{ucfirst:{{#show:{{{data|}}}|?BiomeDef.label}}}}（{{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}，{{#show:{{{data|}}}|?BiomeDef.label.zh-tw}}）'''：{{#show:{{{data|}}}|?BiomeDef.description.zh-cn}}
+
+{{InfoBase|data={{{data|}}}|defType=BiomeDef}}
+
+<hr/>
+<div class="row">
+
+<div class="col-md-4">
+<h3>基础参数</h3>
+<table class="wikitable" style="width:100%;">
+<tr><th style="width:60%;">参数</th><th style="width:40%;">值</th></tr>
+<tr><td>可否建造基地</td><td> {{#switch:{{#show:{{{data|}}}|?BiomeDef.canBuildBase}}|false=否|#default=是}}</td></tr>
+<tr><td>可否自动选择</td><td> {{#switch:{{#show:{{{data|}}}|?BiomeDef.canAutoChoose}}|false=否|#default=是}}</td></tr>
+<tr><td>动物密度</td><td>{{#show:{{{data|}}}|?BiomeDef.animalDensity}}</td></tr>
+<tr><td>植被密度</td><td>{{#show:{{{data|}}}|?BiomeDef.plantDensity}}</td></tr>
+<tr><td>疾病最大间隔时间（天）</td><td>{{#show:{{{data|}}}|?BiomeDef.diseaseMtbDays}}</td></tr>
+<tr><td>派系基地选择权重</td><td>{{#show:{{{data|}}}|?BiomeDef.factionBaseSelectionWeight}}</td></tr>
+<tr><td>可否通行</td><td>{{#switch:{{#show:{{{data|}}}|?BiomeDef.impassable}}|true=否|#default=是}}</td></tr>
+<tr><td>可否放牧动物</td><td>{{#switch:{{#show:{{{data|}}}|?BiomeDef.hasVirtualPlants}}|false=否|#default=是}}</td></tr>
+</table>
+</div>
+
+<div class="col-md-4">
+<h3>基础天气共性</h3>
+{{TableHelper
+|header1=天气
+|header2=共性
+|data={{{data|}}}
+|prop=BiomeDef.baseWeatherCommonalities
+|propDefType=WeatherDef
+|linkHeader=Weathers_
+}}
+</div>
+
+<div class="col-md-4">
+<h3>地面（根据肥沃度）</h3>
+{{TableHelper
+|header1=地面
+|header2=阈值
+|data={{{data|}}}
+|prop=BiomeDef.terrainsByFertility
+|propDefType=TerrainDef
+|linkHeader=Terrains_
+}}
+<h3>地面（补全制定器）</h3>
+<table class="wikitable sortable" style="width:100%;">
+<tr><th style="width:20%;">序号</th><th>地面</th style="width:60%;"><th style="width:20%;">频率</th></tr>
+{{#switch:{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers}}
+|Exist=
+{{#arraymap:{{#invoke:ArrayHelper|indexs|{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.Count}}}}|,|@@|
+<tr><td>@@</td>
+<td>
+{{TableHelper
+|header1=地面
+|header2=阈值
+|data={{{data|}}}
+|prop=BiomeDef.terrainPatchMakers.@@.thresholds
+|propDefType=TerrainDef
+|linkHeader=Terrains_
+}}
+</td>
+<td>{{#show:{{{data|}}}|?BiomeDef.terrainPatchMakers.@@.perlinFrequency}}</td></tr>
+}}
+|#default=<tr><td>（无）</td><td>（无）</td><td>（无）</td></tr>
+}}
+</table>
+</div>
+
+</div><!--row end-->
+
+<hr/>
+<div class="row">
+
+<div class="col-md-4">
+<h3>野生植物</h3>
+{{TableHelper
+|header1=植物种类
+|header2=共性
+|data={{{data|}}}
+|prop=BiomeDef.wildPlants
+|propDefType=ThingDef
+|linkHeader=Plants_
+}}
+</div>
+
+<div class="col-md-4">
+<h3>野生动物</h3>
+{{TableHelper
+|header1=动物种类
+|header2=共性
+|data={{{data|}}}
+|prop=BiomeDef.wildAnimals
+|propDefType=PawnKindDef
+|linkHeader=Animals_
+}}
+</div>
+
+<div class="col-md-4">
+<h3>疾病</h3>
+{{TableHelper
+|header1=疾病事件
+|header2=共性
+|data={{{data|}}}
+|prop=BiomeDef.diseases
+|propDefType=IncidentDef
+|linkHeader=Incidents_
+}}
+</div>
+
+</div><!--row end-->
+
+<hr/>
+
+[[File:{{#invoke:TexHelper|GetFile|{{#show:{{{data|}}}|?BiomeDef.texture}}}}|thumb|left|128px|贴图]]
+
+<!--SWM-->
+{{#set:
+|viewType=BiomeDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+|button={{Button Biome|{{#show:{{{data|}}}|?defName}}}}
+}}
+{{DISPLAYTITLE:生态区 {{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:生态区]]
+</includeonly>

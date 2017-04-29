@@ -1,0 +1,54 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly><!--
+-->{{#vardefine:burned|BurnedWoodPlankFloor,BurnedCarpet}}<!--
+-->{{#vardefine:floors|MetalTile,SilverTile,GoldTile,SterileTile,PavedTile,Concrete,WoodPlankFloor}}<!--
+-->{{#vardefine:carpets|CarpetRed,CarpetGreen,CarpetBlue,CarpetCream,CarpetDark}}<!--
+-->{{#vardefine:tilestone|TileSandstone,TileGranite,TileLimestone,TileSlate,TileMarble}}<!--
+-->{{#vardefine:flagstone|FlagstoneSandstone,FlagstoneGranite,FlagstoneLimestone,FlagstoneSlate,FlagstoneMarble}}<!--
+-->{{#vardefine:rough|Granite_Rough,Limestone_Rough,Marble_Rough,Sandstone_Rough,Slate_Rough}}<!--
+-->{{#vardefine:hewn|Granite_RoughHewn,Limestone_RoughHewn,Marble_RoughHewn,Sandstone_RoughHewn,Slate_RoughHewn}}<!--
+-->{{#vardefine:smooth|Granite_Smooth,Limestone_Smooth,Marble_Smooth,Sandstone_Smooth,SilverTile,Slate_Smooth}}<!--
+-->{{#vardefine:nature|Sand,Soil,MarshyTerrain,SoilRich,Mud,Marsh,Gravel,MossyTerrain,Ice}}<!--
+-->{{#vardefine:roads|BrokenAsphalt,PackedDirt}}<!--
+-->{{#vardefine:special|Underwall}}<!--
+-->{{#vardefine:water|WaterDeep,WaterMovingDeep,WaterShallow,WaterMovingShallow}}<!--
+-->{{Navbox
+|name=Navbox Terrain
+|title=[[Terrains|所有地面&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>]]
+|group1=烧毁的地面
+|list1=&nbsp;{{#arraymap:{{#var:burned}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+|group2=地板
+|list2=
+    {{Navbox|child|
+        |group1=综合
+        |list1=&nbsp;{{#arraymap:{{#var:floors}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+        |group2=地毯
+        |list2=&nbsp;{{#arraymap:{{#var:carpets}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+    }}
+|group3=岩石地砖
+|list3=
+    {{Navbox|child
+        |group1=地砖
+        |list1=&nbsp;{{#arraymap:{{#var:tilestone}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+        |group2=石板
+        |list2=&nbsp;{{#arraymap:{{#var:flagstone}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+    }}
+|group4=自然岩石地面
+|list4=
+    {{Navbox|child
+        |group1=粗糙的
+        |list1=&nbsp;{{#arraymap:{{#var:rough}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+        |group2=粗糙砍凿的
+        |list2=&nbsp;{{#arraymap:{{#var:hewn}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+        |group3=光滑的
+        |list3=&nbsp;{{#arraymap:{{#var:smooth}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+    }}
+|group5=自然地面
+|list5=&nbsp;{{#arraymap:{{#var:nature}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+|group6=道路
+|list6=&nbsp;{{#arraymap:{{#var:roads}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+|group7=特殊
+|list7=&nbsp;{{#arraymap:{{#var:special}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+|group8=水面
+|list8=&nbsp;{{#arraymap:{{#var:water}}|,|@@|[[Terrains_@@|{{#show:Core:Defs_TerrainDef_@@|?TerrainDef.label.zh-cn}}]]|&nbsp;{{!}}&nbsp;}}
+}}</includeonly>

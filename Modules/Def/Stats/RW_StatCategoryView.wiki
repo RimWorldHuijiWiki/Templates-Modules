@@ -1,0 +1,12 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{#invoke:RW_StatCategoryView|view|{{{data|}}}}}
+{{#set:
+|viewType=StatCategoryDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+}}
+{{DISPLAYTITLE:属性分类 {{#show:{{{data|}}}|?StatCategoryDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:属性]]
+</includeonly>

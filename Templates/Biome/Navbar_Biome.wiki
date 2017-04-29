@@ -1,0 +1,7 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude><!--
+--><includeonly><div><!--
+-->{{Button Biome}}<span style="display:inline-block;width:1px;height:128px;background-color: rgba(0, 0, 0, .1);"></span><!--
+-->{{Button Biome|Ocean}}{{Button Biome|Lake}}{{Button Biome|TemperateForest}}{{Button Biome|TropicalRainforest}}<!--
+-->{{Button Biome|AridShrubland}}{{Button Biome|Desert}}{{Button Biome|ExtremeDesert}}<!--
+-->{{Button Biome|BorealForest}}{{Button Biome|Tundra}}{{Button Biome|IceSheet}}{{Button Biome|SeaIce}}<!--
+--></div><hr/></includeonly>
