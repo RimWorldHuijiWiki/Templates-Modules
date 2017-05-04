@@ -75,11 +75,11 @@ function SkillNeed_Direct:new(skill, reportInverse, factorsPerLevel)
     return need
 end
 
-function SkillNeed_Direct:factorFor(level)
-    if level == nil then return 1 end
-    local lv = level + 1
+function SkillNeed_Direct:factorFor(skillLevel)
+    if skillLevel == nil then return 1 end
+    local lvp = skillLevel + 1
     for i, val in pairs(self.factorsPerLevel) do
-        if lv == i then
+        if lvp == i then
             return val
         end
     end

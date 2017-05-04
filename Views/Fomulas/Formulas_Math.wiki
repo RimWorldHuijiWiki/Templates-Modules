@@ -1,0 +1,14 @@
+此页面介绍 RimWorld 中使用的通用公式
+{{FomulaView|通用公式}}
+
+<hr/>
+<h2 id="Lerp">Lerp 线性插值</h2>
+公式：
+<pre>
+Lerp(a, b, t) = a + (b - a) * t
+其中 t 取值区间为 [0, 1]，当 t < 0 时 t 取 0，当 t > 1 时，t 取 1。
+</pre>
+
+<hr/>
+<h2>Curve 曲线处理</h2>
+说明：

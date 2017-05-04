@@ -1,7 +1,7 @@
 local Def = {}
 
 local SMW = require("Module:SMW")
-local Navbox = require("Module:Navbox")
+local Collapse = require("Module:RT_Collapse")
 
 local GenText = require("Module:AC_GenText")
 
@@ -37,9 +37,9 @@ end
 
 function Def:getSummary(defaultDesc)
     
-    local text = "<strong>"
+    local text = "<p><strong>"
         .. self:get_LabelCap()
-        .. "（" .. self.label_zhcn .. " " .. self.label_zhtw .. "）"
+        .. "（" .. self.label_zhcn .. "，" .. self.label_zhtw .. "）"
         .. "</strong>"
 
     if self.description then
@@ -48,35 +48,37 @@ function Def:getSummary(defaultDesc)
         text = text .. "：" .. defaultDesc
     end
 
+    text = text .. "</p>"
+
     return text
 end
 
 function Def:getInfoBase()
 
-    local navboxArgs = {}
-
-    navboxArgs.name = "Infobase"
-    navboxArgs.title = "基本信息"
-    navboxArgs.group1 = "defType"
-    navboxArgs.list1 = self.defType
-    navboxArgs.group2 = "defName"
-    navboxArgs.list2 = self.defName
-    navboxArgs.group3 = "名称（英文）"
-    navboxArgs.list3 = self.label
-    navboxArgs.group4 = "名称（简中）"
-    navboxArgs.list4 = self.label_zhcn
-    navboxArgs.group5 = "名称（繁中）"
-    navboxArgs.list5 = self.label_zhtw
-    if self.description then
-        navboxArgs.group6 = "描述（英文）"
-        navboxArgs.list6 = self.description
-        navboxArgs.group7 = "描述（简中）"
-        navboxArgs.list7 = self.description_zhcn
-        navboxArgs.group8 = "描述（繁中）"
-        navboxArgs.list8 = self.description_zhtw
+    local args = {
+        id = "infobase",
+        title = "基本信息",
+        headers = {{
+            width = "128px"
+        },{}},
+        rows ={{
+            cols = {"defType", self.defType}
+        },{
+            cols = {"defName", self.defName}
+        }}
+    }
+    if self.label ~= nil then
+        args.rows[3] = {cols = {"名称（英文）", self.label}}
+        args.rows[4] = {cols = {"名称（简中）", self.label_zhcn}}
+        args.rows[5] = {cols = {"名称（繁中）", self.label_zhtw}}
+    end
+    if self.description ~= nil then
+        args.rows[6] = {cols = {"描述（英文）", self.description}}
+        args.rows[7] = {cols = {"描述（简中）", self.description_zhcn}}
+        args.rows[8] = {cols = {"描述（繁中）", self.description_zhtw}}
     end
 
-    return Navbox._navbox(navboxArgs)
+    return Collapse.ctable(args)
 end
 
 return Def

@@ -1,0 +1,12 @@
+<noinclude>[[Category:RWTemplates]]</noinclude>
+<includeonly>
+{{DISPLAYTITLE:计算公式 {{{1|}}}}}
+{{#set:
+|viewType=Fomula
+|path={{FULLPAGENAME}}
+|title=计算公式 {{{1|}}}
+}}
+__NOTOC__
+__NOREC__
+[[Category:计算公式]]
+</includeonly>

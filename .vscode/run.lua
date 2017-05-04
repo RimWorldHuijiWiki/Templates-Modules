@@ -1,14 +1,7 @@
-local GenText = require("Modules/GenText")
+local SimpleCurve = require("Modules/RW_AssemblyCSharp/AC_SimpleCurve")
 
-print("Test lua.")
+sc = SimpleCurve:new('"(0,0)","(0.2,0.7)","(0.5, 0.86)","(0.8, 0.93)","(0.96,0.96)","(1.0,0.98)","(1.1,0.985)","(1.3,0.99)","(1.8,0.995)","(10,1)"')
 
-print(GenText.toStringByStyle(15.3545, "Integer"))
-print(GenText.toStringByStyle(15.2453, "FloatOne"))
-print(GenText.toStringByStyle(15.5412, "FloatTwo"))
-print(GenText.toStringByStyle(15.3654, "PercentZero"))
-print(GenText.toStringByStyle(15.36644, "PercentOne"))
-print(GenText.toStringByStyle(15.33644, "PercentTwo"))
-print(GenText.toStringByStyle(15.33669, "Temperature"))
-print(GenText.toStringByStyle(15.123546, "TemperatureOffset"))
-print(GenText.toStringByStyle(36522, "WorkAmount"))
-print(GenText.toStringByStyle("sdfsdfsd", "WorkAmount"))
+for i, p in pairs(sc.points) do
+    print("(" .. p.x .. "," .. p.y .. ")")
+end

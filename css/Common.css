@@ -185,6 +185,146 @@ table.tdnoborder tbody {
 }
 
 
+/*RW Collapse*/
+
+.rw-collapse {
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.rw-collapse-head {
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 15px;
+    cursor: pointer;
+    user-select: none!important;
+    -moz-user-select: none!important;
+    -ms-user-select: none!important;
+    -webkit-user-select: none!important;
+}
+
+.rw-collapse-head::after {
+    content: "\f078";
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    float: right;
+}
+
+.rw-collapse-head.collapsed::after {
+    content: "\f077";
+}
+
+.rw-collapse-content {
+    background-color: #e9e9e9;
+    padding: 20px 15px;
+}
+
+
+/*RW Collapse Table*/
+
+.rw-ctable-simple {
+    color: #c0c7da;
+    background-color: #282f44;
+    width: 100%;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+.rw-ctable-simple tr {
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+.rw-ctable-simple tr:hover {
+    color: #f3f3f3;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+.rw-ctable-simple th {
+    font-size: 16px;
+    font-weight: normal;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.rw-ctable-simple td {
+    font-size: 14px;
+}
+
+.rw-ctable-simple th,
+.rw-ctable-simple td {
+    padding: 8px 20px;
+}
+
+.rw-ctable-simple td+td {
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.rw-ctable-simple th+th {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rw-ctable-simple a,
+.rw-ctable-simple a:hover {
+    color: #e6af2e;
+}
+
+
+/*ECharts*/
+
+.echarts-above {
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 20px;
+    color: #c0c7da;
+    background-color: #202636;
+}
+
+.echarts-above a,
+.echarts-above a:hover {
+    color: #e6af2e;
+}
+
+.echarts-outter {
+    color: #c0c7da;
+    background-color: #282f44;
+    position: relative;
+}
+
+.echarts {
+    width: 100%;
+    height: 100%;
+}
+
+.echarts-loading {
+    text-align: center;
+    color: inherit;
+    background-color: inherit;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.echarts-loading>i {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+}
+
+.echarts-loading-hide {
+    display: none;
+}
+
+
 /*Hexagon icon for Biomes*/
 
 .hexagon {
@@ -327,13 +467,3 @@ table.tdnoborder tbody {
     border-left-color: #836c5b;
     border-right-color: #836c5b;
 }
-
-
-/*ECharts*/
-
-.echarts {
-    display: inline-block;
-}
-
-
-/*hsla(0, 0.00%, 18.33%, 1.00)*/

@@ -1,0 +1,87 @@
+{
+    "color": ["#e6af2e"],
+    "title": {
+        "top": "4%",
+        "itemGap": 12,
+        "subtext": "（直接设定每级技能的系数值）",
+        "text": "属性 射击精确度 的技能系数（射击）",
+        "left": "center",
+        "textStyle": { "color": "#c0c7da", "fontWeight": "normal" }
+    },
+    "grid": {
+        "top": "22%"
+    },
+    "toolbox": {
+        "feature": {
+            "dataView": {
+                "show": true,
+                "readOnly": false
+            },
+            "saveAsImage": {
+                "show": true
+            }
+        },
+        "itemSize": 20,
+        "iconStyle": {
+            "normal": {
+                "borderColor": "#c0c7da"
+            },
+            "emphasis": {
+                "borderColor": "#e6af2e"
+            }
+        },
+        "right": "5%",
+        "top": "4%"
+    },
+    "tooltip": {
+        "formatter": "技能系数<br>射击（{b}级）：× {c}%",
+        "extraCssText": "border-radius: 0;",
+        "borderWidth": 1,
+        "borderColor": "#e6af2e",
+        "trigger": "axis",
+        "padding": [8, 10],
+        "backgroundColor": "#282f44",
+        "axisPointer": {
+            "type": "shadow"
+        }
+    },
+    "xAxis": [{
+        "name": "射击",
+        "axisTick": {
+            "alignWithLabel": true
+        },
+        "type": "category",
+        "axisLabel": {
+            "formatter": "{value}"
+        },
+        "data": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
+        "axisLine": {
+            "onZero": false,
+            "lineStyle": { "color": "#c0c7da" }
+        }
+    }],
+    "yAxis": [{
+        "name": "技能系数",
+        "type": "value",
+        "axisLabel": {
+            "formatter": "{value}%"
+        },
+        "axisLine": {
+            "onZero": false,
+            "lineStyle": { "color": "#c0c7da" }
+        }
+    }],
+    "series": [{
+        "data": [50, 70, 80, 90, 93, 95, 96, 96.5, 97, 97.5, 98, 98.5, 98.75, 99, 99.1, 99.2, 99.3, 99.4, 99.5, 99.6, 99.7],
+        "type": "line",
+        "name": "技能系数",
+        "label": {
+            "normal": {
+                "show": true,
+                "formatter": "{c}%"
+            }
+        }
+    }],
+    "formatterStyle": "Normal",
+    "backgroundColor": "#282f44"
+}

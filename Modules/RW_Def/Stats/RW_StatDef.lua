@@ -5,6 +5,9 @@ local SMW = require("Module:SMW")
 
 local GenText = require("Module:AC_GenText")
 local SkillNeed = require("Module:AC_SkillNeed")
+local PawnCapacityFactor = require("Module:AC_PawnCapacityFactor")
+local SimpleCurve = require("Module:AC_SimpleCurve")
+local StatPart = require("Module:AC_StatPart")
 
 function toboolean(s)
     if s ~= nil and string.lower(s) == "true" then
@@ -46,7 +49,7 @@ function StatDef:new(data)
     -- tree
     def.capacityFactors = SMW.show(data, "StatDef.capacityFactors")
     -- tree
-    def.postProcessCurve = SMW.show(data, "StatDef.postProcessCurve.points")
+    def.postProcessCurve = SMW.show(data, "StatDef.postProcessCurve")
     -- tree
     def.parts = SMW.show(data, "StatDef.parts")
     def:Init(data)
@@ -65,7 +68,7 @@ function StatDef:Init(data)
 
     if self.skillNeedFactors == "Exist" then
         local class = SMW.show(data, "StatDef.skillNeedFactors.0.Class")
-        local skill = SMW.shwo(data, "StatDef.skillNeedFactors.0.skill")
+        local skill = SMW.show(data, "StatDef.skillNeedFactors.0.skill")
         local reportInverse toboolean(SMW.show(data, "StatDef.skillNeedFactors.0.reportInverse", "false"))
         if class == "SkillNeed_BaseBonus" then
             local baseFactor = tonumber(SMW.show(data, "StatDef.skillNeedFactors.0.baseFactor"))
@@ -75,37 +78,45 @@ function StatDef:Init(data)
             local factorsPerLevel = SMW.show(data, "StatDef.skillNeedFactors.0.factorsPerLevel")
             self.skillNeedFactors = {SkillNeed.create_Direct(skill, reportInverse, factorsPerLevel)}
         end
+    else
+        self.skillNeedFactors = nil
     end
 
+    if self.capacityFactors == "Exist" then
+        local pcfs = {}
+        local count = tonumber(SMW.show(data, "StatDef.capacityFactors.Count"))
+        for i = 1, count do
+            local prop = "StatDef.capacityFactors." .. i - 1
+            local capacity = SMW.show(data, prop .. ".capacity")
+            local weight = tonumber(SMW.show(data, prop .. ".weight"))
+            local max = tonumber(SMW.show(data, prop .. ".max"))
+            pcfs[i] = PawnCapacityFactor:new(capacity, weight, max)
+        end
+        self.capacityFactors = pcfs
+    else
+        self.capacityFactors = nil
+    end
 
+    if self.postProcessCurve == "Exist" then
+        self.postProcessCurve = SimpleCurve:new(SMW.show(data, "StatDef.postProcessCurve.points"))
+    else
+        self.postProcessCurve = nil
+    end
 
-    -- if self.capacityFactors == "Exist" then
-    --     local pcfs = {}
-    --     local count = tonumber(SMW.show(data, "StatDef.capacityFactors.Count"))
-    --     for i = 1, count do
-    --         pcf = {}
-    --         prop = "StatDef.capacityFactors." .. i - 1
-    --         pcf.capacity = SMW.show(data, prop .. ".capacity")
-    --         pcf.weight = tonumber(SMW.show(data, prop .. ".weight", "1"))
-    --         pcf.max = tonumber(SMW.show(data, prop .. ".max", "9999"))
-    --         pcfs[i] = pcf
-    --     end
-    --     self.capacityFactors = pcfs
-    -- end
-
-    -- if self.postProcessCurve == "Exist" then
-    --     local points = {}
-    --     local qs = SMW.show(data, "StatDef.postProcessCurve.points")
-    --     local t = mw.text.split(string.sub(qs, 2, -2), "\",\"")
-    --     for i, vec in pairs(t) do
-    --         vec = mw.text.split(string.sub(vec, 2, -2), ",")
-    --         local p = {}
-    --         p.x = tonumber(vec[1])
-    --         p.y = tonumber(vec[2])
-    --         points[i] = p
-    --     end
-    --     self.postProcessCurve = {points}
-    -- end
+    if self.parts == "Exist" then
+        local parts = {}
+        local count = tonumber(SMW.show(data, "StatDef.parts.Count"))
+        for i = 0, count - 1 do
+            local part = StatPart.instance(data, i)
+            if part ~= nil then
+                part.parentStat = self
+            end
+            parts[#parts] = part
+        end
+        self.parts = parts
+    else
+        self.parts = nil
+    end
 
 end
 

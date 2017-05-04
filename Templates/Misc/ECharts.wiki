@@ -1,2 +1,10 @@
 <noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
-<includeonly><div class="echarts" style="width:{{{width|809px}}};height:{{{height|500px}}};">{{#tag:nowiki|{{{option|}}}}}</div></includeonly>
+<includeonly><div class="rw-collapse" style="width:{{{width|809px}}};">
+<div class="bg-primary rw-collapse-head" type="button" data-toggle="collapse" data-target="#rw-collapse-echarts-{{{id|1}}}">{{{title|&nbsp;}}}</div>
+<div class="collapse in" id="rw-collapse-echarts-{{{id|1}}}">
+<div class="echarts-outter" style="height:{{{height|500px}}};">
+<div class="echarts">{{#tag:nowiki|{{{option|}}}}}</div>
+<div class="echarts-loading"><i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i></div>
+</div>
+</div>
+</div></includeonly>

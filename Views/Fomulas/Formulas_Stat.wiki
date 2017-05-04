@@ -1,0 +1,93 @@
+{{FomulaView|属性}}
+每个物品、单位都会有[[Stats|属性]]，比如“耐久值”、“美观度”、“射击精度”等等。属性的最终值由程序经过一系列的计算而得到的。
+
+<hr/><!--技能系数-->
+<h2 id="StatsReport_Skills">{{#invoke:Keyed|zhcnSX|StatsReport_Skills}}</h2>
+由[[Skills|技能]]等级决定。代码中有两种形式：基础加成形式 与 直接形式。
+
+计算公式（基础加成形式）：
+
+ 3个参数：
+     技能
+     基础系数
+     加成系数
+ 
+ 技能系数 = 基础系数 + 加成系数 × 技能等级
+ 
+ 处理后的属性值 = 处理前的属性值 × 技能系数
+
+计算公式（直接形式）：
+
+ 2个参数：
+     技能
+     每级技能对应的系数值
+ 
+ 技能系数 = 技能等级所对应的系数值
+ 
+ 处理后的属性值 = 处理前的属性值 × 技能系数
+
+<hr/><!--健康系数-->
+<h2 id="StatsReport_HealthFactors">{{#invoke:Keyed|zhcnSX|StatsReport_HealthFactors}}</h2>
+也即'''能力系数'''，由 [[PawnCapacities|单位能力]] （如意识、操作能力、视觉能力）决定。计算属性最终值时，可以有多个健康系数起作用。
+
+计算公式：
+
+ 3个参数：
+     单位能力
+     系数最大值
+     系数权重
+ 
+ 如果 单位能力值 >= 系数最大值 则
+     健康系数 = 系数最大值
+ 否则
+     健康系数 = 单位能力值
+ 
+ 如果 系数权重 < 0 则 系数权重 = 0
+ 如果 系数权重 > 1 则 系数权重 = 1
+ 
+ 处理后的属性值 = 处理前的属性值 + (处理前的属性值 × 健康系数 - 处理前的能力值) × 系数权重
+
+<hr/><!--品质乘数-->
+<h2 id="StatsReport_QualityMultiplier">{{#invoke:Keyed|zhcnSX|StatsReport_QualityMultiplier}}</h2>
+{{#invoke:Keyed|zhcnSX|QualityDescription}}
+
+计算公式：
+
+ 2参数：
+     是否应用于负数
+     每级品质对应的系数值
+ 
+ 如果 处理前的属性值 < 0 且 是否应用于负数 为 否 则 不进行计算
+ 
+ 品质乘数 = 物品品质所对应的系数值
+ 
+ 处理后的属性值 = 处理前的属性值 × 品质乘数
+
+<hr/><!--耐久乘数-->
+<h2 id="StatsReport_QualityMultiplier">{{#replace:{{#invoke:Keyed|zhcnSX|StatsReport_HealthMultiplier}}|（{0}）}}</h2>
+
+计算公式：
+
+ 参数：耐久度的曲线处理坐标点
+ 
+ 耐久乘数 = 耐久度经过曲线处理后的值
+ 
+ 处理后的属性值 = 处理前的属性值 × 耐久乘数
+
+<hr/><!--后期曲线处理-->
+<h2 id="StatsReport_PostProcessed">{{#invoke:Keyed|zhcnSX|StatsReport_PostProcessed}}</h2>
+计算属性最终值的最后一步。
+
+计算公式：
+
+ 参数形式：平面直角坐标系上一系列的点 (x, y)    
+ 
+ 如果 处理前的属性值 <= 第一个点的X值 则 最终值 = 第一个点的Y值
+ 
+ 如果 处理前的属性值 >= 最后一个点的X值 则 最终值 = 最后一个点的Y值
+ 
+ 如果 处理前的属性值 在X轴上坐落于A、B两点之间 则
+     T = (处理前的属性值 - 点A的X值) ÷ (点B的X值 - 点A的X值)
+     如果 T < 0 则 T = 0
+     如果 T > 1 则 T = 1
+     最终值 = 点A的Y值 + (点B的Y值 - 点A的Y值) × T
