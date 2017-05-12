@@ -5,7 +5,7 @@
 |path={{FULLPAGENAME}}
 |data={{{data|}}}
 }}
-{{DISPLAYTITLE:属性 {{#show:{{{data|}}}|?StatCategoryDef.label.zh-cn}}}}
+{{DISPLAYTITLE:属性 {{#show:{{{data|}}}|?StatDef.label.zh-cn}}}}
 __NOTOC__
 __NOREC__
 [[Category:属性]]

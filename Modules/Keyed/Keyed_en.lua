@@ -1,6 +1,6 @@
 local Keyed_en = {}
 
-local dict = mw.loadData( 'Module:Keyed_en/dict' )
+local dict = mw.loadData("Module:Keyed_en_dict")
 
 -- for lua
 function Keyed_en.trans(...)

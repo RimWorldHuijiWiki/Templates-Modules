@@ -1,6 +1,6 @@
 local Keyed_zhcn = {}
 
-local dict = mw.loadData( 'Module:Keyed_zhcn/dict' )
+local dict = mw.loadData("Module:Keyed_zhcn_dict")
 
 -- for lua
 function Keyed_zhcn.trans(...)

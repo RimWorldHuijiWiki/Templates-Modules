@@ -163,10 +163,19 @@ function Collapse.ctable(cells)
             local cols = tr.cols
             if cols ~= nil and type(cols) == "table" then
                 for j, td in pairs(cols) do
-                    text = text
-                        .. "<td>"
-                        .. td or ""
-                        .. "</td>"
+                    if type(td) == "table" then
+                        text = text
+                            .. "<td"
+                            .. (td.span and (" colspan=\"" .. td.span .. "\"") or "")
+                            .. ">"
+                            .. (td.text or "")
+                            .. "</td>"
+                    else
+                        text = text
+                            .. "<td>"
+                            .. td
+                            .. "</td>"
+                    end
                 end
             end
             text = text .. "</tr>\n"
@@ -184,6 +193,7 @@ end
 --     title = "",
 --     barClass = "", -- default/primary/success/info/warning/danger default: primary
 --     above = "",
+--     aboveExtraCssText = ""
 --     width = ""
 --     height = ""
 --     option = {}
@@ -238,7 +248,9 @@ function Collapse.echarts(args)
     local above = args.above
     if above ~= nil and above ~= "" then
         text = text
-            .. "<div class=\"echarts-above\">"
+            .. "<div class=\"echarts-above\""
+            .. (args.aboveExtraCssText and (" style=\"" .. args.aboveExtraCssText .. "\"") or "")
+            .. ">"
             .. above
             .. "</div>\n"
     end
@@ -259,12 +271,14 @@ function Collapse.echarts(args)
 end
 
 -- Preset Colors
+
 Collapse.highlighting = "#e6af2e"
 Collapse.foregroundColor = "#c0c7da"
 Collapse.backgroundColor = "#282f44"
 Collapse.handleIcon = "path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z"
 
 -- Create a new option table for echarts
+
 function Collapse.newOptionNormal(colors)
     return {
         formatterStyle = "Normal",
@@ -330,7 +344,8 @@ function Collapse.newOptionNormal(colors)
                 lineStyle = {
                     color = Collapse.foregroundColor
                 }
-            }
+            },
+            boundaryGap = true
         }},
         yAxis = {{
             type = "value",
@@ -460,6 +475,25 @@ function Collapse.newOptionCurve(colors)
         }},
         series = {}
     }
+end
+
+function Collapse.newOption(style)
+    local option = Collapse.newOptionNormal()
+    if style == "normal" then
+        return option
+    elseif style == "point" then
+        option.tooltip.axisPointer.type = "line"
+        return option
+    elseif style == "span" then
+        option.xAxis[1].axisTick.alignWithLabel = false
+        return option
+    elseif style == "value" then
+        option.tooltip.axisPointer.type = "line"
+        option.xAxis[1].boundaryGap = false
+        return option
+    else
+        return option
+    end        
 end
 
 return Collapse

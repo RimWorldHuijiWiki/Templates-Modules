@@ -5,12 +5,15 @@ local Collapse = require("Module:RT_Collapse")
 
 local GenText = require("Module:AC_GenText")
 
-function Def:new( data )
+function Def:new(data)
     def = {}
     setmetatable(def, self)
     self.__index = self
     -- fields
     def.defType = SMW.show(data, "defType")
+    if def.defType == nil then
+        return nil
+    end
     def.defName = SMW.show(data, "defName")
     def.label = SMW.show(data, def.defType .. ".label")
     def.label_zhcn = SMW.show(data, def.defType .. ".label.zh-cn")

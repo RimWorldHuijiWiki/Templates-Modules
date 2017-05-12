@@ -25,7 +25,7 @@ function StatDef:new(data)
     -- fields
     def.category = SMW.show(data, "StatDef.category", "StatWorker")
     def.workerClass = SMW.show(data, "StatDef.workerClass")
-    def.hideAtValue = SMW.show(data, "StatDef.hideAtValue")
+    def.hideAtValue = tonumber(SMW.show(data, "StatDef.hideAtValue", "-2.14748365E+09"))
     def.showNonAbstract = toboolean(SMW.show(data, "StatDef.showNonAbstract", "true"))
     def.showIfUndefined = toboolean(SMW.show(data, "StatDef.showIfUndefined", "true"))
     def.showOnPawns = toboolean(SMW.show(data, "StatDef.showOnPawns", "true"))
@@ -35,11 +35,13 @@ function StatDef:new(data)
     def.toStringNumberSense = SMW.show(data, "StatDef.toStringNumberSense", "Absolute")
     def.toStringStyle = SMW.show(data, "StatDef.toStringStyle")
     def.formatString = SMW.show(data, "StatDef.formatString")
+    def.formatString_zhcn = SMW.show(data, "StatDef.formatString.zh-cn")
+    def.formatString_zhtw = SMW.show(data, "StatDef.formatString.zh-tw")
     def.defaultBaseValue = tonumber(SMW.show(data, "StatDef.defaultBaseValue", "1"))
     def.minValue = tonumber(SMW.show(data, "StatDef.minValue"))
     def.maxValue = tonumber(SMW.show(data, "StatDef.maxValue", "9999999"))
     def.roundValue = toboolean(SMW.show(data, "StatDef.roundValue", "false"))
-    def.roundToFiveOver = tonumber(SMW.show(data, "StatDef.roundToFiveOver", "99999999"))
+    def.roundToFiveOver = tonumber(SMW.show(data, "StatDef.roundToFiveOver", "3.40282347E+38"))
     -- list
     def.statFactors = SMW.show(data, "StatDef.statFactors")
     def.applyFactorsIfNegative = toboolean(SMW.show(data, "StatDef.applyFactorsIfNegative", "true"))
@@ -52,11 +54,11 @@ function StatDef:new(data)
     def.postProcessCurve = SMW.show(data, "StatDef.postProcessCurve")
     -- tree
     def.parts = SMW.show(data, "StatDef.parts")
-    def:Init(data)
+    def:postLoad(data)
     return def
 end
 
-function StatDef:Init(data)
+function StatDef:postLoad(data)
 
     if self.statFactors ~= nil then
         local t = mw.text.split(self.statFactors, ",")
@@ -110,8 +112,8 @@ function StatDef:Init(data)
             local part = StatPart.instance(data, i)
             if part ~= nil then
                 part.parentStat = self
+                parts[#parts + 1] = part
             end
-            parts[#parts] = part
         end
         self.parts = parts
     else
@@ -133,13 +135,19 @@ end
 --     return self.workerInt
 -- end
 
--- function StatDef:valueToString(val, numberSense)
---     if numberSense == nil or numberSense == "" then numberSense = "Absolute" end
---     local text = GenText.ToStringByStyle(val, self.toStringStyle, numberSense)
---     if not (self.formatString == null or self.formatString == "") then
---         text = string.gsub(self.formatString, "{0}", text)
---     end
---     return text
--- end
+function StatDef:valueToString(val, numberSense)
+
+    if numberSense == nil or numberSense == "" then
+        numberSense = "Absolute"
+    end
+
+    local text = GenText.toStringByStyle(val, self.toStringStyle, numberSense)
+
+    if not (self.formatString == nil or self.formatString == "") then
+        text = string.gsub(self.formatString, "{0}", text)
+    end
+
+    return text
+end
 
 return StatDef

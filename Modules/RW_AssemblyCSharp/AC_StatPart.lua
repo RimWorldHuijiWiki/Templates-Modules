@@ -4,15 +4,23 @@ local StatPart_Curve = {}
 local StatPart_Health = {}
 local StatPart_Mood = {}
 local StatPart_BodySize = {}
+local StatPart_NaturalNotMissingBodyPartsCoverage = {}
 local StatPart_Food = {}
 local StatPart_Rest = {}
 local StatPart_BedStat = {}
 local StatPart_Age = {}
 local StatPart_ApparelStatOffset = {}
+local StatPart_WorkTableUnpowered = {}
+local StatPart_WorkTableTemperature = {}
+local StatPart_Outdoors = {}
+local StatPart_RoomStat = {}
+local StatPart_WornByCorpse = {}
+local StatPart_GearAndInventoryMass = {}
 
 local SMW = require("Module:SMW")
 local Collapse = require("Module:RT_Collapse")
-local Keyed = require("Module:Keyed")
+local Keyed_zhcn = require("Module:Keyed_zhcn")
+local Mathf = require("Module:UE_Mathf")
 
 local SimpleCurve = require("Module:AC_SimpleCurve")
 local PawnOrCorpseStatUtility  = require("Module:AC_PawnOrCorpseStatUtility")
@@ -20,11 +28,7 @@ local PawnOrCorpseStatUtility  = require("Module:AC_PawnOrCorpseStatUtility")
 -- local StatRequest = require("Module:AC_StatRequest")
 
 function toboolean(s)
-    if s ~= nil and string.lower(s) == "true" then
-        return true
-    else
-        return false
-    end
+    return s ~= nil and string.lower(s) == "true"
 end
 
 -- Base
@@ -40,6 +44,10 @@ end
 
 function StatPart:transformValue(req, val)
     return val
+end
+
+function StatPart:explainEcharts()
+    return "<div sytle=\"display:none;\">StatPart</div>\n"
 end
 
 -- function StatPart:explanationPart(req)
@@ -105,28 +113,29 @@ function StatPart_Quality:qualityMultiplier(qc)
 end
 
 function StatPart_Quality:explainEcharts()
-    local StatsReport_QualityMultiplier = Keyed.zhcnS("StatsReport_QualityMultiplier")
-    local Quality = Keyed.zhcnS("Quality")
-    local option = Collapse.newOptionNormal()
+    local StatsReport_QualityMultiplier = Keyed_zhcn.trans("StatsReport_QualityMultiplier")
+    local Quality = Keyed_zhcn.trans("Quality")
+    local option = Collapse.newOption("span")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_QualityMultiplier
     option.tooltip.formatter = StatsReport_QualityMultiplier .. "<br/>" .. Quality .. "（{b}）：× {c}%"
     option.xAxis[1].name = Quality
     option.xAxis[1].data = {
-        Keyed.zhcnS("QualityCategoryShort_Awful"),
-        Keyed.zhcnS("QualityCategoryShort_Shoddy"),
-        Keyed.zhcnS("QualityCategoryShort_Poor"),
-        Keyed.zhcnS("QualityCategoryShort_Normal"),
-        Keyed.zhcnS("QualityCategoryShort_Good"),
-        Keyed.zhcnS("QualityCategoryShort_Superior"),
-        Keyed.zhcnS("QualityCategoryShort_Excellent"),
-        Keyed.zhcnS("QualityCategoryShort_Masterwork"),
-        Keyed.zhcnS("QualityCategoryShort_Legendary")
+        Keyed_zhcn.trans("QualityCategoryShort_Awful"),
+        Keyed_zhcn.trans("QualityCategoryShort_Shoddy"),
+        Keyed_zhcn.trans("QualityCategoryShort_Poor"),
+        Keyed_zhcn.trans("QualityCategoryShort_Normal"),
+        Keyed_zhcn.trans("QualityCategoryShort_Good"),
+        Keyed_zhcn.trans("QualityCategoryShort_Superior"),
+        Keyed_zhcn.trans("QualityCategoryShort_Excellent"),
+        Keyed_zhcn.trans("QualityCategoryShort_Masterwork"),
+        Keyed_zhcn.trans("QualityCategoryShort_Legendary")
     }
     option.yAxis[1].name = StatsReport_QualityMultiplier
     option.yAxis[1].axisLabel.formatter = "{value}%"
     option.series[1] = {
         name = StatsReport_Skills,
         type = "line",
+        step = "middle",
         label = {
             normal = {
                 show = true,
@@ -147,9 +156,8 @@ function StatPart_Quality:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_QualityMultiplier,
-        above = "是否应用于负数：" .. (self.alsoAppliesToNegativeValues and "是；" or "否；")
-            .. "计算公式：[[Formulas_Stat#StatsReport_QualityMultiplier|" .. StatsReport_QualityMultiplier .. "]]",
+        title = StatsReport_QualityMultiplier .. "（片段）",
+        above = "是否应用于负数：" .. (self.alsoAppliesToNegativeValues and "是" or "否"),
         option = option
     })
 end
@@ -206,10 +214,10 @@ function StatPart_Health:curveXGetter(req)
 end
 
 function StatPart_Health:explainEcharts()
-    local StatsReport_HealthMultiplier = Keyed.zhcnS("StatsReport_HealthMultiplier")
+    local StatsReport_HealthMultiplier = Keyed_zhcn.trans("StatsReport_HealthMultiplier")
     StatsReport_HealthMultiplier = string.gsub(StatsReport_HealthMultiplier, "（{0}）", "")
-    local HitPointsBasic = Keyed.zhcnS("HitPointsBasic")
-    local option = Collapse.newOptionNormal()
+    local HitPointsBasic = Keyed_zhcn.trans("HitPointsBasic")
+    local option = Collapse.newOption("value")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_HealthMultiplier
     option.title.subtext = HitPointsBasic .. "的曲线处理坐标点：" .. self.curve:toString()
     option.tooltip.formatter = StatsReport_HealthMultiplier .. "<br/>" .. HitPointsBasic .. "（{b}%）：× {c}%"
@@ -221,9 +229,9 @@ function StatPart_Health:explainEcharts()
     local series1_data = {}
     local i = 1
     local curve = self.curve
-    for hp = 0, 100, 5 do
-        xAxis1_data[i] = hp
-        series1_data[i] = curve:evaluate(hp / 100) * 100
+    for hp = 0, 100, 1 do
+        xAxis1_data[i] = tostring(hp)
+        series1_data[i] = Mathf.round(curve:evaluate(hp / 100) * 100, 2)
         i = i + 1
     end
     option.xAxis[1].data = xAxis1_data
@@ -240,8 +248,7 @@ function StatPart_Health:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_HealthMultiplier,
-        above = "计算公式：[[Formulas_Stat#StatsReport_HealthMultiplier|" .. StatsReport_HealthMultiplier .. "]]",
+        title = StatsReport_HealthMultiplier .. "（片段）",
         option = option
     })
 end
@@ -264,25 +271,25 @@ function StatPart_Mood:new(statData, index)
     return part
 end
 
-function StatPart_Mood:transformValue(req, val)
-    if req:hasThing() then
-        local pawn = req:get_Thing()
-        if pawn ~= nil and pawn.needs.mood ~= nil then
-            return val * self:moodMultiplier(pawn.needs.mood:get_CurLevel())
-        end
-    end
-    return val
-end
+-- function StatPart_Mood:transformValue(req, val)
+--     if req:hasThing() then
+--         local pawn = req:get_Thing()
+--         if pawn ~= nil and pawn.needs.mood ~= nil then
+--             return val * self:moodMultiplier(pawn.needs.mood:get_CurLevel())
+--         end
+--     end
+--     return val
+-- end
 
-function StatPart_Mood:moodMultiplier(mood)
-    return self.curve:evaluate(mood)
-end
+-- function StatPart_Mood:moodMultiplier(mood)
+--     return self.curve:evaluate(mood)
+-- end
 
 function StatPart_Mood:explainEcharts()
-    local StatsReport_MoodMultiplier = Keyed.zhcnS("StatsReport_MoodMultiplier")
+    local StatsReport_MoodMultiplier = Keyed_zhcn.trans("StatsReport_MoodMultiplier")
     StatsReport_MoodMultiplier = string.gsub(StatsReport_MoodMultiplier, "（{0}）", "")
     local moodLevel = "心情值"
-    local option = Collapse.newOptionNormal()
+    local option = Collapse.newOption("value")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_MoodMultiplier
     option.title.subtext = moodLevel .. "的曲线处理坐标点：" .. self.curve:toString()
     option.tooltip.formatter = StatsReport_MoodMultiplier .. "<br/>" .. moodLevel .. "（{b}%）：× {c}%"
@@ -294,9 +301,9 @@ function StatPart_Mood:explainEcharts()
     local series1_data = {}
     local i = 1
     local curve = self.curve
-    for ml = 0, 100, 5 do
-        xAxis1_data[i] = ml
-        series1_data[i] = curve:evaluate(ml / 100) * 100
+    for ml = 0, 100, 1 do
+        xAxis1_data[i] = tostring(ml)
+        series1_data[i] = Mathf.round(curve:evaluate(ml / 100) * 100, 2)
         i = i + 1
     end
     option.xAxis[1].data = xAxis1_data
@@ -313,8 +320,7 @@ function StatPart_Mood:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_MoodMultiplier,
-        above = "计算公式：[[Formulas_Stat#StatsReport_MoodMultiplier|" .. StatsReport_MoodMultiplier .. "]]",
+        title = StatsReport_MoodMultiplier .. "（片段）",
         option = option
     })
 end
@@ -354,10 +360,10 @@ function StatPart_BodySize:tryGetBodySize(req, bodySize)
 end
 
 function StatPart_BodySize:explainEcharts()
-    local StatsReport_BodySize = Keyed.zhcnS("StatsReport_BodySize")
+    local StatsReport_BodySize = Keyed_zhcn.trans("StatsReport_BodySize")
     StatsReport_BodySize = string.gsub(StatsReport_BodySize, "（{0}）", "")
     local bodySize = "体型值"
-    local option = Collapse.newOptionNormal()
+    local option = Collapse.newOption("value")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_BodySize
     option.tooltip.formatter = StatsReport_BodySize .. "<br/>" .. bodySize .. "（{b}）：× {c}%"
     option.xAxis[1].name = bodySize
@@ -366,9 +372,9 @@ function StatPart_BodySize:explainEcharts()
     local xAxis1_data = {}
     local series1_data = {}
     local i = 1
-    for bs = 0, 400, 10 do
-        xAxis1_data[i] = string.format("%.2f", bs / 100) 
-        series1_data[i] = bs
+    for bs = 0, 40, 1 do
+        xAxis1_data[i] = string.format("%.1f", bs / 10) 
+        series1_data[i] = bs * 10
         i = i + 1
     end
     option.xAxis[1].data = xAxis1_data
@@ -385,9 +391,33 @@ function StatPart_BodySize:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_BodySize,
-        above = "计算公式：[[Formulas_Stat#StatsReport_BodySize|" .. StatsReport_BodySize .. "]]",
+        title = StatsReport_BodySize .. "（片段）",
         option = option
+    })
+end
+
+-- StatPart_BodySize
+
+function StatPart_NaturalNotMissingBodyPartsCoverage:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_NaturalNotMissingBodyPartsCoverage"
+    part.index = index
+    return part
+end
+
+function StatPart_NaturalNotMissingBodyPartsCoverage:explainEcharts()
+    local StatsReport_MissingBodyParts = Keyed_zhcn.trans("StatsReport_MissingBodyParts")
+    return Collapse.ctable({
+        id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+        style = "max-width:809px;",
+        title = StatsReport_MissingBodyParts .. "（片段）",
+        headers = {{
+            text = StatsReport_MissingBodyParts .. "取决于自然身体部件的缺失程度。"
+        }}
     })
 end
 
@@ -409,48 +439,49 @@ function StatPart_Food:new(statData, index)
     return part
 end
 
-function StatPart_Food:transformValue(req, val)
-    if req:hasThing() then
-        local pawn = req:get_Thing()
-        if pawn ~= nil and pawn.needs.food ~= nil then
-            return val * self:foodMultiplier(pawn.needs.food:get_CurCategory())
-        end
-    end
-    return val
-end
+-- function StatPart_Food:transformValue(req, val)
+--     if req:hasThing() then
+--         local pawn = req:get_Thing()
+--         if pawn ~= nil and pawn.needs.food ~= nil then
+--             return val * self:foodMultiplier(pawn.needs.food:get_CurCategory())
+--         end
+--     end
+--     return val
+-- end
 
-function StatPart_Food:foodMultiplier(hunger)
-    if hunger == "Fed" then
-        return self.factorFed
-    elseif hunger == "Hungry" then
-        return self.factorHungry
-    elseif hunger == "UrgentlyHungry" then
-        return self.factorUrgentlyHungry
-    elseif hunger == "Starving" then
-        return self.factorStarving
-    else
-        return 1
-    end
-end
+-- function StatPart_Food:foodMultiplier(hunger)
+--     if hunger == "Fed" then
+--         return self.factorFed
+--     elseif hunger == "Hungry" then
+--         return self.factorHungry
+--     elseif hunger == "UrgentlyHungry" then
+--         return self.factorUrgentlyHungry
+--     elseif hunger == "Starving" then
+--         return self.factorStarving
+--     else
+--         return 1
+--     end
+-- end
 
 function StatPart_Food:explainEcharts()
-    local HungerRate = Keyed.zhcnS("HungerRate")
+    local HungerRate = Keyed_zhcn.trans("HungerRate")
     local StatsReport_HungerRateMultiplier = HungerRate .. "乘数"
-    local option = Collapse.newOptionNormal()
+    local option = Collapse.newOption("span")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_HungerRateMultiplier
     option.tooltip.formatter = StatsReport_HungerRateMultiplier .. "<br/>" .. HungerRate .. "（{b}）：× {c}%"
     option.xAxis[1].name = HungerRate
     option.xAxis[1].data = {
-        Keyed.zhcnS("HungerLevel_Starving"),
-        Keyed.zhcnS("HungerLevel_UrgentlyHungry"),
-        Keyed.zhcnS("HungerLevel_Hungry"),
-        Keyed.zhcnS("HungerLevel_Fed")
+        Keyed_zhcn.trans("HungerLevel_Starving"),
+        Keyed_zhcn.trans("HungerLevel_UrgentlyHungry"),
+        Keyed_zhcn.trans("HungerLevel_Hungry"),
+        Keyed_zhcn.trans("HungerLevel_Fed")
     }
     option.yAxis[1].name = StatsReport_HungerRateMultiplier
     option.yAxis[1].axisLabel.formatter = "{value}%"
     option.series[1] = {
         name = StatsReport_Skills,
         type = "line",
+        step = "middle",
         label = {
             normal = {
                 show = true,
@@ -466,8 +497,7 @@ function StatPart_Food:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_HungerRateMultiplier,
-        above = "计算公式：[[Formulas_Stat#StatsReport_HungerRateMultiplier|" .. StatsReport_HungerRateMultiplier .. "]]",
+        title = StatsReport_HungerRateMultiplier .. "（片段）",
         option = option
     })
 end
@@ -490,48 +520,49 @@ function StatPart_Rest:new(statData, index)
     return part
 end
 
-function StatPart_Rest:transformValue(req, val)
-    if req:hasThing() then
-        local pawn = req:get_Thing()
-        if pawn ~= nil and pawn.needs.rest ~= nil then
-            return val * self:restMultiplier(pawn.needs.rest:get_CurCategory())
-        end
-    end
-    return val
-end
+-- function StatPart_Rest:transformValue(req, val)
+--     if req:hasThing() then
+--         local pawn = req:get_Thing()
+--         if pawn ~= nil and pawn.needs.rest ~= nil then
+--             return val * self:restMultiplier(pawn.needs.rest:get_CurCategory())
+--         end
+--     end
+--     return val
+-- end
 
-function StatPart_Rest:restMultiplier(hunger)
-    if hunger == "Rested" then
-        return self.factorRested
-    elseif hunger == "Tired" then
-        return self.factorTired
-    elseif hunger == "VeryTired" then
-        return self.factorVeryTired
-    elseif hunger == "Exhausted" then
-        return self.factorExhausted
-    else
-        return 1
-    end
-end
+-- function StatPart_Rest:restMultiplier(hunger)
+--     if hunger == "Rested" then
+--         return self.factorRested
+--     elseif hunger == "Tired" then
+--         return self.factorTired
+--     elseif hunger == "VeryTired" then
+--         return self.factorVeryTired
+--     elseif hunger == "Exhausted" then
+--         return self.factorExhausted
+--     else
+--         return 1
+--     end
+-- end
 
 function StatPart_Rest:explainEcharts()
-    local Tiredness = Keyed.zhcnS("Tiredness")
+    local Tiredness = Keyed_zhcn.trans("Tiredness")
     local StatsReport_TirednessMultiplier = Tiredness .. "乘数"
-    local option = Collapse.newOptionNormal()
+    local option = Collapse.newOption("span")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_TirednessMultiplier
     option.tooltip.formatter = StatsReport_TirednessMultiplier .. "<br/>" .. Tiredness .. "（{b}）：× {c}%"
     option.xAxis[1].name = Tiredness
     option.xAxis[1].data = {
-        Keyed.zhcnS("HungerLevel_Exhausted"),
-        Keyed.zhcnS("HungerLevel_VeryTired"),
-        Keyed.zhcnS("HungerLevel_Tired"),
-        Keyed.zhcnS("HungerLevel_Rested")
+        Keyed_zhcn.trans("HungerLevel_Exhausted"),
+        Keyed_zhcn.trans("HungerLevel_VeryTired"),
+        Keyed_zhcn.trans("HungerLevel_Tired"),
+        Keyed_zhcn.trans("HungerLevel_Rested")
     }
     option.yAxis[1].name = StatsReport_TirednessMultiplier
     option.yAxis[1].axisLabel.formatter = "{value}%"
     option.series[1] = {
         name = StatsReport_Skills,
         type = "line",
+        step = "middle",
         label = {
             normal = {
                 show = true,
@@ -547,8 +578,7 @@ function StatPart_Rest:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_TirednessMultiplier,
-        above = "计算公式：[[Formulas_Stat#StatsReport_TirednessMultiplier|" .. StatsReport_TirednessMultiplier .. "]]",
+        title = StatsReport_TirednessMultiplier .. "（片段）",
         option = option
     })
 end
@@ -568,16 +598,13 @@ function StatPart_BedStat:new(statData, index)
 end
 
 function StatPart_BedStat:explainEcharts()
+    local StatsReport_BedStatMultiplier = "床铺属性乘数"
     return Collapse.ctable({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
         style = "max-width:809px;",
-        title = "床铺属性乘数",
+        title = StatsReport_BedStatMultiplier .. "（片段）",
         headers = {{
-            text = "床铺属性：" .. "[[Stats_" .. self.stat .. "|" .. SMW.show("Core:Defs_StatDef_" .. self.stat, "StatDef.label.zh-cn") .. "]]",
-            width = "50%"
-        },{
-            text = "计算公式：[[Formulas_Stat#StatsReport_BedStatMultiplier|床铺属性乘数]]",
-            width = "50%"
+            text = "床铺属性：" .. "[[Stats_" .. self.stat .. "|" .. SMW.show("Core:Defs_StatDef_" .. self.stat, "StatDef.label.zh-cn") .. "]]"
         }}
     })
 end
@@ -601,12 +628,12 @@ function StatPart_Age:new(statData, index)
 end
 
 function StatPart_Age:explainEcharts()
-    local StatsReport_AgeMultiplier = Keyed.zhcnS("StatsReport_AgeMultiplier")
+    local StatsReport_AgeMultiplier = Keyed_zhcn.trans("StatsReport_AgeMultiplier")
     StatsReport_AgeMultiplier = string.gsub(StatsReport_AgeMultiplier, "（{0}）", "")
     local ageLifeRate = "龄寿比"
-    local option = Collapse.newOptionNormal()
+    local option = Collapse.newOption("value")
     option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_AgeMultiplier
-    option.title.subtext = ageLifeRate .. "的曲线处理坐标点：" .. self.curve:toString()
+    option.title.subtext = ageLifeRate .. "（当前年龄/预期寿命）的曲线处理坐标点：" .. self.curve:toString()
     option.tooltip.formatter = StatsReport_AgeMultiplier .. "<br/>" .. ageLifeRate .. "（{b}%）：× {c}%"
     option.xAxis[1].name = ageLifeRate
     option.xAxis[1].axisLabel.formatter = "{value}%"
@@ -616,9 +643,9 @@ function StatPart_Age:explainEcharts()
     local series1_data = {}
     local i = 1
     local curve = self.curve
-    for ml = 0, 100, 5 do
-        xAxis1_data[i] = ml
-        series1_data[i] = curve:evaluate(ml / 100) * 100
+    for alr = 0, 100, 5 do
+        xAxis1_data[i] = tostring(alr)
+        series1_data[i] = Mathf.round(curve:evaluate(alr / 100) * 100,2)
         i = i + 1
     end
     option.xAxis[1].data = xAxis1_data
@@ -635,8 +662,7 @@ function StatPart_Age:explainEcharts()
     }
     return Collapse.echarts({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
-        title = StatsReport_AgeMultiplier,
-        above = ageLifeRate .. " = 当前年龄 / 预期寿命；计算公式：[[Formulas_Stat#StatsReport_AgeMultiplier|" .. StatsReport_AgeMultiplier .. "]]",
+        title = StatsReport_AgeMultiplier .. "（片段）",
         option = option
     })
 end
@@ -656,16 +682,260 @@ function StatPart_ApparelStatOffset:new(statData, index)
 end
 
 function StatPart_ApparelStatOffset:explainEcharts()
+    local StatsReport_ApparelStatOffset = "衣物属性偏移量"
     return Collapse.ctable({
         id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
         style = "max-width:809px;",
-        title = "衣物属性偏移量",
+        title = StatsReport_ApparelStatOffset .. "（片段）",
         headers = {{
             text = "衣物属性：" .. "[[Stats_" .. self.apparelStat .. "|" .. SMW.show("Core:Defs_StatDef_" .. self.apparelStat, "StatDef.label.zh-cn") .. "]]",
             width = "50%"
-        },{
-            text = "计算公式：[[Formulas_Stat#StatsReport_ApparelStatOffset|衣物属性偏移量]]",
+        }}
+    })
+end
+
+-- StatPart_WorkTableUnpowered
+
+function StatPart_WorkTableUnpowered:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_WorkTableUnpowered"
+    part.index = index
+    return part
+end
+
+function StatPart_WorkTableUnpowered:explainEcharts()
+    local StatsReport_WorkTableUnpowered = Keyed_zhcn.trans("NoPower") .. "乘数"
+    return Collapse.ctable({
+        id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+        style = "max-width:809px;",
+        title = StatsReport_WorkTableUnpowered .. "（片段）",
+        headers = {{
+            text = StatsReport_WorkTableUnpowered .. " = 工作台未通电工作速度系数"
+        }}
+    })
+end
+
+-- StatPart_WorkTableTemperature
+
+function StatPart_WorkTableTemperature:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_WorkTableTemperature"
+    part.index = index
+    part.WorkRateFactor = 0.6
+    part.MinTemp = 5
+    part.MaxTemp = 35
+    return part
+end
+
+function StatPart_WorkTableTemperature:explainEcharts()
+    local StatsReport_WorkTableTemperature = Keyed_zhcn.trans("BadTemperature") .. "乘数"
+    local temperature = "温度"
+    local degreesCelsius = "℃"
+    local option = Collapse.newOption("span")
+    option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_WorkTableTemperature
+    option.tooltip.formatter = StatsReport_WorkTableTemperature .. "<br/>" .. temperature .. "（{b}）：× {c}%"
+    option.xAxis[1].name = temperature
+    option.xAxis[1].data = {
+        "t ＜ " .. self.MinTemp .. degreesCelsius,
+        self.MinTemp .. degreesCelsius .. " ≤ t ≤ " .. self.MaxTemp .. degreesCelsius,
+        self.MaxTemp .. degreesCelsius .. " ＜ t"
+    }
+    option.yAxis[1].name = StatsReport_WorkTableTemperature
+    option.yAxis[1].axisLabel.formatter = "{value}%"
+    option.series[1] = {
+        name = StatsReport_Skills,
+        type = "line",
+        step = "middle",
+        label = {
+            normal = {
+                show = true,
+                formatter = "{c}%"
+            }
+        },
+        data = {
+            self.WorkRateFactor * 100,
+            100,
+            self.WorkRateFactor * 100
+        }
+    }
+    return Collapse.echarts({
+        id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+        title = StatsReport_WorkTableTemperature .. "（片段）",
+        option = option
+    })
+end
+
+-- StatPart_Outdoors
+
+function StatPart_Outdoors:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_Outdoors"
+    part.index = index
+    local prop = "StatDef.parts." .. index .. "."
+    part.factorIndoors = tonumber(SMW.show(statData, prop .. "factorIndoors")) or 1
+    part.factorOutdoors = tonumber(SMW.show(statData, prop .. "factorOutdoors")) or 1
+    return part
+end
+
+function StatPart_Outdoors:explainEcharts()
+    local Outdoors = Keyed_zhcn.trans("Outdoors")
+    local Indoors = Keyed_zhcn.trans("Indoors")
+    local StatsReport_Outdoors = Outdoors .. "/" .. Indoors .. "乘数"
+    return Collapse.ctable({
+        id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+        style = "max-width:809px;",
+        title = StatsReport_Outdoors .. "（片段）",
+        headers = {{
+            text = Outdoors .. "：×" .. (self.factorOutdoors * 100) .. "%",
             width = "50%"
+        },{
+            text = Indoors .. "：×" .. (self.factorIndoors * 100) .. "%",
+            width = "50%"
+        }}
+    })
+end
+
+-- StatPart_Outdoors
+
+function StatPart_RoomStat:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_RoomStat"
+    part.index = index
+    local prop = "StatDef.parts." .. index .. "."
+    part.roomStat = SMW.show(statData, prop .. "roomStat")
+    part.customLabel = SMW.show(statData, prop .. "customLabel")
+    part.customLabel_zhcn = SMW.show(statData, prop .. "customLabel.zh-cn")
+    part.customLabel_zhtw = SMW.show(statData, prop .. "customLabel.zh-tw")
+    return part
+end
+
+function StatPart_RoomStat:explainEcharts()
+    local StatsReport_RoomStat = "房间属性乘数"
+    if self.roomStat == "ResearchSpeedFactor" then
+        local cleanliness = self.customLabel_zhcn
+        local roomStatLabel = SMW.show("Core:Defs_RoomStatDef_" .. self.roomStat, "RoomStatDef.label.zh-cn")
+        local option = Collapse.newOption("value")
+        local curve = SimpleCurve:new('"(-5,0.75)","(-2.5,0.85)","(0,1)","(1,1.15)"')
+        option.title.text = "属性 " .. self.parentStat.label_zhcn .. " 的" .. StatsReport_RoomStat
+        option.title.subtext = "将" .. cleanliness .. "处理为" .. roomStatLabel .. "的曲线处理坐标点：" .. curve:toString()
+        option.tooltip.formatter = StatsReport_RoomStat .. "<br/>" .. cleanliness .. "（{b}）：× {c}%"
+        option.xAxis[1].name = cleanliness
+        option.yAxis[1].name = roomStatLabel
+        option.yAxis[1].axisLabel.formatter = "{value}%"
+        local xAxis1_data = {}
+        local series1_data = {}
+        for cl = -60, 20 do
+            xAxis1_data[#xAxis1_data + 1] = tostring(cl / 10)
+            series1_data[#series1_data + 1] = Mathf.round(curve:evaluate(cl / 10) * 100, 2)
+        end
+        option.xAxis[1].data = xAxis1_data
+        option.series[1] = {
+            name = roomStatLabel,
+            type = "line",
+            label = {
+                normal = {
+                    show = true,
+                    formatter = "{c}%"
+                }
+            },
+            data = series1_data
+        }
+        return Collapse.echarts({
+            id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+            title = StatsReport_RoomStat .. "（片段）",
+            above = "房间属性：[[RoomStats_" .. self.roomStat .. "|" .. SMW.show("Core:Defs_RoomStatDef_" .. self.roomStat, "RoomStatDef.label.zh-cn") .. "]]<br/>"
+                .. "自定义显示名称（英文）：" .. self.customLabel .. "<br/>"
+                .. "自定义显示名称（简中）：" .. self.customLabel_zhcn .. "<br/>"
+                .. "自定义显示名称（繁中）：" .. self.customLabel_zhtw .. "<br/>"
+                .. "（游戏中会显示为“" .. cleanliness .. "”，但实际是经过计算后得到隐藏的房间属性“" .. roomStatLabel .. "”，再将此隐藏属性作为乘数。）",
+            aboveExtraCssText = "text-align:left;",
+            option = option
+        })
+    else
+        return Collapse.ctable({
+            id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+            style = "max-width:809px;",
+            title = StatsReport_RoomStat .. "（片段）",
+            headers = {{
+                text = "房间属性",
+                width = "50%"
+            },{
+                text = "[[RoomStats_" .. self.roomStat .. "|" .. SMW.show("Core:Defs_RoomStatDef_" .. self.roomStat, "RoomStatDef.label.zh-cn") .. "]]",
+                width = "50%"
+            }},
+            rows = {{
+                cols = "自定义显示名称（英文）", self.customLabel
+            },{
+                cols = "自定义显示名称（简中）", self.customLabel_zhcn
+            },{
+                cols = "自定义显示名称（繁中）", self.customLabel_zhtw
+            }}
+        })
+    end
+end
+
+-- StatPart_WornByCorpse
+
+function StatPart_WornByCorpse:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_Outdoors"
+    part.index = index
+    return part
+end
+
+function StatPart_WornByCorpse:explainEcharts()
+    local StatsReport_WornByCorpse = Keyed_zhcn.trans("StatsReport_WornByCorpse")
+    return Collapse.ctable({
+        id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+        style = "max-width:809px;",
+        title = StatsReport_WornByCorpse .. "（片段）",
+        headers = {{
+            text = StatsReport_WornByCorpse .. "：×" .. (0.1 * 100) .. "%"
+        }}
+    })
+end
+
+-- StatPart_GearAndInventoryMass
+
+function StatPart_GearAndInventoryMass:new(statData, index)
+    setmetatable(self, StatPart)
+    local part = StatPart:new()
+    setmetatable(part, self)
+    self.__index = self
+    -- fields
+    part.class = "StatPart_Outdoors"
+    part.index = index
+    return part
+end
+
+function StatPart_GearAndInventoryMass:explainEcharts()
+    local StatsReport_GearAndInventoryMass = Keyed_zhcn.trans("StatsReport_GearAndInventoryMass")
+    return Collapse.ctable({
+        id = self.parentStat.defName .. "-parts-" .. self.index .. "-" .. self.class,
+        style = "max-width:809px;",
+        title = StatsReport_GearAndInventoryMass .. "（片段）",
+        headers = {{
+            text = StatsReport_GearAndInventoryMass .. " = 所有装备与货物质量的总和；此项作为加数。"
         }}
     })
 end
@@ -685,6 +955,8 @@ function StatPart.instance(statData, index)
         return StatPart_Mood:new(statData, index)
     elseif className == "StatPart_BodySize" then
         return StatPart_BodySize:new(statData, index)
+    elseif className == "StatPart_NaturalNotMissingBodyPartsCoverage" then
+        return StatPart_NaturalNotMissingBodyPartsCoverage:new(statData, index)
     elseif className == "StatPart_Food" then
         return StatPart_Food:new(statData, index)
     elseif className == "StatPart_Rest" then
@@ -695,7 +967,20 @@ function StatPart.instance(statData, index)
         return StatPart_Age:new(statData, index)
     elseif className == "StatPart_ApparelStatOffset" then
         return StatPart_ApparelStatOffset:new(statData, index)
+    elseif className == "StatPart_WorkTableUnpowered" then
+        return StatPart_WorkTableUnpowered:new(statData, index)
+    elseif className == "StatPart_WorkTableTemperature" then
+        return StatPart_WorkTableTemperature:new(statData, index)
+    elseif className == "StatPart_Outdoors" then
+        return StatPart_Outdoors:new(statData, index)
+    elseif className == "StatPart_RoomStat" then
+        return StatPart_RoomStat:new(statData, index)
+    elseif className == "StatPart_WornByCorpse" then
+        return StatPart_WornByCorpse:new(statData, index)
+    elseif className == "StatPart_GearAndInventoryMass" then
+        return StatPart_GearAndInventoryMass:new(statData, index)
     end
+    
 end
 
 return StatPart

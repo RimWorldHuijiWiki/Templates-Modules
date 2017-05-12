@@ -3,7 +3,7 @@ local StatDef = require("Module:RW_StatDef")
 
 local SMW = require("Module:SMW")
 local Collapse = require("Module:RT_Collapse")
-local Keyed = require("Module:Keyed")
+local Keyed_zhcn = require("Module:Keyed_zhcn")
 
 function StatView.view(frame)
     local def = StatDef:new(frame.args[1])
@@ -13,15 +13,117 @@ function StatView.view(frame)
         .. def:getInfoBase()
         .. "\n<hr/>\n"
 
-    local StatsReport_BaseValue = Keyed.zhcnS("StatsReport_BaseValue")
-    local StatsReport_Material = Keyed.zhcnS("StatsReport_Material")
-    local StatsReport_Skills = Keyed.zhcnS("StatsReport_Skills")
-    local StatsReport_OtherStats = Keyed.zhcnS("StatsReport_OtherStats")
-    local StatsReport_HealthFactors = Keyed.zhcnS("StatsReport_HealthFactors")
-    local StatsReport_PostProcessed = Keyed.zhcnS("StatsReport_PostProcessed")
-    local StatsReport_FinalValue = Keyed.zhcnS("StatsReport_FinalValue")
+    local StatsReport_BaseValue = Keyed_zhcn.trans("StatsReport_BaseValue")
+    local StatsReport_Skills = Keyed_zhcn.trans("StatsReport_Skills")
+    local StatsReport_OtherStats = Keyed_zhcn.trans("StatsReport_OtherStats")
+    local StatsReport_HealthFactors = Keyed_zhcn.trans("StatsReport_HealthFactors")
+    local StatsReport_PostProcessed = Keyed_zhcn.trans("StatsReport_PostProcessed")
+    local StatsReport_FinalValue = Keyed_zhcn.trans("StatsReport_FinalValue")
     
     -- Base Args
+    local rows = {}
+
+    if def.category then
+        rows[#rows + 1]  = {
+            cols = {
+                "属性分类",
+                def.category,
+                "[[StatCategories_" .. def.category .. "|" .. SMW.show("Core:Defs_StatCategoryDef_" .. def.category, "StatCategoryDef.label.zh-cn") .. "]]"
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {"属性分类", "", ""}}
+    end
+
+    if def.hideAtValue then
+        rows[#rows + 1]  = {
+            cols = {
+                "小于此值时隐藏",
+                def.hideAtValue,
+                ""
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {"小于此值时隐藏", "", ""}}
+    end
+    
+    rows[#rows + 1] = {
+            cols = {"格式化显示字符串", (def.formatString or ""), (def.formatString_zhcn or "")}
+    }
+
+    if def.defaultBaseValue then
+        rows[#rows + 1]  = {
+            cols = {
+                "默认基础值",
+                def.defaultBaseValue,
+                def:valueToString(def.defaultBaseValue)
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {"默认基础值", "", ""}}
+    end
+
+    if def.minValue then
+        rows[#rows + 1]  = {
+            cols = {
+                "最小值",
+                def.minValue,
+                def:valueToString(def.minValue)
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {"最小值", "", ""}}
+    end
+
+    if def.maxValue then
+        rows[#rows + 1]  = {
+            cols = {
+                "最大值",
+                def.maxValue,
+                def:valueToString(def.maxValue)
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {"最大值", "", ""}}
+    end
+    
+    rows[#rows + 1] = {
+            cols = {"是否四舍五入成整数", tostring(def.roundValue), (def.roundValue and "是" or "否")}
+    }
+
+    if def.roundToFiveOver then
+        rows[#rows + 1]  = {
+            cols = {
+                "大于此值时采取特殊估算",
+                def.roundToFiveOver,
+                ""
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {"大于此值时采取特殊估算", "", ""}}
+    end
+
+    if def.statFactors then
+        local links = ""
+        for i, s in pairs(def.statFactors) do
+            links = links .. "[[Stats_" .. s .. "|" .. SMW.show("Core:Defs_StatDef_" .. s, "StatDef.label.zh-cn") .. "]] "
+        end
+        rows[#rows + 1]  = {
+            cols = {
+                StatsReport_OtherStats, table.concat(def.statFactors, ", "), links
+            }
+        }
+    else
+        rows[#rows + 1]  = {cols = {StatsReport_OtherStats, "", ""}}
+    end
+    
+    rows[#rows + 1] = {
+            cols = {"负数时是否应用系数", tostring(def.applyFactorsIfNegative), (def.applyFactorsIfNegative and "是" or "否")}
+    }
+    rows[#rows + 1] = {
+            cols = {"无技能系数", def.noSkillFactor, (def.noSkillFactor and (def.noSkillFactor * 100 .. "%") or "")}
+    }
+
     local argBases = {
         id = "argsbases",
         style = "max-width:809px;",
@@ -36,36 +138,11 @@ function StatView.view(frame)
             text = "显示",
             width = "30%"
         }},
-        rows = {{
-            cols = {"属性分类", (def.category and ("[[StatCategories_" .. def.category .. "|" .. SMW.show("Core:Defs_StatCategoryDef_" .. def.category, "StatCategoryDef.label.zh-cn") .. "]]") or ""), ""}
-        },{
-            cols = {"格式化显示字符串", (def.formatString_zhcn or ""), ""}
-        },{
-            cols = {"默认基础值", (def.defaultBaseValue or ""), ""}
-        },{
-            cols = {"最小值", (def.minValue or ""), ""}
-        },{
-            cols = {"最大值", (def.maxValue or ""), ""}
-        },{
-            cols = {"其他属性系数", (def.statFactors and (
-                function()
-                    local sfs = ""
-                    for i, s in pairs(def.statFactors) do
-                        sfs = sfs .. "[[Stats_" .. s .. "|" .. SMW.show("Core:Defs_StatDef_" .. s, "StatDef.label.zh-cn") .. "]] "
-                    end
-                    return sfs
-                end
-            ) or ""), ""}
-        },{
-            cols = {"负数时是否应用系数", (def.applyFactorsIfNegative and "是" or "否"), ""}
-        },{
-            cols = {"无技能系数", def.noSkillFactor, ""}
-        }}
+        rows = rows
     }
     text = text .. Collapse.ctable(argBases)
     -- Base Args end 
-
-    -- Section 2
+    
     text = text .. "<hr/>\n"
     local isPercent = (def.toStringStyle == "PercentZero" or def.toStringStyle == "PercentOne" or def.toStringStyle == "PercentTwo")
 
@@ -83,16 +160,14 @@ function StatView.view(frame)
                 .. "技能：[[Skills_" .. skill .. "|" .. skillLabel .. "]]，"
                 .. "基础系数：" .. skillNeed.baseFactor * 100 .. "%，"
                 .. "加成系数：" .. skillNeed.bonusFactor * 100 .. "%；"
-                .. "计算公式：[[Formulas_Stat#skillNeedFactors|" .. StatsReport_Skills .. "]]"
             option.title.subtext = ""
                 .. "基础系数：" .. skillNeed.baseFactor * 100 .. "%，"
                 .. "加成系数：" .. skillNeed.bonusFactor * 100 .. "%；"
-                .. StatsReport_Skills .. " = 基础系数 + 加成系数 × 技能等级；"
+                .. StatsReport_Skills .. " = 基础系数 + 加成系数 × 技能等级"
         else
             above = StatsReport_Skills
                 .. "（直接形式）："
-                .. "技能：[[Skills_" .. skill .. "|" .. skillLabel .. "]]；"
-                .. "计算公式：[[Formulas_Stat#StatsReport_Skills|" .. StatsReport_Skills .. "]]"
+                .. "技能：[[Skills_" .. skill .. "|" .. skillLabel .. "]]"
             option.title.subtext = "（直接设定每级技能的系数值）"
         end
         option.tooltip.formatter = StatsReport_Skills .. "<br/>" .. skillLabel .. "（{b}级）：× {c}%"
@@ -137,7 +212,7 @@ function StatView.view(frame)
                 text = "权重",
                 width = "30%"
             },{
-                text = "最大值",
+                text = "系数最大值",
                 width = "30%"
             }}
         }
@@ -145,7 +220,7 @@ function StatView.view(frame)
         local rows = {}
         local count = 0
         for i, factor in pairs(pcfs) do
-            rows[1] = {
+            rows[i] = {
                 cols = {
                     "[[PawnCapacities_" .. factor.capacity .. "|" .. SMW.show("Core:Defs_PawnCapacityDef_" .. factor.capacity, "PawnCapacityDef.label.zh-cn") .. "]]",
                     factor.weight * 100 .. "%",
@@ -154,8 +229,14 @@ function StatView.view(frame)
             }
             count = count + 1
         end
-        rows[count + 1] = {
-            cols = {"计算公式：[[Formulas_Stat#StatsReport_HealthFactors|" .. StatsReport_HealthFactors .. "]]", "", ""}
+        rows[#rows + 1] = {
+            cols = {{
+                span = 3,
+                text = StatsReport_HealthFactors .. " = 单位能力值<br/>"
+                    .. StatsReport_HealthFactors .. " ≤ 系数最大值<br/>" 
+                    .. "0 ≤ 权重 ≤ 1<br/>"
+                    .. "处理后的属性值 = 处理前的属性值 + (处理前的属性值 × " .. StatsReport_HealthFactors .. " - 处理前的属性值) × 权重"
+            }}
         }
         healthFactors.rows = rows
         text = text .. Collapse.ctable(healthFactors)
@@ -177,10 +258,10 @@ function StatView.view(frame)
         local option = Collapse.newOptionCurve()
         local postProcessCurve = def.postProcessCurve
         option.title.text = "属性 " .. def.label_zhcn .. " 的" .. StatsReport_PostProcessed
-        option.title.subtext = "曲线处理坐标点：" .. postProcessCurve:toString()
         option.tooltip.formatter = StatsReport_PostProcessed
         local points = postProcessCurve.points
         option.series[1] = {
+            name = StatsReport_PostProcessed,
             type = "line",
             label = {
                 normal = {
@@ -207,7 +288,7 @@ function StatView.view(frame)
         text = text .. Collapse.echarts({
             id = "StatDef-" .. def.defName .. "-postProcessCurve",
             title = StatsReport_PostProcessed,
-            above = "计算公式：[[Formulas_Stat#StatsReport_PostProcessed|" .. StatsReport_PostProcessed .. "]]",
+            above = "曲线处理坐标点：" .. postProcessCurve:toString(),
             option = option
         })
     end

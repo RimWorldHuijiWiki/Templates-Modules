@@ -1,6 +1,6 @@
 local Keyed_zhtw = {}
 
-local dict = mw.loadData( 'Module:Keyed_zhtw/dict' )
+local dict = mw.loadData("Module:Keyed_zhtw_dict")
 
 -- for lua
 function Keyed_zhtw.trans(...)
