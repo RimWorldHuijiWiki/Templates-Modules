@@ -1,0 +1,12 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{#invoke:RW_TerrainView|view|{{{data|}}}}}
+{{#set:
+|viewType=TerrainDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+}}
+{{DISPLAYTITLE:地面 {{#show:{{{data|}}}|?TerrainDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:地面]]
+</includeonly>

@@ -1,5 +1,5 @@
 local SkillNeed = {}
-local base = SkillNeed
+local SkillNeed = SkillNeed
 local SkillNeed_BaseBonus = {}
 local SkillNeed_Direct = {}
 
@@ -19,8 +19,7 @@ function SkillNeed.create_Direct(skill, reportInverse, factorsPerLevel)
     return SkillNeed_Direct:new(skill, reportInverse, factorsPerLevel)
 end
 
--- base
-
+-- SkillNeed
 function SkillNeed:new(skill, reportInverse)
     local need = {}
     setmetatable(need, self)
@@ -36,10 +35,9 @@ function SkillNeed:factorFor(level)
 end
 
 -- SkillNeed_BaseBonus
-
 function SkillNeed_BaseBonus:new(skill, reportInverse, baseFactor, bonusFactor)
-    setmetatable(self, base)
-    local need = base:new(skill, reportInverse)
+    setmetatable(self, SkillNeed)
+    local need = SkillNeed:new(skill, reportInverse)
     setmetatable(need, self)
     self.__index = self
     -- fields
@@ -55,10 +53,9 @@ function SkillNeed_BaseBonus:factorFor(level)
 end
 
 -- SkillNeed_Direct
-
 function SkillNeed_Direct:new(skill, reportInverse, factorsPerLevel)
-    setmetatable(self, base)
-    local need = base:new(skill, reportInverse)
+    setmetatable(self, SkillNeed)
+    local need = SkillNeed:new(skill, reportInverse)
     setmetatable(need, self)
     self.__index = self
     -- fields

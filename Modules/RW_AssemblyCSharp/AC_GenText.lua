@@ -95,7 +95,41 @@ function GenText.toStringTemperatureOffset(celsiusTemp, format)
 end
 
 function GenText.toStringWorkAmount(workAmount)
-    return tostring(math.ceil(workAmount / 60)) .. "秒"
+    return tostring(math.ceil(workAmount / 60)) .. " 秒"
+end
+
+-- boolean to icon
+
+function GenText.booleanToIcon(value)
+    return (value and "<i class=\"fa fa-check\" aria-hidden=\"true\"></i>" or "<i class=\"fa fa-times\" aria-hidden=\"true\"></i>")
+end
+
+-- enum to string
+
+function GenText.enumTraversabilityToString(passability)
+    if passability == "Standable" then
+        return "可站立"
+    elseif passability == "PassThroughOnly" then
+        return "仅可通行"
+    elseif passability == "Impassable" then
+        return "不可通行"
+    else
+        return ""
+    end
+end
+
+function GenText.enumTerrainEdgeTypeToString(edgeType)
+    if edgeType == "Hard" then
+        return "锐利"
+    elseif edgeType == "Fade" then
+        return "淡出"
+    elseif edgeType == "FadeRough" then
+        return "粗糙淡出"
+    elseif edgeType == "FadeRough" then
+        return "水面"
+    else
+        return ""
+    end
 end
 
 return GenText

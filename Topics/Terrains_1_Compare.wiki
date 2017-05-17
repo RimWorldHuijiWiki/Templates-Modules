@@ -1,0 +1,23 @@
+{{#invoke:RT_Note|noteX|rimworld|bar-chart|以下属性相同的地面合并为单项|
+*5种地毯
+*5种粗糙的自然岩石地面和5种粗糙砍凿的自然岩石地面
+*5种光滑的自然岩石地面}}
+<!--调用此函数生成静态网页代码-->
+<!--{{#invoke:RW_Terrains|showComparison|debug}}-->
+<div class="rw-collapse" style="width:100%;">
+<div class="bg-primary rw-collapse-head" type="button" data-toggle="collapse" data-target="#rw-collapse-echarts-terrainComparision">地面属性对比</div>
+<div class="collapse in" id="rw-collapse-echarts-terrainComparision">
+<div class="echarts-outter" style="height:4800px;">
+<div class="echarts">{"xAxis":[{"offset":0,"splitLine":{"show":false},"max":100,"min":-100,"name":"行走速度","position":"top","type":"value","axisLine":{"lineStyle":{"color":"#2e6fe6"}},"axisLabel":{"formatter":"{value}%"}},{"offset":40,"splitLine":{"show":false},"max":140,"min":-140,"name":"肥沃度","position":"top","type":"value","axisLine":{"lineStyle":{"color":"#2ee62e"}},"axisLabel":{"formatter":"{value}%"}},{"offset":80,"splitLine":{"show":false},"max":6,"min":-6,"name":"美观度","position":"top","type":"value","axisLine":{"lineStyle":{"color":"#e62ee4"}},"axisLabel":{"formatter":"{value}"}},{"offset":120,"splitLine":{"show":false},"max":2,"min":-2,"name":"清洁度","position":"top","type":"value","axisLine":{"lineStyle":{"color":"#2ee6e4"}},"axisLabel":{"formatter":"{value}"}},{"offset":160,"splitLine":{"show":false},"max":1000,"min":-1000,"name":"市场价值","position":"top","type":"value","axisLine":{"lineStyle":{"color":"#e6af2e"}},"axisLabel":{"formatter":"{value}￥"}}],"toolbox":{"feature":{"dataView":{"show":true,"readOnly":false}},"itemSize":20,"iconStyle":{"normal":{"borderColor":"#c0c7da"},"emphasis":{"borderColor":"#e6af2e"}},"right":"10%","top":40},"color":["#2e6fe6","#2ee62e","#e62ee4","#2ee6e4","#e6af2e"],"tooltip":{"extraCssText":"border-radius: 2px;","borderWidth":2,"borderColor":"#e6af2e","trigger":"axis","padding":[12,12],"backgroundColor":"#282f44","axisPointer":{"type":"shadow"}},"grid":{"top":300,"left":"12%"},"title":{"top":"10","itemGap":12,"subtext":"","text":"","left":"center","textStyle":{"color":"#c0c7da","fontWeight":"normal"}},"legend":{"top":40,"textStyle":{"color":"#c0c7da"},"data":["行走速度","肥沃度","美观度","清洁度","市场价值"]},"yAxis":[{"type":"category","axisLabel":{"formatter":"{value}"},"boundaryGap":true,"data":["被烧毁的地毯","被烧毁的木地板","流动的浅水","海水（浅）","浅水","压紧的泥土","破碎的沥青","冰面","苔藓地面","沙砾","沼泽","泥地","肥沃的土地","湿软的土地","土地","沙地","光滑的岩石地面","粗糙砍凿的岩石地面","粗糙的岩石地面","大理石石板","板岩石板","石灰岩石板","花岗岩石板","砂岩石板","大理石地砖","板岩地砖","石灰岩地砖","花岗岩地砖","砂岩地砖","地毯","无菌地砖","金质地砖","银质地砖","金属地砖","木地板","铺装地砖","混凝土地面"],"axisLine":{"lineStyle":{"color":"#c0c7da"}},"splitLine":{"show":true,"lineStyle":{"color":"#c0c7da","type":"dashed","opacity":0.8}}}],"series":[{"type":"bar","name":"行走速度","label":{"normal":{"show":true,"formatter":"{c}%","position":"right"}},"data":[59,59,52,52,52,93,100,52,81,87,36,52,87,46,87,76,93,93,93,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],"xAxisIndex":0},{"type":"bar","name":"肥沃度","label":{"normal":{"show":true,"formatter":"{c}%","position":"right"}},"data":[0,0,0,0,0,0,0,0,100,70,0,0,140,70,100,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xAxisIndex":1},{"type":"bar","name":"美观度","label":{"normal":{"show":true,"position":"right"}},"data":[-6,-6,0,0,0,-1,-1,-1,-1,-1,-2,-2,-1,-2,-1,-1,3,-1,-1,0,0,0,0,0,1,1,1,1,1,2,0,4,2,1,0,0,-1],"xAxisIndex":2},{"type":"bar","name":"清洁度","label":{"normal":{"show":true,"position":"right"}},"data":[0,0,0,0,0,-1,-1,0,-1,-1,-2,-2,-1,-2,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.6,0,0,0,0,0,0],"xAxisIndex":3},{"type":"bar","name":"市场价值","label":{"normal":{"show":true,"formatter":"{c}￥","position":"right"}},"data":[0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,9.1,9.1,9.1,9.9,9.1,10.9,10.9,10.9,11.7,10.9,13.705,25.65,855.4,88.6,15.4,4.455,5,2.2],"xAxisIndex":4}],"formatterStyle":"Normal","backgroundColor":"#282f44"}</div>
+<div class="echarts-loading"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i></div></div>
+</div>
+</div>
+{{DISPLAYTITLE:地面属性对比}}
+{{#set:
+|viewType=Topic
+|path={{FULLPAGENAME}}
+|title=地面属性对比
+}}
+__NOREC__
+[[Category:地面]]
+[[Category:属性]]

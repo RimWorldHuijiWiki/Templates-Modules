@@ -1,18 +1,21 @@
 /* 这里放置的CSS将应用于所有皮肤 */
 
-.huiji-css-hook {
+
+/*.huiji-css-hook {
     background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/7/70/BGPlanet2.jpg);
     background-attachment: fixed;
     background-position: auto;
     background-size: cover;
     background-repeat: no-repeat;
-}
+}*/
 
-.btn-default {
+
+/*.btn-default {
     border-color: #000!important;
-}
+}*/
 
-.dropdown-menu .selflink {
+
+/*.dropdown-menu .selflink {
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -20,39 +23,23 @@
     line-height: 1.42857143;
     color: #333333;
     white-space: nowrap;
-}
+}*/
 
-hr {
-    border-top-color: rgba(0, 0, 0, .1);
-}
 
-th a {
+/*th a {
     color: #e6e6e6;
-}
+}*/
 
-table.wikitable {
-    font-size: 14px;
-}
 
-table.wikitable>tr>th,
-table.wikitable>tr>td,
-table.wikitable>*>tr>th,
-table.wikitable>*>tr>td {
-    padding: 0.3em 0.6em;
-}
-
-td.navbox-list {
-    line-height: 1.6em;
-}
-
-.thumbinner {
+/*.thumbinner {
     border-radius: 0px;
     color: #dcdcdc;
-}
+}*/
 
-#allcomments {
+
+/*#allcomments {
     color: #eee;
-}
+}*/
 
 .subnav .nav-pills>:first-child {
     background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/6/69/Rimworldlogo_main.png);
@@ -65,27 +52,21 @@ td.navbox-list {
     opacity: 0;
 }
 
-@font-face {
-    font-family: rimworld;
-    src: url('http://huiji-dl.oss-cn-qingdao.aliyuncs.com/GOTHIC.TTF');
-}
 
-.huiji-css-hook #wiki-body {
-    font-family: "rimworld", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
-}
-
-.header2 a {
+/*.header2 a {
     color: #f3a640;
-}
+}*/
 
-@media (min-width: 1440px) {
+
+/*@media (min-width: 1440px) {
     .container {
         width: 90%;
         max-width: 1600px;
     }
-}
+}*/
 
-table a {
+
+/*table a {
     word-break: keep-all;
 }
 
@@ -113,6 +94,49 @@ table.tdnoborder tbody {
 #ca-varlang-7,
 #ca-varlang-8 {
     display: none!important;
+}*/
+
+
+/*Overwrite*/
+
+.huiji-css-hook #wiki-body {
+    /*font-family: "rimworld", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;*/
+    font-family: "Source Sans Pro", "Helvetica Neue", "Arial", "sans-serif"
+}
+
+@font-face {
+    font-family: RimWordFont;
+    src: url("http://huiji-public.huijistatic.com/rimworld/uploads/6/6a/RimWordFont.ttf");
+}
+
+.rw-font {
+    font-family: "RimWordFont", "Source Sans Pro", "Helvetica Neue", "Arial", "sans-serif"
+}
+
+hr {
+    border-top-color: rgba(0, 0, 0, .1);
+}
+
+table.wikitable {
+    font-size: 14px;
+}
+
+table.wikitable>tr>th,
+table.wikitable>tr>td,
+table.wikitable>*>tr>th,
+table.wikitable>*>tr>td {
+    padding: 0.3em 0.6em;
+}
+
+td.navbox-list {
+    line-height: 1.6em;
+}
+
+
+/*btn*/
+
+.rw-btn-icon-right {
+    margin-left: 10px;
 }
 
 
@@ -178,19 +202,13 @@ table.tdnoborder tbody {
 }
 
 
-/*RW Table*/
-
-.rw-infobase {
-    width: 100%;
-}
-
-
 /*RW Collapse*/
 
 .rw-collapse {
-    margin-bottom: 20px;
+    max-width: 100%;
     overflow: hidden;
     position: relative;
+    margin: 20px 0;
 }
 
 .rw-collapse-head {
@@ -204,10 +222,12 @@ table.tdnoborder tbody {
     -webkit-user-select: none!important;
 }
 
-.rw-collapse-head::after {
+.rw-collapse-head::after,
+.rw-collapse-navbox::before {
     content: "\f078";
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
+    line-height: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -218,32 +238,64 @@ table.tdnoborder tbody {
     content: "\f077";
 }
 
+.rw-collapse-navbox::before {
+    content: "O";
+    float: left;
+    font-family: "RimWordFont";
+}
+
+.rw-collapse-above {
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 20px;
+    color: #c0c7da;
+    background-color: #202636;
+}
+
+.rw-collapse-above a {
+    color: #e6af2e;
+}
+
+.rw-collapse-above a:hover {
+    color: #e5ca8a;
+}
+
 .rw-collapse-content {
-    background-color: #e9e9e9;
+    background-color: #ececec;
     padding: 20px 15px;
 }
 
 
-/*RW Collapse Table*/
+/*RW Tables*/
 
-.rw-ctable-simple {
+.rw-ctable-simple,
+.rw-navbox,
+.rw-navbox-child {
     color: #c0c7da;
     background-color: #282f44;
     width: 100%;
     -webkit-transition: .2s;
     transition: .2s;
+    border-spacing: 0;
 }
 
-.rw-ctable-simple tr {
+.rw-ctable-simple tr,
+.rw-navbox tr {
     -webkit-transition: .2s;
     transition: .2s;
 }
 
-.rw-ctable-simple tr:hover {
+.rw-ctable-simple tr:hover,
+.rw-navbox th.rw-navbox-label {
     color: #f3f3f3;
     background-color: rgba(255, 255, 255, 0.1);
     -webkit-transition: .2s;
     transition: .2s;
+}
+
+.rw-ctable-simple tr.rw-ctable-thumbnail:hover {
+    color: #c0c7da;
+    background-color: transparent;
 }
 
 .rw-ctable-simple th {
@@ -252,13 +304,35 @@ table.tdnoborder tbody {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.rw-ctable-simple td {
+.rw-navbox th.rw-navbox-label {
+    white-space: nowrap;
+    text-align: right;
+    font-weight: normal;
+}
+
+.rw-navbox td.rw-navbox-list {
+    width: 100%;
+}
+
+.rw-ctable-simple td,
+.rw-navbox th,
+.rw-navbox td {
     font-size: 14px;
 }
 
 .rw-ctable-simple th,
-.rw-ctable-simple td {
+.rw-ctable-simple td,
+.rw-navbox th,
+.rw-navbox td {
     padding: 8px 20px;
+}
+
+.rw-ctable-simple th.rw-ctable-empty {
+    padding: 0;
+}
+
+.rw-navbox td.children {
+    padding: 0 2px;
 }
 
 .rw-ctable-simple td+td {
@@ -269,26 +343,105 @@ table.tdnoborder tbody {
     border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.rw-navbox tr+tr>th,
+.rw-navbox tr+tr>td {
+    border-top: 1px solid #282f44;
+}
+
+.rw-ctable-simple .item,
+.rw-navbox .item {
+    display: inline-block;
+    padding-right: 8px;
+}
+
+
+/*.rw-ctable-simple .item+.item::before,
+.rw-navbox .item+.item::before {
+    content: " ";
+    opacity: 0.8;
+    margin: 0 4px;
+}*/
+
+@media screen and (max-width: 768px) {
+    .rw-navbox th.rw-navbox-label,
+    .rw-navbox td.rw-navbox-list {
+        text-align: left;
+        display: block !important;
+        width: 100% !important;
+        border-top: 1px solid #282f44;
+    }
+    .rw-navbox td.children {
+        padding: 0 4px;
+    }
+}
+
 .rw-ctable-simple a,
-.rw-ctable-simple a:hover {
+.rw-navbox a {
     color: #e6af2e;
+}
+
+.rw-ctable-simple a:hover,
+.rw-navbox a:hover {
+    color: #e5ca8a;
+}
+
+.rw-ctable-simple .selflink,
+.rw-navbox .selflink {
+    color: #e5ca8a;
+}
+
+
+/*Note*/
+
+.rw-note {
+    overflow: hidden;
+    font-style: normal;
+    font-weight: 400;
+    text-rendering: auto;
+    line-height: 1.6em;
+    background-color: #ececec;
+    padding: 10px 15px 10px 32px;
+    border-left-width: 6px;
+    border-left-style: solid;
+    margin-bottom: 20px;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+.rw-note strong {
+    font-weight: 450;
+}
+
+.rw-note+.rw-note {
+    margin-top: -16px;
+}
+
+.rw-note:before {
+    display: inline-block;
+    width: 32px;
+    float: left;
+    margin: 0 0 0 -32px;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.quote-rimworld {
+    color: #c0c7da;
+    background-color: #282f44;
+}
+
+.quote-rimworld:hover {
+    color: #f3f3f3;
 }
 
 
 /*ECharts*/
-
-.echarts-above {
-    text-align: center;
-    font-size: 14px;
-    padding: 8px 20px;
-    color: #c0c7da;
-    background-color: #202636;
-}
-
-.echarts-above a,
-.echarts-above a:hover {
-    color: #e6af2e;
-}
 
 .echarts-outter {
     color: #c0c7da;
@@ -466,4 +619,104 @@ table.tdnoborder tbody {
 .hexagon-Tundra::after {
     border-left-color: #836c5b;
     border-right-color: #836c5b;
+}
+
+
+/*RimWorld Texture show as sreen capture or large button icon*/
+
+.rw-lbtn {
+    cursor: pointer;
+    display: inline-block;
+    width: 104px;
+    height: 128px;
+    position: relative;
+    overflow: hidden;
+    padding: 10px 0;
+    -webkit-transition: .2s;
+    transition: .2s;
+    user-select: none!important;
+    -moz-user-select: none!important;
+    -ms-user-select: none!important;
+    -webkit-user-select: none!important;
+}
+
+.rw-lbtn:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.rw-lbtn-icon {
+    display: block;
+    width: 64px;
+    height: 64px;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+}
+
+.rw-lbtn-label {
+    display: table-cell;
+    width: 128px;
+    height: 44px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.rw-lbtn-link,
+.rw-lbtn-link a {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rw-texture {
+    position: relative;
+    overflow: hidden;
+}
+
+.x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.x128 {
+    width: 128px;
+    height: 128px;
+}
+
+.x256-128 {
+    width: 256px;
+    height: 128px;
+}
+
+.rw-hexagon-x64 {
+    /*clip-path: url(#clip-path-hexagon-x64);*/
+}
+
+.rw-hexagon-x128 {
+    /*clip-path: url(#clip-path-hexagon-x128);*/
+}
+
+.rw-blend {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    mix-blend-mode: multiply;
+}
+
+.rw-biome,
+.rw-biome img {
+    width: 512px;
+    height: 512px;
+}
+
+.rw-terrain,
+.rw-terrain img {
+    width: 1024px;
+    height: 1024px;
 }

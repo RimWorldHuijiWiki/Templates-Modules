@@ -5,10 +5,7 @@ local SMW = require("Module:SMW")
 
 function WeatherView.view(frame)
     local def = WeatherDef:new(frame.args[1])
-    local text = def:getSummary()
-    text = text .. "\n\n"
-    text = text .. def:getInfoBase()
-    return text
+    return def:getInfoBase()
 end
 
 return WeatherView

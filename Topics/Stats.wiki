@@ -1,0 +1,16 @@
+{{#invoke:RT_Note|noteX|rimworld|bar-chart|属性|英文 Stat，原本是“统计 Statistic”的缩写，在各类游戏中使用其衍生意义，是某个物体或单位的特点或状态的数值表示。}}
+{{#invoke:RT_Note|noteX|rimworld|bar-chart|属性分类|英文 Stat Category，RimWorld 中的一种定义，用于在详细信息面板展示属性时对属性进行分组。}}
+<hr/>
+{{#invoke:RT_Note|noteX|warning|warning||属性与房间属性两者容易混淆，但并不相同。参见：[[RoomStats|房间属性]]}}
+----
+{{#invoke:RW_StatNav|nav}}
+{{DISPLAYTITLE:属性}}
+{{#set:
+|viewType=Def
+|path={{FULLPAGENAME}}
+|title=属性
+|revisiontime={{REVISIONTIMESTAMP}}
+}}
+__NOTOC__
+__NOREC__
+[[Category:属性]]

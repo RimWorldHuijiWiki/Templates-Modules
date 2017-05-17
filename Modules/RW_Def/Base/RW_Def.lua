@@ -38,6 +38,13 @@ function Def:toString()
     return self.defName
 end
 
+-- Custom
+
+function Def:setLabel(newLabel)
+    self.label_zhcn = newLabel
+    return self;
+end
+
 function Def:getSummary(defaultDesc)
     
     local text = "<p><strong>"
@@ -56,32 +63,37 @@ function Def:getSummary(defaultDesc)
     return text
 end
 
-function Def:getInfoBase()
-
-    local args = {
-        id = "infobase",
+function Def:getInfoBase(thumbnail)
+    local rows = {}
+    if thumbnail then
+        rows[#rows + 1] = {
+            cols = {{
+                text = thumbnail,
+                span = 2
+            }},
+            extraCssText = "rw-ctable-thumbnail"
+        }
+    end
+    rows[#rows + 1] = {cols = {"defType", self.defType}}
+    rows[#rows + 1] = {cols = {"defName", self.defName}}
+    if self.label ~= nil then
+        rows[#rows + 1] = {cols = {"名称（英文）", self.label}}
+        rows[#rows + 1] = {cols = {"名称（简中）", self.label_zhcn}}
+        rows[#rows + 1] = {cols = {"名称（繁中）", self.label_zhtw}}
+    end
+    if self.description ~= nil then
+        rows[#rows + 1] = {cols = {"描述（英文）", self.description}}
+        rows[#rows + 1] = {cols = {"描述（简中）", self.description_zhcn}}
+        rows[#rows + 1] = {cols = {"描述（繁中）", self.description_zhtw}}
+    end
+    return Collapse.ctable({
+        id = self.defName .. "infoBase",
         title = "基本信息",
         headers = {{
             width = "128px"
         },{}},
-        rows ={{
-            cols = {"defType", self.defType}
-        },{
-            cols = {"defName", self.defName}
-        }}
-    }
-    if self.label ~= nil then
-        args.rows[3] = {cols = {"名称（英文）", self.label}}
-        args.rows[4] = {cols = {"名称（简中）", self.label_zhcn}}
-        args.rows[5] = {cols = {"名称（繁中）", self.label_zhtw}}
-    end
-    if self.description ~= nil then
-        args.rows[6] = {cols = {"描述（英文）", self.description}}
-        args.rows[7] = {cols = {"描述（简中）", self.description_zhcn}}
-        args.rows[8] = {cols = {"描述（繁中）", self.description_zhtw}}
-    end
-
-    return Collapse.ctable(args)
+        rows = rows
+    })
 end
 
 return Def

@@ -1,11 +1,23 @@
 local StatWorker = {}
-local base = StatWorker
+local StatWorker_MarketValue = {}
 
-local StatRequest = require("Module:AC_StatRequest")
-local StatUtility = require("Module:AC_StatUtility")
-local Mathf = require("Module:UE_Mathf")
+local StatDef
 
--- StatWorker (base)
+local StatExtension
+local StatRequest
+local StatUtility
+
+local Mathf
+
+function StatWorker.init(StatDefClass, StatExtensionClass, StatRequestClass, StatUtilityClass, MathfClass)
+    StatDef = StatDefClass
+    StatExtension = StatExtensionClass
+    StatRequest = StatRequestClass
+    StatUtility = StatUtilityClass
+    Mathf = MathfClass
+end
+
+-- StatWorker (StatWorker)
 
 function StatWorker:new()
     local worker = {}
@@ -39,10 +51,7 @@ function StatWorker:getValueUnfinalized(req, applyPostProcess)
     local statDefName = self.stat.defName
     local num = self:getBaseValueFor(req:get_Def())
     local thing = req:get_Thing()
-    local pawn
-    if thing.class == "Pawn" then
-        pawn = thing
-    end
+    local pawn = ((thing and thing.class == pawn) and thing or nil)
     if pawn ~= nil then
         -- TODO pawn's traits, hediffs, apparels, equipments
         num = num * StatUtility.getStatFactorFromList(pawn.ageTracker:get_CurLifeStage().statFactors, statDefName)
@@ -91,9 +100,12 @@ end
 
 -- StatWorker_MarketValue
 
+StatWorker_MarketValue.ValuePerWork = 0.003
+StatWorker_MarketValue.DefaultGuessStuffCost = 2
+
 function StatWorker_MarketValue:new()
-    setmetatable(self, base)
-    local worker = base:new()
+    setmetatable(self, StatWorker)
+    local worker = StatWorker:new()
     setmetatable(worker, self)
     self.__index = self
     return worker
@@ -104,16 +116,36 @@ function StatWorker_MarketValue:getValueUnfinalized(req, applyPostProcess)
         applyPostProcess = true
     end
     local thing = req:get_Thing()
-    if thing ~= nil and thing.class == "Pawn" then
-        return base.getValueUnfinalized(self, StatRequest.F)
-    end
     local def = req:get_Def()
+    local stuffDef = req:get_StuffDef()
+    if thing ~= nil and thing.class == "Pawn" then
+        return StatWorker.getValueUnfinalized(self, StatRequest.forBuildableDef(def, stuffDef, "Normal"), applyPostProcess)
+    end
+    if StatUtility.statListContains(def.statBases, "MarketValue") then
+        return StatWorker.getValueUnfinalized(self, req, true)
+    end
+    local num = 0
     if def.costList ~= nil then
-        for i, thingCountClass in pairs(def.costList) do
-            local thingDef
+        for i, thingCount in pairs(def.costList) do
+            num = num + thingCount.count * thingCount.thingDef:get_BaseMarketValue()
         end
     end
+    local workAmount = math.max(
+        StatExtension.getStatValueAbstract(def, StatDef.of("WorkToMake"), stuffDef),
+        StatExtension.getStatValueAbstract(def, StatDef.of("WorkToBuild"), stuffDef)
+    )
+    return num + workAmount * StatWorker_MarketValue.ValuePerWork
 end
 
+-- Instance
+function StatWorker.instance(workerClass)
+    if workerClass == "StatWorker" then
+        return StatWorker:new()
+    elseif workerClass == "StatWorker_MarketValue" then
+        return StatWorker_MarketValue:new()
+    else
+        return StatWorker:new()
+    end
+end
 
 return StatWorker

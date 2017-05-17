@@ -7,11 +7,7 @@ local Keyed_zhcn = require("Module:Keyed_zhcn")
 
 function StatView.view(frame)
     local def = StatDef:new(frame.args[1])
-    local text = ""
-        .. def:getSummary()
-        .. "\n"
-        .. def:getInfoBase()
-        .. "\n<hr/>\n"
+    local text = def:getInfoBase() .. "\n<hr/>\n"
 
     local StatsReport_BaseValue = Keyed_zhcn.trans("StatsReport_BaseValue")
     local StatsReport_Skills = Keyed_zhcn.trans("StatsReport_Skills")

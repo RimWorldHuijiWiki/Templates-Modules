@@ -27,6 +27,7 @@ function StatUtility.statListContains(modList, stat)
             end
         end
     end
+    return false
 end
 
 return StatUtility

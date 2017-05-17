@@ -17,13 +17,23 @@ local StatPart_RoomStat = {}
 local StatPart_WornByCorpse = {}
 local StatPart_GearAndInventoryMass = {}
 
-local SMW = require("Module:SMW")
-local Collapse = require("Module:RT_Collapse")
-local Keyed_zhcn = require("Module:Keyed_zhcn")
-local Mathf = require("Module:UE_Mathf")
+local SMW
+local Collapse
+local Keyed_zhcn
+local Mathf
 
-local SimpleCurve = require("Module:AC_SimpleCurve")
-local PawnOrCorpseStatUtility  = require("Module:AC_PawnOrCorpseStatUtility")
+local SimpleCurve
+local PawnOrCorpseStatUtility
+
+-- init
+function StatPart.init(SMWClass, CollapseClass, Keyed_zhcnClass, PawnOrCorpseStatUtilityClass, SimpleCurveClass, MathfClass)
+    SMW = SMWClass
+    Collapse = CollapseClass
+    Keyed_zhcn = Keyed_zhcnClass
+    PawnOrCorpseStatUtility = PawnOrCorpseStatUtilityClass
+    SimpleCurve = SimpleCurveClass
+    Mathf = MathfClass
+end
 
 -- local StatRequest = require("Module:AC_StatRequest")
 
@@ -31,7 +41,7 @@ function toboolean(s)
     return s ~= nil and string.lower(s) == "true"
 end
 
--- Base
+-- StatPart
 
 function StatPart:new()
     local part = {
@@ -183,9 +193,9 @@ end
 
 function StatPart_Curve:transformValue(req, val)
     if req:hasThing() and self:appliesTo(req) then
-        return  
+        return val * self.curve:evaluate(self:curveXGetter(req))
     end
-    return val * self.curve:evaluate(self:curveXGetter(req))
+    return val
 end
 
 -- StatPart_Health
@@ -338,26 +348,26 @@ function StatPart_BodySize:new(statData, index)
     return part
 end
 
-function StatPart_BodySize:transformValue(req, val)
-    local num = {}
-    if self:tryGetBodySize(req, num) then
-        return val * num.out
-    end
-    return val
-end
+-- function StatPart_BodySize:transformValue(req, val)
+--     local num = {}
+--     if self:tryGetBodySize(req, num) then
+--         return val * num.out
+--     end
+--     return val
+-- end
 
-function StatPart_BodySize:tryGetBodySize(req, bodySize)
-    return PawnOrCorpseStatUtility.tryGetPawnOrCorpseStat(
-        req,
-        function(x)
-            return x:get_BodySize()
-        end,
-        function(x)
-            return x.race.baseBodySize
-        end,
-        bodySize
-    )
-end
+-- function StatPart_BodySize:tryGetBodySize(req, bodySize)
+--     return PawnOrCorpseStatUtility.tryGetPawnOrCorpseStat(
+--         req,
+--         function(x)
+--             return x:get_BodySize()
+--         end,
+--         function(x)
+--             return x.race.baseBodySize
+--         end,
+--         bodySize
+--     )
+-- end
 
 function StatPart_BodySize:explainEcharts()
     local StatsReport_BodySize = Keyed_zhcn.trans("StatsReport_BodySize")
