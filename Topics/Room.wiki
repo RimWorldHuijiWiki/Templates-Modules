@@ -20,7 +20,7 @@
 *畜棚：有动物床铺和动物睡眠点
 *陵墓：有棺材或墓地
 }}
-{{#invoke:RT_Note|noteX|warning|warning|殖民者无法监狱中的食物互动|如果发现无法烹饪并提示缺少材料时，检查是否不小心在大厅或仓库中放置了设为囚犯专用的床。}}
+{{#invoke:RT_Note|noteX|warning|warning|殖民者无法与监狱中的食物互动|如果发现无法烹饪并提示缺少材料时，检查是否不小心在大厅或仓库中放置了设为囚犯专用的床。}}
 <hr/>
 {{#invoke:RT_Note|noteX|info|smile-o||房间属性中作为汇总的是“观感”，不是“感官”。}}
 {{#invoke:RT_Note|noteX|info|lightbulb-o||房间属性计算公式中的“毗邻物体”指的是墙、门等这类能围成房间的不可通行的物体。}}
