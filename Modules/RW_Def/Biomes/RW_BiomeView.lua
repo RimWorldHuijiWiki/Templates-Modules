@@ -17,6 +17,8 @@ function BiomeView.view(frame)
         .. "</div>"
     
     text = text .. "</div>"
+
+    text = text .. def:showECharts()
     
     return text
 end

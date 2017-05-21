@@ -1,5 +1,7 @@
 local BuildableDef = {}
 local base = require("Module:RW_Def")
+setmetatable(BuildableDef, base)
+BuildableDef.__index = BuildableDef
 
 local SMW = require("Module:SMW")
 local Collapse
@@ -24,10 +26,8 @@ function toboolean(s)
 end
 
 function BuildableDef:new(data)
-    setmetatable(self, base)
     def = base:new(data)
     setmetatable(def, self)
-    self.__index = self
     -- fields
     local prop = def.defType .. "."
     -- list

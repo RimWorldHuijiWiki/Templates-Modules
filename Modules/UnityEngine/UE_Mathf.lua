@@ -20,6 +20,14 @@ function Mathf.clamp01(value)
     return value
 end
 
+-- Calculates the linear parameter t that produces the interpolant value within the range [a, b].
+function Mathf.inverseLerp(a, b, value)
+    if a ~= b then
+        return Mathf.clamp01((value - a) / (b - a))
+    end
+    return 0
+end
+
 -- Linearly interpolates between a and b by t.
 function Mathf.lerp(a, b, t)
     return a + (b - a) * Mathf.clamp01(t)
@@ -42,6 +50,19 @@ end
 -- Returns f rounded to the nearest integer.
 function Mathf.roundToInt(f)
     return math.floor(f + 0.5)
+end
+
+-- GenMath
+
+function Mathf.lerpDouble(inFrom, inTo, outFrom, outTo, x)
+    return outFrom + (outTo - outFrom) * ((x - inFrom) / (inTo - inFrom))
+end
+
+function Mathf.unboundedValueToFactor(val)
+    if val > 0 then
+        return 1 + val
+    end
+    return 1 / (1 - val)
 end
 
 return Mathf

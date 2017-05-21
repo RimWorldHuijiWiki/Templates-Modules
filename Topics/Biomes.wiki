@@ -1,0 +1,9 @@
+{{#invoke:RW_Biomes|view}}
+{{DISPLAYTITLE:生态区}}
+{{#set:
+|viewType=Topic
+|path={{FULLPAGENAME}}
+|title=生态区
+}}
+__NOREC__
+[[Category:生态区]]

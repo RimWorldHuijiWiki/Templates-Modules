@@ -1,0 +1,12 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{#invoke:RW_BiomeView|view|{{{data|}}}}}
+{{#set:
+|viewType=BiomeDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+}}
+{{DISPLAYTITLE:生态区 {{#show:{{{data|}}}|?BiomeDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:生态区]]
+</includeonly>

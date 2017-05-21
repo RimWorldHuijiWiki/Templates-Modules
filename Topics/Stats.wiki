@@ -9,7 +9,6 @@
 |viewType=Def
 |path={{FULLPAGENAME}}
 |title=属性
-|revisiontime={{REVISIONTIMESTAMP}}
 }}
 __NOTOC__
 __NOREC__

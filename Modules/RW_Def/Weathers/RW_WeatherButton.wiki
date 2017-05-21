@@ -1,7 +1,0 @@
-<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude><!--
---><includeonly><div class="rw-button"><!--
--->{{#if:{{{1|}}}<!--
--->|<div class="rw-icon">[[File:rw_icon_weathers_{{{1|}}}.svg|64px|link=]]</div><div class="rw-button-label">{{#show:Core:Defs_WeatherDef_{{{1|}}}|?WeatherDef.label.zh-cn}}</div>[[Weathers_{{{1|}}}|&nbsp;]]<!--
--->|<div class="rw-icon">[[File:rw_icon_weathers.svg|64px|link=]]</div><div class="rw-button-label">{{#show:Weathers|?title}}</div>[[Weathers|&nbsp;]]<!--
--->}}<!--
---></div></includeonly>

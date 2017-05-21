@@ -208,7 +208,25 @@ td.navbox-list {
     max-width: 100%;
     overflow: hidden;
     position: relative;
-    margin: 20px 0;
+    border: none;
+    border-radius: 0;
+    margin: 40px 0;
+}
+
+.rw-collapse-group {
+    background-color: #282f44;
+    max-width: 100%;
+    margin: 40px 0;
+}
+
+.rw-collapse-group .rw-collapse {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.rw-collapse-group .rw-collapse+.rw-collapse {
+    margin-top: 5px;
 }
 
 .rw-collapse-head {
@@ -242,6 +260,18 @@ td.navbox-list {
     content: "O";
     float: left;
     font-family: "RimWordFont";
+}
+
+.rw-collapse-head h2,
+.rw-collapse-head h2 .mw-headline {
+    display: inline;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    border-bottom: none;
+    padding-bottom: 0;
+    padding-top: 0;
+    margin: 0;
 }
 
 .rw-collapse-above {
@@ -381,10 +411,7 @@ td.navbox-list {
 }
 
 .rw-ctable-simple a:hover,
-.rw-navbox a:hover {
-    color: #e5ca8a;
-}
-
+.rw-navbox a:hover,
 .rw-ctable-simple .selflink,
 .rw-navbox .selflink {
     color: #e5ca8a;
@@ -403,7 +430,7 @@ td.navbox-list {
     padding: 10px 15px 10px 32px;
     border-left-width: 6px;
     border-left-style: solid;
-    margin-bottom: 20px;
+    margin: 30px 0;
     -webkit-transition: .2s;
     transition: .2s;
 }
@@ -413,7 +440,7 @@ td.navbox-list {
 }
 
 .rw-note+.rw-note {
-    margin-top: -16px;
+    margin-top: -20px;
 }
 
 .rw-note:before {
@@ -438,6 +465,14 @@ td.navbox-list {
 
 .quote-rimworld:hover {
     color: #f3f3f3;
+}
+
+.quote-rimworld a {
+    color: #e6af2e;
+}
+
+.quote-rimworld a:hover {
+    color: #e5ca8a;
 }
 
 
@@ -475,150 +510,6 @@ td.navbox-list {
 
 .echarts-loading-hide {
     display: none;
-}
-
-
-/*Hexagon icon for Biomes*/
-
-.hexagon {
-    width: 32px;
-    height: 56px;
-    position: absolute;
-    top: 4px;
-    left: 16px;
-    background-color: #967136;
-}
-
-.hexagon::before,
-.hexagon::after {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    border-top: 28px solid transparent;
-    border-bottom: 28px solid transparent;
-}
-
-.hexagon::before {
-    left: -16px;
-    border-right: 16px solid #3c485b;
-    /*border-right: 16px solid #967136;*/
-}
-
-.hexagon::after {
-    right: -16px;
-    border-left: 16px solid #3c485b;
-    /*border-left: 16px solid #967136;*/
-}
-
-.hexagon-AridShrubland {
-    background-color: #896849;
-}
-
-.hexagon-AridShrubland::before,
-.hexagon-AridShrubland::after {
-    border-left-color: #896849;
-    border-right-color: #896849;
-}
-
-.hexagon-BorealForest {
-    background-color: #64542f;
-}
-
-.hexagon-BorealForest::before,
-.hexagon-BorealForest::after {
-    border-left-color: #64542f;
-    border-right-color: #64542f;
-}
-
-.hexagon-Desert {
-    background-color: #9a7c58;
-}
-
-.hexagon-Desert::before,
-.hexagon-Desert::after {
-    border-left-color: #9a7c58;
-    border-right-color: #9a7c58;
-}
-
-.hexagon-ExtremeDesert {
-    background-color: #9e8261;
-}
-
-.hexagon-ExtremeDesert::before,
-.hexagon-ExtremeDesert::after {
-    border-left-color: #9e8261;
-    border-right-color: #9e8261;
-}
-
-.hexagon-IceSheet {
-    background-color: #a0a0a0;
-}
-
-.hexagon-IceSheet::before,
-.hexagon-IceSheet::after {
-    border-left-color: #a0a0a0;
-    border-right-color: #a0a0a0;
-}
-
-.hexagon-Ocean {
-    background-color: #3c485b;
-}
-
-.hexagon-Ocean::before,
-.hexagon-Ocean::after {
-    border-left-color: #3c485b;
-    border-right-color: #3c485b;
-}
-
-.hexagon-Lake {
-    background-color: #3c485b;
-}
-
-.hexagon-Lake::before,
-.hexagon-Lake::after {
-    border-left-color: #3c485b;
-    border-right-color: #3c485b;
-}
-
-.hexagon-SeaIce {
-    background-color: #939394;
-}
-
-.hexagon-SeaIce::before,
-.hexagon-SeaIce::after {
-    border-left-color: #939394;
-    border-right-color: #939394;
-}
-
-.hexagon-TemperateForest {
-    background-color: #71693a;
-}
-
-.hexagon-TemperateForest::before,
-.hexagon-TemperateForest::after {
-    border-left-color: #71693a;
-    border-right-color: #71693a;
-}
-
-.hexagon-TropicalRainforest {
-    background-color: #5d592c;
-}
-
-.hexagon-TropicalRainforest::before,
-.hexagon-TropicalRainforest::after {
-    border-left-color: #5d592c;
-    border-right-color: #5d592c;
-}
-
-.hexagon-Tundra {
-    background-color: #836c5b;
-}
-
-.hexagon-Tundra::before,
-.hexagon-Tundra::after {
-    border-left-color: #836c5b;
-    border-right-color: #836c5b;
 }
 
 
@@ -719,4 +610,15 @@ td.navbox-list {
 .rw-terrain img {
     width: 1024px;
     height: 1024px;
+}
+
+.rw-capture {
+    max-width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.rw-capture img {
+    max-width: 100%;
+    height: auto;
 }

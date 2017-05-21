@@ -1,29 +1,41 @@
 local SimpleCurve = {}
+SimpleCurve.__index = SimpleCurve
 
 local Mathf = require("Module:UE_Mathf")
 
 function SimpleCurve:new(points)
 
-    if points == nil or type(points) ~= "string" then
-        return nil
+    if type(points) == "table" then
+        for i, p in pairs(points) do
+            points[i] = {
+                x = p[1],
+                y = p[2]
+            }
+        end
+        table.sort(points, function(a, b) return a.x < b.x end)
+        local curve = {points = points}
+        setmetatable(curve, self)
+        return curve
     end
 
-    local curve = {}
-    setmetatable(curve, self)
-    self.__index = self
-    -- fields
-    points = string.sub(points, 2, -2)
-    points = mw.text.split(points, "\",\"")
-    for i, p in pairs(points) do
-        p = mw.text.split(string.sub(p, 2, -2), ",")
-        points[i] = {
-            x = tonumber(p[1]),
-            y = tonumber(p[2])
-        }
+    if type(points) == "string" then
+        local curve = {}
+        setmetatable(curve, self)
+        -- fields
+        points = string.sub(points, 2, -2)
+        points = mw.text.split(points, "\",\"")
+        for i, p in pairs(points) do
+            p = mw.text.split(string.sub(p, 2, -2), ",")
+            points[i] = {
+                x = tonumber(p[1]),
+                y = tonumber(p[2])
+            }
+        end
+        table.sort(points, function(a, b) return a.x < b.x end)
+        curve.points = points
+        return curve
     end
-    table.sort(points, function(a, b) return a.x < b.x end)
-    curve.points = points
-    return curve
+
 end
 
 function SimpleCurve:pointsCount()

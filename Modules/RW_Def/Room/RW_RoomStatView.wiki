@@ -1,0 +1,136 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{#if:{{{data|}}}|{{#invoke:RW_RoomStatView|view|{{{data|}}}}}
+{{#set:
+|viewType=RoomStatDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+}}
+{{DISPLAYTITLE:房间属性 {{#show:{{{data|}}}|?RoomStatDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:房间]][[Category:房间属性]][[Category:属性]]
+}}<!--
+-->{{#switch:{{{data|Core:Defs_RoomStatDef_Impressiveness}}}
+|Core:Defs_RoomStatDef_Impressiveness=<div class="rw-note quote-rimworld quote-primary fa-calculator">
+<strong>房间属性 观感 计算公式</strong><br/>
+$$
+\begin{aligned}
+f_1(x) &= \left\{
+\begin{aligned}
+&-1-\log{(-x)}   &\qquad x \leq -1 \\
+&x              &\qquad -1 \lt x \lt 1 \\
+&1+\log{x}       &\qquad x \geq 1
+\end{aligned}
+\right. \\\\
+lerp(a, b, t) &= \left\{
+\begin{aligned}
+&a                  &\qquad t \leq 0 \\
+&a + (b-a)\cdot t   &\qquad 0 \lt t \lt 1 \\
+&b                  &\qquad t \geq 1
+\end{aligned}
+\right. \\\\
+factor_1 &= f_1\left(\frac{财富}{1500}\right) \\\\
+factor_2 &= f_1\left(\frac{美观}{3}\right) \\\\
+factor_3 &= f_1\left(\frac{空间}{125}\right) \\\\
+factor_4 &= f_1\left(\frac{清洁}{2.5}\right) \\\\
+a &= \frac{factor_1+factor_2+factor_3+factor_4}{4} \\\\
+b &= \min(factor_1, factor_2, factor_3, factor_4) \\\\
+c_1 &= lerp(a, b, 0.35) \\\\
+c_2 &= factor_3\cdot 5 \\\\
+{观感} &= \left\{
+\begin{aligned}
+&lerp(c_1, c_2, 0.75)\cdot 100  &\qquad c_1 \gt c_2 \\\\
+&c_1\cdot 100                   &\qquad c_1 \leq c_2
+\end{aligned}
+\right. \\
+\end{aligned}
+$$
+</div>
+|Core:Defs_RoomStatDef_Wealth=<div class="rw-note quote-rimworld quote-primary fa-calculator">
+<strong>房间属性 财富 计算公式</strong><br/>
+$$
+\begin{aligned}
+&\begin{aligned}
+&房间内物体市场价值\,   &thMV \\\\
+&房间内物体堆叠数\,   &thS \\\\
+&房间内物体种类数\,   &n \\\\
+&毗邻物体市场价值\,     &atMV \\\\
+&毗邻物体数量\,       &m \\\\
+&地面清市场价值\,         &teMV \\\\
+&房间面积\,           &c
+\end{aligned} \\\\
+&\begin{aligned}
+{财富} &= 
+&\frac{\sum_{i=1}^n(thMV_i \cdot thS_i) + \sum_{i=1}^matMV_i + \sum_{i=1}^cteMV_i}{c}
+\end{aligned}
+\end{aligned}
+$$
+</div>
+|Core:Defs_RoomStatDef_Space=<div class="rw-note quote-rimworld quote-primary fa-calculator">
+<strong>房间属性 空间 计算公式</strong><br/>
+$$
+\begin{aligned}
+&\begin{aligned}
+&房间内可站立面积\,   &c_1 \\\\
+&房间内可行走面积\,   &c_2 \\\\
+& &S &= \left\{
+\begin{aligned}
+&350                            &\qquad 室外 \\\\
+&c_1 \cdot 1.4 + c_2 \cdot 0.5  &\qquad 室内
+\end{aligned}
+\right.
+\end{aligned} \\\\
+&\begin{aligned}
+{空间} &= \min(S, 350)
+\end{aligned}
+\end{aligned}
+$$
+</div>
+|Core:Defs_RoomStatDef_Beauty=<div class="rw-note quote-rimworld quote-primary fa-calculator">
+<strong>房间属性 美观 计算公式</strong><br/>
+$$
+\begin{aligned}
+&\begin{aligned}
+&房间内物体美观度\,   &thB \\\\
+&房间内物体堆叠数\,   &thS \\\\
+&房间内物体种类数\,   &n \\\\
+&毗邻物体美观度\,     &atB \\\\
+&毗邻物体数量\,       &m \\\\
+&地面美观度\,         &teS \\\\
+&房间面积\,           &c \\\\
+&美观度总和           &B &= \sum_{i=1}^n(thB_i \cdot thS_i) + \sum_{i=1}^matB_i + \sum_{i=1}^cteB_i
+\end{aligned} \\\\
+&\begin{aligned}
+{美观} &= \left\{
+\begin{aligned}
+&\frac{B}{20 + 0.5c}  &\qquad 0 \leq c \lt 20 \\\\
+&\frac{B}{c}          &\qquad 20 \leq c \lt 100000 \\\\
+&\frac{B}{100000}     &\qquad c \geq 10000
+\end{aligned}
+\right. \\
+\end{aligned}
+\end{aligned}
+$$
+</div>
+|Core:Defs_RoomStatDef_Cleanliness=<div class="rw-note quote-rimworld quote-primary fa-calculator">
+<strong>房间属性 清洁 计算公式</strong><br/>
+$$
+\begin{aligned}
+&\begin{aligned}
+&房间内物体清洁度\,   &thC \\\\
+&房间内物体堆叠数\,   &thS \\\\
+&房间内物体种类数\,   &n \\\\
+&毗邻物体清洁度\,     &atC \\\\
+&毗邻物体数量\,       &m \\\\
+&地面清洁度\,         &teC \\\\
+&房间面积\,           &c
+\end{aligned} \\\\
+&\begin{aligned}
+{清洁} &= 
+&\frac{\sum_{i=1}^n(thC_i \cdot thS_i) + \sum_{i=1}^matC_i + \sum_{i=1}^cteC_i}{c}
+\end{aligned}
+\end{aligned}
+$$
+</div>
+}}{{#html:MathJax}}
+</includeonly>

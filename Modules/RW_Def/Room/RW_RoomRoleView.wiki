@@ -1,0 +1,12 @@
+<noinclude>[[Category:RWTemplates]]{{Documentation}}</noinclude>
+<includeonly>{{#invoke:RW_RoomRoleView|view|{{{data|}}}}}
+{{#set:
+|viewType=RoomRoleDef
+|path={{FULLPAGENAME}}
+|data={{{data|}}}
+}}
+{{DISPLAYTITLE:房间分类 {{#show:{{{data|}}}|?RoomRoleDef.label.zh-cn}}}}
+__NOTOC__
+__NOREC__
+[[Category:房间]][[Category:房间分类]]
+</includeonly>

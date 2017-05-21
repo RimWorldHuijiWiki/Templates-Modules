@@ -17,30 +17,57 @@ $(document).ready(function() {
             for (var i = 0; i < allChartsContainer.length; i++) {
                 try {
                     var curOption = JSON.parse(allChartsContainer[i].innerHTML);
-                    if (curOption.formatterStyle === "Curve") {
-                        var tooltipTitle = curOption.tooltip.formatter;
-                        curOption.tooltip.formatter = function(params) {
-                            var serie = params[0];
-                            if (serie === null) {
-                                return tooltipTitle;
+                    switch (curOption.formatterStyle) {
+                        case "Curve":
+                            {
+                                var tooltipTitle = curOption.tooltip.formatter;
+                                curOption.tooltip.formatter = function(params) {
+                                    var serie = params[0];
+                                    if (serie === null) {
+                                        return tooltipTitle;
+                                    }
+                                    var data = serie.data || [0, 0];
+                                    return tooltipTitle + "<br/>" + data[0] + " => " + data[1];
+                                }
                             }
-                            var data = serie.data || [0, 0];
-                            return tooltipTitle + "<br/>" + data[0] + " => " + data[1];
-                        }
-                    } else if (curOption.formatterStyle === "CurvePercent") {
-                        var tooltipTitle = curOption.tooltip.formatter;
-                        curOption.tooltip.formatter = function(params) {
-                            var serie = params[0];
-                            if (serie === null) {
-                                return tooltipTitle;
+                            break;
+                        case "CurvePercent":
+                            {
+                                var tooltipTitle = curOption.tooltip.formatter;
+                                curOption.tooltip.formatter = function(params) {
+                                    var serie = params[0];
+                                    if (serie === null) {
+                                        return tooltipTitle;
+                                    }
+                                    var data = serie.data || [0, 0];
+                                    return tooltipTitle + "<br/>" + data[0] + "% => " + data[1] + "%";
+                                }
+                                curOption.series[0].label.normal.formatter = function(params) {
+                                    var data = params.data || [0, 0];
+                                    return "(" + data[0] + "%, " + data[1] + "%)";
+                                }
                             }
-                            var data = serie.data || [0, 0];
-                            return tooltipTitle + "<br/>" + data[0] + "% => " + data[1] + "%";
-                        }
-                        curOption.series[0].label.normal.formatter = function(params) {
-                            var data = params.data || [0, 0];
-                            return "(" + data[0] + "%, " + data[1] + "%)";
-                        }
+                            break;
+                        case "BiomeMap":
+                            {
+                                var tooltipTitle = curOption.tooltip.formatter;
+                                var extraOption = curOption.extraOption;
+                                var allLabels = extraOption.allLabels;
+                                var rainMax = extraOption.rainMax;
+                                var rainSpan = extraOption.rainSpan;
+                                var tempMin = extraOption.tempMin;
+                                var tempMax = extraOption.tempMax;
+                                var tempSpan = extraOption.tempSpan;
+                                curOption.tooltip.formatter = function(params) {
+                                    // var serie = params[0];
+                                    // if (serie === null) {
+                                    //     return tooltipTitle;
+                                    // }
+                                    var data = params.data || [0, 0, 0];
+                                    return allLabels[data[2] - 1] + "<br/>降雨量：" + rainSpan * data[0] + " mm，平均温度：" + (tempMin + tempSpan * data[1]) + " ℃";
+                                }
+                            }
+                            break;
                     }
                     var curChart = echarts.init(allChartsContainer[i]);
                     var curLoading = allChartsContainer[i].nextElementSibling;

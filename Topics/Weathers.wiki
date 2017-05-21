@@ -1,0 +1,9 @@
+{{#invoke:RW_Weathers|view}}
+{{DISPLAYTITLE:天气}}
+{{#set:
+|viewType=Topic
+|path={{FULLPAGENAME}}
+|title=天气
+}}
+__NOREC__
+[[Category:天气]]

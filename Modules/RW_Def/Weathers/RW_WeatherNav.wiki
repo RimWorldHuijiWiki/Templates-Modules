@@ -1,6 +1,0 @@
-<div><!--
--->{{RW WeatherButton}}<span style="display:inline-block;width:1px;height:128px;background-color: rgba(0, 0, 0, .1);"></span><!--
--->{{RW WeatherButton|Clear}}{{RW WeatherButton|DryThunderstorm}}<!--
--->{{RW WeatherButton|Fog}}{{RW WeatherButton|FoggyRain}}{{RW WeatherButton|Rain}}<!--
--->{{RW WeatherButton|RainyThunderstorm}}{{RW WeatherButton|SnowGentle}}{{RW WeatherButton|SnowHard}}<!--
---></div><hr/><noinclude>[[Category:RWTemplates]]</noinclude>

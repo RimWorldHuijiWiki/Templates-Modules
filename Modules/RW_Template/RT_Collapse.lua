@@ -8,6 +8,7 @@ echarts_ID = 1
 
 -- args = {
 --     id = "",
+--     parent = ""
 --     style = "",
 --     title = "",
 --     barClass = "", -- default/primary/success/info/warning/danger default: primary
@@ -21,7 +22,7 @@ function Collapse.collapse(args)
         return ""
     end
 
-    local text = "<div class=\"rw-collapse\""
+    local text = "<div class=\"panel rw-collapse\""
         .. (args.style and (" style=\"" .. args.style .. "\"") or "")
         .. ">\n<div class=\"bg-"
 
@@ -42,7 +43,10 @@ function Collapse.collapse(args)
         text = text .. "primary"
     end
 
-    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-collapse-"
+    local parent = args.parent
+    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
+        .. (parent and (" data-parent=\"#" .. parent .. "\"") or "")
+        .. " data-target=\"#rw-collapse-"
     
     local id = args.id
     if id == nil or mw.text.trim(id) == "" then
@@ -54,6 +58,9 @@ function Collapse.collapse(args)
     local show = args.contentShow
     if show == nil then
         show = true
+    end
+    if parent then
+        show = false
     end
     text = text
         .. "\">"
@@ -77,7 +84,7 @@ function Collapse.collapse(args)
 end
 
 
--- local option = {
+-- local args = {
 --     id = "",
 --     style = "",
 --     title = "",
@@ -91,20 +98,30 @@ end
 --     }},
 --     rows = {{
 --         cols = {},
---         extraCssText = ""
+--         extraCssText = "",
+--         extraStyleText = "",
+--     },{
+--     cols = {{
+--         text = "",
+--         span = 1,
+--         rowspan = 1
+--     },{
+--         text = "",
+--         extraStyleText = "",
+--     }}
 --     }}
 -- }
-function Collapse.ctable(option)
+function Collapse.ctable(args)
 
-    if option == nil or type(option) ~= "table" then
+    if args == nil or type(args) ~= "table" then
         return "generate ctable failure, parameter error."
     end
 
-    local text = "<div class=\"rw-collapse\""
-        .. (option.style and (" style=\"" .. option.style .. "\"") or "")
+    local text = "<div class=\"panel rw-collapse\""
+        .. (args.style and (" style=\"" .. args.style .. "\"") or "")
         .. ">\n<div class=\"bg-"
 
-    local barClass = option.barClass
+    local barClass = args.barClass
     if barClass == "default" then
         text = text .. "default"
     elseif barClass == "primary" then
@@ -121,22 +138,28 @@ function Collapse.ctable(option)
         text = text .. "primary"
     end
 
-    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-ctable-simple-"
+    local parent = args.parent
+    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
+        .. (parent and (" data-parent=\"#" .. parent .. "\"") or "")
+        .. " data-target=\"#rw-ctable-simple-"
 
-    local id = option.id
+    local id = args.id
     if id == nil or mw.text.trim(id) == "" then
         id = "id" .. ctable_ID
         ctable_ID = ctable_ID + 1
     end
     text = text .. id
 
-    local show = option.contentShow
+    local show = args.contentShow
     if show == nil then
         show = true
     end
+    if parent then
+        show = false
+    end
     text = text
         .. "\">"
-        .. (option.title or "&nbsp;")
+        .. (args.title or "&nbsp;")
         .. "</div>\n<div class=\"collapse "
         .. (show and "in" or "")
         .. "\" id=\"rw-ctable-simple-"
@@ -146,7 +169,7 @@ function Collapse.ctable(option)
     text = text
         .. "<table class=\"rw-ctable-simple\">\n"
 
-    local headers = option.headers
+    local headers = args.headers
     if headers ~= nil and type(headers) == "table" then
         text = text .. "<tr>"
         for i, th in pairs(headers) do
@@ -161,7 +184,7 @@ function Collapse.ctable(option)
         text = text .. "</tr>\n"
     end
 
-    local rows = option.rows
+    local rows = args.rows
     if rows ~= nil and type(rows) == "table" then
         for i, tr in pairs(rows) do
             if tr.extraCssText then
@@ -176,6 +199,8 @@ function Collapse.ctable(option)
                         text = text
                             .. "<td"
                             .. (td.span and (" colspan=\"" .. td.span .. "\"") or "")
+                            .. (td.rowspan and (" rowspan=\"" .. td.rowspan .. "\"") or "")
+                            .. (td.extraStyleText and (" style=\"" .. td.extraStyleText .. "\"") or "")
                             .. ">"
                             .. (td.text or "")
                             .. "</td>"
@@ -197,7 +222,7 @@ function Collapse.ctable(option)
 end
 
 
--- local option = {
+-- local args = {
 --     id = "",
 --     title = "",
 --     above = "",
@@ -216,15 +241,15 @@ end
 --     }},
 --    footer = ""
 -- }
-function Collapse.navbox(option)
+function Collapse.navbox(args)
 
-    if option == nil or type(option) ~= "table" then
+    if args == nil or type(args) ~= "table" then
         return "generate navbox failure, parameter error."
     end
 
-    local text = "<div class=\"rw-collapse\">\n<div class=\"bg-primary rw-collapse-head rw-collapse-navbox\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-navbox-"
+    local text = "<div class=\"panel rw-collapse\">\n<div class=\"bg-primary rw-collapse-head rw-collapse-navbox\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-navbox-"
 
-    local id = option.id
+    local id = args.id
     if id == nil or mw.text.trim(id) == "" then
         id = "id" .. navbox_ID
         navbox_ID = navbox_ID + 1
@@ -233,13 +258,13 @@ function Collapse.navbox(option)
 
     text = text
         .. "\">"
-        .. (option.title or "&nbsp;")
+        .. (args.title or "&nbsp;")
         .. "</div>\n<div class=\"collapse in\" id=\"rw-navbox-"
         .. id
         .. "\">\n"
-        .. (option.above and ("<div class=\"rw-collapse-above\">" .. option.above .. "</div>") or "")
-        .. Collapse.navbox_table(option.rows)
-        .. (option.footer and ("<div class=\"rw-collapse-above\">" .. option.footer .. "</div>") or "")
+        .. (args.above and ("<div class=\"rw-collapse-above\">" .. args.above .. "</div>") or "")
+        .. Collapse.navbox_table(args.rows)
+        .. (args.footer and ("<div class=\"rw-collapse-above\">" .. args.footer .. "</div>") or "")
         .. "</div>\n"
 
     text = text .. "</div>"
@@ -291,6 +316,7 @@ end
 -- args = {
 --     mode = "", -- normal/debug
 --     id = "",
+--     parent = "",
 --     style = "",
 --     title = "",
 --     barClass = "", -- default/primary/success/info/warning/danger default: primary
@@ -306,7 +332,7 @@ function Collapse.echarts(args)
         return ""
     end
 
-    local text = "<div class=\"rw-collapse\""
+    local text = "<div class=\"panel rw-collapse\""
         .. (args.width and (" style=\"width:" .. args.width .. ";\"") or " style=\"width:809px;\"")
         .. ">\n<div class=\"bg-"
 
@@ -327,7 +353,10 @@ function Collapse.echarts(args)
         text = text .. "primary"
     end
 
-    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-collapse-echarts-"
+    local parent = args.parent
+    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
+        .. (parent and (" data-parent=\"#" .. parent .. "\"") or "")
+        .. " data-target=\"#rw-collapse-echarts-"
     
     local id = args.id
     if id == nil or mw.text.trim(id) == "" then
@@ -339,6 +368,9 @@ function Collapse.echarts(args)
     local show = args.contentShow
     if show == nil then
         show = true
+    end
+    if parent then
+        show = false
     end
     text = text
         .. "\">"
@@ -450,6 +482,12 @@ function Collapse.newOptionNormal(colors)
                     color = Collapse.foregroundColor
                 }
             },
+            splitLine = {
+                lineStyle = {
+                    type = "dashed",
+                    color = Collapse.foregroundColor,
+                }
+            },
             boundaryGap = true
         }},
         yAxis = {{
@@ -462,7 +500,13 @@ function Collapse.newOptionNormal(colors)
                 lineStyle = {
                     color = Collapse.foregroundColor
                 }
-            }
+            },
+            splitLine = {
+                lineStyle = {
+                    type = "dashed",
+                    color = Collapse.foregroundColor,
+                }
+            },
         }},
         series = {}
     }
@@ -545,7 +589,13 @@ function Collapse.newOptionCurve(colors)
             },
             axisPointer = {
                 snap = false
-            }
+            },
+            splitLine = {
+                lineStyle = {
+                    type = "dashed",
+                    color = Collapse.foregroundColor,
+                }
+            },
         }},
         yAxis = {{
             type = "value",
@@ -561,7 +611,13 @@ function Collapse.newOptionCurve(colors)
             },
             axisPointer = {
                 snap = false
-            }
+            },
+            splitLine = {
+                lineStyle = {
+                    type = "dashed",
+                    color = Collapse.foregroundColor,
+                }
+            },
         }},
         dataZoom = {{
             type = "slider",
@@ -581,6 +637,25 @@ function Collapse.newOptionCurve(colors)
         }},
         series = {}
     }
+end
+
+function Collapse.newOption(style, colors)
+    local option = Collapse.newOptionNormal(colors)
+    if style == "normal" then
+        return option
+    elseif style == "point" then
+        option.tooltip.axisPointer.type = "line"
+        return option
+    elseif style == "span" then
+        option.xAxis[1].axisTick.alignWithLabel = false
+        return option
+    elseif style == "value" then
+        option.tooltip.axisPointer.type = "line"
+        option.xAxis[1].boundaryGap = false
+        return option
+    else
+        return option
+    end        
 end
 
 function Collapse.newOptionPlusminus(colors)
@@ -607,10 +682,10 @@ function Collapse.newOptionPlusminus(colors)
         },
         tooltip = {
             trigger = "axis",
-            backgroundColor = Collapse.backgroundColor,
             axisPointer = {
                 type = "shadow"
             },
+            backgroundColor = Collapse.backgroundColor,
             borderColor = Collapse.highlighting,
             borderWidth = 2,
             padding = {12, 12},
@@ -691,23 +766,74 @@ function Collapse.newOptionPlusminusX(xAxisCount, colors)
     return option    
 end
 
-function Collapse.newOption(style, colors)
-    local option = Collapse.newOptionNormal(colors)
-    if style == "normal" then
-        return option
-    elseif style == "point" then
-        option.tooltip.axisPointer.type = "line"
-        return option
-    elseif style == "span" then
-        option.xAxis[1].axisTick.alignWithLabel = false
-        return option
-    elseif style == "value" then
-        option.tooltip.axisPointer.type = "line"
-        option.xAxis[1].boundaryGap = false
-        return option
-    else
-        return option
-    end        
+function Collapse.newOptionPie(colors)
+    return {
+        formatterStyle = "Pie",
+        color = colors or {Collapse.highlighting},
+        backgroundColor = Collapse.backgroundColor,
+        title = {
+            top = "center",
+            left = "center",
+            text = "",
+            textStyle = {
+                color = Collapse.foregroundColor,
+                fontWeight = "normal"
+            },
+            subtext = "",
+            itemGap = 12
+        },
+        tooltip = {
+            -- trigger = "item",
+            backgroundColor = Collapse.backgroundColor,
+            borderColor = Collapse.highlighting,
+            borderWidth = 2,
+            padding = {12, 12},
+            extraCssText = "border-radius: 2px;",
+            formatter = "{b}<br/>{a}：{c}（{d}%）"
+        },
+        toolbox = {
+            itemSize = 20,
+            feature = {
+                dataView = {
+                    show = true,
+                    readOnly = false
+                },
+                -- saveAsImage = {
+                --     show = true
+                -- }
+            },
+            iconStyle = {
+                normal = {
+                    borderColor = Collapse.foregroundColor
+                },
+                emphasis = {
+                    borderColor = Collapse.highlighting
+                }
+            },
+            top = "4%",
+            right = "5%"
+        },
+        series = {{
+            name = "权重",
+            type = "pie",
+            radius = {"55%", "75%"},
+            label = {
+                normal = {
+                    formatter = "{b} {d}%",
+                    textStyle = {
+                        fontSize = 14
+                    }
+                },
+                emphasis = {
+                    show = true,
+                    textStyle = {
+                        fontSize = 14,
+                        fontWeight = "bold",
+                    }
+                }
+            }
+        }}
+    }
 end
 
 return Collapse
