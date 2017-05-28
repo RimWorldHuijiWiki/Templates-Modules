@@ -83,6 +83,7 @@ function Collapse.collapse(args)
     return text
 end
 
+Collapse.firstHeaderWidth = "144px"
 
 -- local args = {
 --     id = "",
@@ -165,9 +166,14 @@ function Collapse.ctable(args)
         .. "\" id=\"rw-ctable-simple-"
         .. id
         .. "\">\n"
-    
-    text = text
-        .. "<table class=\"rw-ctable-simple\">\n"
+        .. Collapse.ctable_simple(args)
+        .. "</div>\n</div>\n"
+
+    return text
+end
+
+function Collapse.ctable_simple(args)
+    local text = "<table class=\"rw-ctable-simple\">\n"
 
     local headers = args.headers
     if headers ~= nil and type(headers) == "table" then
@@ -216,7 +222,7 @@ function Collapse.ctable(args)
         end
     end
 
-    text = text .. "</table>\n</div>\n</div>\n"
+    text = text .. "</table>\n"
 
     return text
 end
@@ -391,7 +397,7 @@ function Collapse.echarts(args)
 
     text = text
         .. "<div class=\"echarts-outter\""
-        .. (args.height and (" style=\"height:" .. args.height .. ";\"") or " style=\"height:500px;\"")
+        .. (args.height and (" style=\"padding-bottom:" .. args.height .. ";\"") or " style=\"padding-bottom:61.8%\"")
         .. ">\n"
         .. "<div class=\"echarts\">"
         .. (args.option and mw.text.jsonEncode(args.option) or "{}")

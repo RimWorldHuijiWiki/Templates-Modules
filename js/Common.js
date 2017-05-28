@@ -1,22 +1,23 @@
 /* 这里的任何JavaScript将为所有用户在每次页面载入时加载。 */
 
 // hexagon clip-path for biome
-$(document).ready(function() {
-    $("body").prepend('<svg height="0" width="0"><defs><clipPath id="clip-path-hexagon-x64"><polygon points="0 32, 16 5, 48 5, 64 32, 48 59, 16 59" /></clipPath></defs></svg>');
-    $("body").prepend('<svg height="0" width="0"><defs><clipPath id="clip-path-hexagon-x128"><polygon points="0 64, 32 9, 96 9, 128 64, 96 119, 32 119" /></clipPath></defs></svg>');
-    $(".rw-hexagon-x64").css("clip-path", "url(#clip-path-hexagon-x64)")
-    $(".rw-hexagon-x128").css("clip-path", "url(#clip-path-hexagon-x128)")
-});
+// $(document).ready(function() {
+//     $("body").prepend('<svg height="0" width="0"><defs><clipPath id="clip-path-hexagon-x64"><polygon points="0 32, 16 5, 48 5, 64 32, 48 59, 16 59" /></clipPath></defs></svg>');
+//     $("body").prepend('<svg height="0" width="0"><defs><clipPath id="clip-path-hexagon-x128"><polygon points="0 64, 32 9, 96 9, 128 64, 96 119, 32 119" /></clipPath></defs></svg>');
+//     $(".rw-hexagon-x64").css("clip-path", "url(#clip-path-hexagon-x64)")
+//     $(".rw-hexagon-x128").css("clip-path", "url(#clip-path-hexagon-x128)")
+// });
 
 // ECharts
 $(document).ready(function() {
-    var allChartsContainer = document.getElementsByClassName("echarts");
-    if (allChartsContainer.length > 0) {
-        $.getScript("https://cdn.bootcss.com/echarts/3.5.3/echarts.min.js", function() {
+    var allOptionEles = document.getElementsByClassName("echarts");
+    if (allOptionEles.length > 0) {
+        mw.loader.using('ext.HuijiMiddleware.echarts', function() {
             var allCharts = new Array();
-            for (var i = 0; i < allChartsContainer.length; i++) {
+            for (var i = 0; i < allOptionEles.length; i++) {
+                var curOptionEle = allOptionEles[i];
                 try {
-                    var curOption = JSON.parse(allChartsContainer[i].innerHTML);
+                    var curOption = JSON.parse(curOptionEle.innerHTML);
                     switch (curOption.formatterStyle) {
                         case "Curve":
                             {
@@ -69,26 +70,31 @@ $(document).ready(function() {
                             }
                             break;
                     }
-                    var curChart = echarts.init(allChartsContainer[i]);
-                    var curLoading = allChartsContainer[i].nextElementSibling;
-                    if (curLoading !== null && curLoading.className === "echarts-loading") {
-                        curLoading.className += " echarts-loading-hide";
+                    var curChart = echarts.init(curOptionEle);
+                    var curLoadingEle = curOptionEle.nextElementSibling;
+                    if (curLoadingEle !== null && curLoadingEle.className.includes("echarts-loading")) {
+                        curLoadingEle.className += " echarts-loading-hide";
                     }
                     curChart.setOption(curOption);
                     allCharts.push(curChart);
-                } catch (e) {
-                    allChartsContainer[i].innerHTML = "<span style=\"color:red;font-size:18px;\">Echarts 配置项错误：" + e + "</span>";
-                    var curLoading = allChartsContainer[i].nextElementSibling;
-                    if (curLoading !== null && curLoading.className === "echarts-loading") {
-                        curLoading.className += " echarts-loading-hide";
+                } catch (ex) {
+                    curOptionEle.innerHTML = "<span style=\"color:red;font-size:18px;\">ECharts option error: " + ex + "</span>";
+                    var curLoadingEle = curOptionEle.nextElementSibling;
+                    if (curLoadingEle !== null && curLoadingEle.className.includes("echarts-loading")) {
+                        curLoadingEle.className += " echarts-loading-hide";
                     }
                 }
             }
-            window.addEventListener("resize", function(event) {
-                for (var i = 0; i < allCharts.length; i++) {
-                    allCharts[i].resize();
-                }
-            })
-        })
+            var allResize = function(event) {
+                setTimeout(function() {
+                    for (var i = 0; i < allCharts.length; i++) {
+                        allCharts[i].resize();
+                    }
+                }, 300);
+            };
+            window.addEventListener("resize", allResize);
+        }, function() {
+            console.log("failed to load echarts module");
+        });
     }
 });

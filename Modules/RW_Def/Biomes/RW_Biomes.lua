@@ -9,7 +9,7 @@ local BiomeDef = require("Module:RW_BiomeDef")
 
 function Biomes.view(frame)
     local text = Note.note("rimworld", "th-large", "生态区", "英文 Biome，是 RimWorld 中的一种定义，在生成世界时，根据不同的温度和降雨量生成具备不同地表和动植物群落的区域。")
-        .. "<hr/>"
+        .. "<hr/>\n"
     
     -- Arid
     local AridShrubland = BiomeDef.of("AridShrubland")
@@ -121,7 +121,6 @@ function Biomes.view(frame)
         id = "biomesMap",
         title = "<h2>生态区的降雨量/平均温度分布</h2>",
         width = "100%",
-        height = "680px",
         option = {
             formatterStyle = "BiomeMap",
             extraOption = {
@@ -211,7 +210,6 @@ function Biomes.view(frame)
         id = "biomesComparision",
         title = "<h2>生态区的数据对比</h2>",
         width = "100%",
-        height = "680px",
         option = {
             formatterStyle = "Normal",
             color = colors,
@@ -313,7 +311,7 @@ function Biomes.view(frame)
                     }
                 },
                 position = "right",
-                offset = 80,
+                offset = 60,
             },{
                 name = "疾病最大间隔时间",
                 type = "value",

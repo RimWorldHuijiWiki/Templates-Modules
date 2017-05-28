@@ -331,8 +331,8 @@ function BiomeDef:showECharts()
 end
 
 function BiomeDef:getButton()
-    local text = "<div class=\"rw-lbtn\">\n"
-        .. "<div class=\"rw-lbtn-icon rw-hexagon-x64\">\n"
+    text = "<div class=\"rw-lbtn\">"
+        .. "<div class=\"rw-lbtn-icon clip-hexagon-64\">\n"
         .. "<div class=\"rw-biome\">[[File:" .. Textures.getFileName(self.texture) .. "|link=]]</div>\n"
         .. "</div>\n"
         .. "<div class=\"rw-lbtn-label\">" .. self.label_zhcn .. "</div>\n"

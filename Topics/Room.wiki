@@ -1,11 +1,13 @@
 {{#invoke:RT_Note|noteX|rimworld|home|房间|RimWorld 中由不可通行的物体所围成的封闭区域。}}
-<hr/>
+<div class="row"><div class="col-md-12">
 <div class="rw-capture">[[File:Room_Judge.png|890px|link=]]</div>
 {{#invoke:RT_Note|noteX|info|lightbulb-o||上图四个房间中，左边三个是房间，而最右边的实际上不是房间，因为电池是可通行的，无法形成封闭区域。}}
-<hr/>
+</div></div>
+<div class="row"><div class="col-md-12">
 <div class="rw-capture">[[File:RoomStat_Toggle.png|890px|link=]]</div>
 {{#invoke:RT_Note|noteX|info|lightbulb-o||在屏幕右下角有“环境显示”开关，可以查看房间的分类和房间属性。}}
-<hr/>
+</div></div>
+<div class="row"><div class="col-md-12">
 {{#invoke:RT_Note|noteX|info|home|房间分类|房间分类（用途）的判断方式（一个房间可以同时属于多个分类）：
 *卧室：床和睡眠点总数为1
 *多人宿舍：床和睡眠点的总数大于1
@@ -21,15 +23,11 @@
 *陵墓：有棺材或墓地
 }}
 {{#invoke:RT_Note|noteX|warning|warning|殖民者无法与监狱中的食物互动|如果发现无法烹饪并提示缺少材料时，检查是否不小心在大厅或仓库中放置了设为囚犯专用的床。}}
-<hr/>
-{{#invoke:RT_Note|noteX|info|smile-o||房间属性中作为汇总的是“观感”，不是“感官”。}}
-{{#invoke:RT_Note|noteX|info|lightbulb-o||房间属性计算公式中的“毗邻物体”指的是墙、门等这类能围成房间的不可通行的物体。}}
-{{RW_RoomStatView}}
+</div></div>
+<div class="row"><div class="col-md-12">
+{{#invoke:RT_Note|noteX|info|smile-o||房间属性中作为汇总的是“观感”，不是“感官”。}}{{#invoke:RT_Note|noteX|info|lightbulb-o||房间属性计算公式中的“毗邻物体”指的是墙、门等这类能围成房间的不可通行的物体。}}{{RW_RoomStatView}}
+</div></div>
 {{#invoke:RW_RoomNav|nav}}
-<!--<table class="rw-ctable-simple">
-{{#arraymap:{{#ask:[[defType::RoomStatDef]]|?defName|mainlabel=-|headers=hide}}|,|@@|<tr><td>RoomStats_@@</td><td><nowiki>{{RW_RoomStatView|data=Core:Defs_RoomStatDef_</nowiki>@@<nowiki>}}<hr/>{{#invoke:RW_RoomNav|nav}}</nowiki></td></tr>|}}
-{{#arraymap:{{#ask:[[defType::RoomRoleDef]]|?defName|mainlabel=-|headers=hide}}|,|@@|<tr><td>RoomRoles_@@</td><td><nowiki>{{RW_RoomRoleView|data=Core:Defs_RoomRoleDef_</nowiki>@@<nowiki>}}<hr/>{{#invoke:RW_RoomNav|nav}}</nowiki></td></tr>|}}
-</table>-->
 {{DISPLAYTITLE:房间}}
 {{#set:
 |viewType=Topic
@@ -38,3 +36,7 @@
 }}
 __NOREC__
 [[Category:房间]][[Category:房间属性]][[Category:房间分类]]
+<!--<table class="rw-ctable-simple">
+{{#arraymap:{{#ask:[[defType::RoomStatDef]]|?defName|mainlabel=-|headers=hide}}|,|@@|<tr><td>RoomStats_@@</td><td><nowiki>{{RW_RoomStatView|data=Core:Defs_RoomStatDef_</nowiki>@@<nowiki>}}<hr/>{{#invoke:RW_RoomNav|nav}}</nowiki></td></tr>|}}
+{{#arraymap:{{#ask:[[defType::RoomRoleDef]]|?defName|mainlabel=-|headers=hide}}|,|@@|<tr><td>RoomRoles_@@</td><td><nowiki>{{RW_RoomRoleView|data=Core:Defs_RoomRoleDef_</nowiki>@@<nowiki>}}<hr/>{{#invoke:RW_RoomNav|nav}}</nowiki></td></tr>|}}
+</table>-->

@@ -215,7 +215,7 @@ function Def:getInfoBase(thumbnail)
         id = self.defName .. "infoBase",
         title = "基本信息",
         headers = {{
-            width = "128px"
+            width = "144px"
         },{}},
         rows = rows
     })

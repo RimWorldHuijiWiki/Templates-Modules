@@ -37,7 +37,7 @@ function TerrainView.view(frame)
     else
         thumbnail = "<div class=\"rw-texture x256-128\">\n"
             .. "<div class=\"rw-terrain\">[[File:" .. Textures.getFileName(def.texturePath) .. "|link=]]</div>\n"
-            .. "<div class=\"rw-icon-blend\" style=\"" .. def.color:toBG() .. "\"></div>\n"
+            .. "<div class=\"rw-blend\" style=\"" .. def.color:toBG() .. "\"></div>\n"
             .. "</div>\n"
     end
 

@@ -7,3 +7,4 @@
 }}
 __NOREC__
 [[Category:生态区]]
+{{#html:Clip_path_hexagon}}

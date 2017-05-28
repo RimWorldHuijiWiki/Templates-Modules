@@ -30,7 +30,7 @@ function Note.note(class, icon, label, text)
     if flagText then
         newNote = newNote .. text
     end
-    return newNote .. "</div>"
+    return newNote .. "</div>\n"
 end
 
 return Note

@@ -33,7 +33,7 @@ function Weathers.view(frame)
             parent = "weathers-group",
             title = "<h2>" .. weather.label_zhcn .. "</h2>",
             headers = {{
-                width = "128px"
+                width = "144px"
             },{}},
             rows = {{
                 cols = {{
@@ -77,7 +77,6 @@ function Weathers.view(frame)
         id = "weathersComparision",
         title = "<h2>生态区的数据对比</h2>",
         width = "100%",
-        height = "680px",
         option = {
             formatterStyle = "Normal",
             color = colors,

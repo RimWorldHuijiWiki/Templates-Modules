@@ -367,7 +367,7 @@ end
 
 function RoomStatDef:showIsHidden()
     if self.isHidden then
-        return Note.note("rimworld", "question", nil, "这是个<strong>隐藏的</strong>房间属性。")
+        return Note.note("rimworld", "question", "这是个隐藏的房间属性", "系数，并不是最终值，而是在计算某些属性的最终值时作为参与计算的因子，有时候是乘法，有时候是其他算法。")
     end
     return ""
 end

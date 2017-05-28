@@ -1,9 +1,0 @@
-{{#invoke:RW_Terrains|view}}
-{{DISPLAYTITLE:地面}}
-{{#set:
-|viewType=Topic
-|path={{FULLPAGENAME}}
-|title=地面
-}}
-__NOREC__
-[[Category:地面]]

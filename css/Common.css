@@ -1,45 +1,80 @@
 /* 这里放置的CSS将应用于所有皮肤 */
 
-
-/*.huiji-css-hook {
-    background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/7/70/BGPlanet2.jpg);
+.huiji-css-hook {
+    /*background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/7/70/BGPlanet2.jpg);*/
+    background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/a/a5/Global_bg_img.png);
     background-attachment: fixed;
-    background-position: auto;
     background-size: cover;
     background-repeat: no-repeat;
-}*/
+}
+
+.header .navbar-header #menu-toggle {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+#sidebar-wrapper .sidebar-nav ul li {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+a {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
 
 
-/*.btn-default {
-    border-color: #000!important;
-}*/
+/*Font*/
+
+.huiji-css-hook #content-actions,
+.huiji-css-hook #wiki-body {
+    font-family: "Source Sans Pro", "Helvetica Neue", "Arial", "sans-serif", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", "SimSun", "sans-serif";
+}
+
+a:focus,
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+}
+
+.huiji-css-hook a:hover {
+    color: #f5b95f;
+    /*will-change: text-shadow;*/
+    text-shadow: 0 0 8px rgba(245, 185, 95, 0.6);
+}
+
+.huiji-css-hook .selflink {
+    color: #f5d6a9;
+}
+
+hr {
+    border-color: rgba(192, 199, 218, 0.2);
+}
+
+@font-face {
+    font-family: RimWordFont;
+    src: url("http://huiji-public.huijistatic.com/rimworld/uploads/6/6a/RimWordFont.ttf");
+}
+
+.rw-font {
+    font-family: "RimWordFont", "Source Sans Pro", "Helvetica Neue", "Arial", "sans-serif"
+}
 
 
-/*.dropdown-menu .selflink {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: 1.42857143;
-    color: #333333;
-    white-space: nowrap;
-}*/
-
-
-/*th a {
-    color: #e6e6e6;
-}*/
-
-
-/*.thumbinner {
-    border-radius: 0px;
-    color: #dcdcdc;
-}*/
-
-
-/*#allcomments {
-    color: #eee;
-}*/
+/*Navbar*/
 
 .subnav .nav-pills>:first-child {
     background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/6/69/Rimworldlogo_main.png);
@@ -53,152 +88,332 @@
 }
 
 
-/*.header2 a {
-    color: #f3a640;
-}*/
+/*Wiki Body*/
 
-
-/*@media (min-width: 1440px) {
-    .container {
-        width: 90%;
-        max-width: 1600px;
+@media (min-width: 768px) {
+    .wiki-body-section {
+        padding-left: 32px;
+        padding-right: 32px;
     }
-}*/
-
-
-/*table a {
-    word-break: keep-all;
 }
-
-.hvr-bubble-float-bottom:before {
-    border-color: #232020 transparent transparent;
-}
-
-.hvr-bubble-float-top:before {
-    border-color: transparent transparent #232020;
-}
-
-table.tdnoborder td {
-    border-width: 0!important;
-}
-
-table.tdnoborder tbody {
-    border: 1px solid #000!important;
-}
-
-#ca-varlang-0,
-#ca-varlang-3,
-#ca-varlang-4,
-#ca-varlang-5,
-#ca-varlang-6,
-#ca-varlang-7,
-#ca-varlang-8 {
-    display: none!important;
-}*/
-
-
-/*Overwrite*/
 
 .huiji-css-hook #wiki-body {
-    /*font-family: "rimworld", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;*/
-    font-family: "Source Sans Pro", "Helvetica Neue", "Arial", "sans-serif"
+    box-shadow: 0 0 60px 0px rgba(0, 0, 0, .15);
+    margin-bottom: 60px;
 }
 
-@font-face {
-    font-family: RimWordFont;
-    src: url("http://huiji-public.huijistatic.com/rimworld/uploads/6/6a/RimWordFont.ttf");
+
+/*First Heading*/
+
+.huiji-css-hook #firstHeading {
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(192, 199, 218, 0.3);
+    margin-bottom: 32px;
 }
 
-.rw-font {
-    font-family: "RimWordFont", "Source Sans Pro", "Helvetica Neue", "Arial", "sans-serif"
+.huiji-css-hook #firstHeading #huiji-h1-edit-button {
+    bottom: 3px;
 }
 
-hr {
-    border-top-color: rgba(0, 0, 0, .1);
+.huiji-css-hook #firstHeading #huiji-h1-edit-button #alt-ca-ve-edit::before {
+    content: "\f044";
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    line-height: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-table.wikitable {
-    font-size: 14px;
+.huiji-css-hook #firstHeading #huiji-h1-edit-button .mw-editsection-divider {
+    display: none;
 }
 
-table.wikitable>tr>th,
-table.wikitable>tr>td,
-table.wikitable>*>tr>th,
-table.wikitable>*>tr>td {
-    padding: 0.3em 0.6em;
+.huiji-css-hook #firstHeading #huiji-h1-edit-button #ca-edit.icon-edit-code::before,
+.huiji-css-hook #firstHeading #huiji-h1-edit-button #alt-ca-edit::before {
+    content: "\f121";
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    line-height: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-td.navbox-list {
-    line-height: 1.6em;
+.huiji-css-hook #firstHeading #huiji-h1-edit-button a {
+    margin-right: 8px;
+}
+
+.huiji-css-hook #firstHeading #contentSub {
+    margin-top: 8px;
+}
+
+
+/*TOC Sidebar*/
+
+@media(min-width: 768px) {
+    .toc-sidebar {
+        padding-left: 0;
+        margin-left: -20px;
+    }
+}
+
+.toc-sidebar a {
+    -webkit-transition: border 0.3s ease-out;
+    -moz-transition: border 0.3s ease-out;
+    transition: border 0.3s ease-out;
+    -webkit-transition: background 0.3s ease-out;
+    -moz-transition: background 0.3s ease-out;
+    transition: background 0.3s ease-out;
+}
+
+
+/*.toc-sidebar .active a,
+.toc-sidebar a:hover {
+    will-change: border;
+    will-change: background;
+}*/
+
+.toc-sidebar .nav>li>a,
+.toc-sidebar .nav>.active:focus>a,
+.toc-sidebar .nav>.active:hover>a,
+.toc-sidebar .nav>.active>a,
+.toc-sidebar .nav .nav>.active:focus>a,
+.toc-sidebar .nav .nav>.active:hover>a,
+.toc-sidebar .nav .nav>.active>a,
+#wiki-outer-body .toc-sidebar li a:hover,
+#wiki-outer-body .toc-sidebar li.active>a:hover {
+    color: #c0c7da;
+    font-weight: normal;
+    border-left-width: 4px;
+}
+
+
+/*.toc-sidebar .nav>li>a,
+.toc-sidebar .nav>.active:focus>a,
+.toc-sidebar .nav>.active:hover>a,
+.toc-sidebar .nav>.active>a,
+#wiki-outer-body .toc-sidebar li a:hover,
+#wiki-outer-body .toc-sidebar li.active>a:hover {
+    padding: 4px 16px;
+    font-size: 13px;
+}*/
+
+.toc-sidebar .toc-ul-wrap {
+    width: 100%;
+}
+
+#toc ul {
+    padding-left: 0;
+}
+
+.toc-sidebar .toc-ul-wrap>ul {
+    padding: 1rem 0;
+}
+
+#wiki-outer-body .toc-sidebar li a:hover,
+#wiki-outer-body .toc-sidebar li.active>a,
+#wiki-outer-body .toc-sidebar li.active>a:hover {
+    color: #f3f3f3;
+}
+
+#wiki-outer-body .toc-sidebar li>a:hover {
+    border-color: rgba(192, 199, 218, 0.5);
+    background-color: rgba(192, 199, 218, 0.15);
+}
+
+#wiki-outer-body .toc-sidebar li.active>a,
+#wiki-outer-body .toc-sidebar li a:active {
+    border-color: rgba(245, 185, 95, 0.8);
+}
+
+#wiki-outer-body .toc-sidebar li.active>a {
+    background-color: rgba(245, 185, 95, 0.3);
+}
+
+#wiki-outer-body .toc-sidebar li a:active {
+    background-color: rgba(245, 185, 95, 0.8);
+}
+
+
+/*Acrylic*/
+
+.rw-tab {
+    position: relative;
+    overflow: hidden;
+}
+
+.rw-tab * {
+    position: relative;
+}
+
+.acrylic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.acrylic::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    /*background-color: rgba(40, 47, 68, 0.8);*/
+    background-color: rgba(32, 38, 54, 0.85);
+    z-index: -1;
+}
+
+.acrylic::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-image: url(http://huiji-public.huijistatic.com/rimworld/uploads/a/a5/Global_bg_img.png);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-filter: blur(16px);
+    -moz-filter: blur(16px);
+    -ms-filter: blur(16px);
+    -o-filter: blur(16px);
+    filter: blur(16px);
+    filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius=15, MakeShadow=false);
+    z-index: -2;
 }
 
 
 /*btn*/
 
 .rw-btn-icon-right {
-    margin-left: 10px;
-}
-
-
-/*RW Button*/
-
-.rw-icon {
-    display: inline-block;
-    overflow: hidden;
-    width: 64px;
-    height: 64px;
-    position: relative;
-}
-
-.rw-icon-blend {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    mix-blend-mode: multiply;
-}
-
-.rw-button {
-    display: inline-block;
-    width: 104px;
-    height: 128px;
-    position: relative;
-    overflow: hidden;
-    padding: 10px 0;
-    -webkit-transition: .2s;
-    transition: .2s;
-}
-
-.rw-button:hover {
-    background-color: rgba(0, 0, 0, .1);
-}
-
-.rw-button .rw-icon {
-    display: block;
-    margin: auto;
-}
-
-.rw-button .rw-button-label {
-    display: table-cell;
-    width: 104px;
-    height: 44px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.rw-button>a {
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    margin-left: 12px;
 }
 
 .rw-exhibition {
     padding-bottom: 0.5em;
     padding-top: 25px;
+}
+
+
+/*RW Section*/
+
+.rw-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    min-height: 30rem;
+}
+
+
+/*Nav Tab*/
+
+.rw-tab {
+    color: #c0c7da;
+    position: relative;
+    padding: 0 24px;
+    border: 1px solid rgba(192, 199, 218, 0.2);
+    overflow: hidden;
+    margin: 32px 0;
+    box-shadow: 0 0 24px 3px rgba(0, 0, 0, 0.2);
+}
+
+.rw-tab-list {
+    padding: 16px 0!important;
+    border-bottom: 1px solid transparent;
+    margin: 0 -2px!important;
+}
+
+.rw-tab-list::after {
+    content: " ";
+    display: block;
+    margin: 0 2px;
+    border-bottom: 1px solid rgba(192, 199, 218, 0.2);
+    position: relative;
+    bottom: -17px;
+}
+
+.rw-tab-list>li {
+    float: left;
+    font-size: 16px;
+    border: 2px solid transparent;
+    border-color: rgba(192, 199, 218, 0.15);
+    background-color: rgba(192, 199, 218, 0.05);
+    margin: 2px!important;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
+    -webkit-transition: border 0.3s ease-out;
+    -moz-transition: border 0.3s ease-out;
+    transition: border 0.3s ease-out;
+    -webkit-transition: background 0.3s ease-out;
+    -moz-transition: background 0.3s ease-out;
+    transition: background 0.3s ease-out;
+}
+
+.rw-tab-list>li,
+.rw-tab-list>li * {
+    user-select: none!important;
+    -moz-user-select: none!important;
+    -ms-user-select: none!important;
+    -webkit-user-select: none!important;
+}
+
+.rw-tab-list>li:hover,
+.rw-tab-list>li.active,
+.rw-tab-list>li:active {
+    color: #f3f3f3;
+}
+
+.rw-tab-list>li:hover {
+    border-color: rgba(192, 199, 218, 0.5);
+    background-color: rgba(192, 199, 218, 0.15);
+    box-shadow: 0 0 8px 1px rgba(192, 199, 218, 0.1);
+}
+
+.rw-tab-list>li.active,
+.rw-tab-list>li:active {
+    border-color: rgba(245, 185, 95, 0.8);
+}
+
+.rw-tab-list>li.active:hover {
+    box-shadow: 0 0 12px 1px rgba(245, 185, 95, 0.2);
+}
+
+.rw-tab-list>li.active {
+    background-color: rgba(245, 185, 95, 0.3);
+}
+
+.rw-tab-list>li:active {
+    background-color: rgba(245, 185, 95, 0.8);
+}
+
+
+/*.rw-tab-list>li:hover,
+.rw-tab-list>li.active:hover,
+.rw-tab-list>li:active {
+    will-change: border;
+    will-change: background;
+    will-change: box-shadow;
+}*/
+
+.rw-tab-list>li>div {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding: 4px 16px;
+}
+
+.rw-tab-content {
+    /*display: inline-block;*/
+    padding: 24px 0;
 }
 
 
@@ -208,21 +423,26 @@ td.navbox-list {
     max-width: 100%;
     overflow: hidden;
     position: relative;
-    border: none;
+    border: 1px solid rgba(192, 199, 218, 0.2);
     border-radius: 0;
     margin: 40px 0;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, .15);
 }
 
 .rw-collapse-group {
-    background-color: #282f44;
+    /*background-color: #282f44;*/
     max-width: 100%;
+    padding-bottom: 5px;
+    border-radius: 0;
     margin: 40px 0;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, .15);
 }
 
 .rw-collapse-group .rw-collapse {
     margin-top: 0;
     margin-bottom: 0;
     border-radius: 0;
+    box-shadow: none;
 }
 
 .rw-collapse-group .rw-collapse+.rw-collapse {
@@ -232,7 +452,7 @@ td.navbox-list {
 .rw-collapse-head {
     text-align: center;
     font-size: 18px;
-    padding: 10px 15px;
+    padding: 12px 16px;
     cursor: pointer;
     user-select: none!important;
     -moz-user-select: none!important;
@@ -277,26 +497,27 @@ td.navbox-list {
 .rw-collapse-above {
     text-align: center;
     font-size: 14px;
-    padding: 8px 20px;
+    padding: 8px 16px;
     color: #c0c7da;
     background-color: #202636;
 }
 
-.rw-collapse-above a {
-    color: #e6af2e;
-}
-
-.rw-collapse-above a:hover {
-    color: #e5ca8a;
-}
-
 .rw-collapse-content {
     background-color: #ececec;
-    padding: 20px 15px;
+    padding: 24px 16px;
 }
 
 
 /*RW Tables*/
+
+.rw-ctable-simple {
+    border: 1px solid rgba(192, 199, 218, 0.2);
+}
+
+.rw-collapse>.collapse>.rw-ctable-simple,
+.rw-collapse>.collapsing>.rw-ctable-simple {
+    border: none;
+}
 
 .rw-ctable-simple,
 .rw-navbox,
@@ -304,24 +525,25 @@ td.navbox-list {
     color: #c0c7da;
     background-color: #282f44;
     width: 100%;
-    -webkit-transition: .2s;
-    transition: .2s;
     border-spacing: 0;
-}
-
-.rw-ctable-simple tr,
-.rw-navbox tr {
-    -webkit-transition: .2s;
-    transition: .2s;
+    -webkit-transition: background 0.3s ease-out;
+    -moz-transition: background 0.3s ease-out;
+    transition: background 0.3s ease-out;
 }
 
 .rw-ctable-simple tr:hover,
 .rw-navbox th.rw-navbox-label {
     color: #f3f3f3;
-    background-color: rgba(255, 255, 255, 0.1);
-    -webkit-transition: .2s;
-    transition: .2s;
+    background-color: rgba(192, 199, 218, 0.1);
+    -webkit-transition: background 0.3s ease-out;
+    -moz-transition: background 0.3s ease-out;
+    transition: background 0.3s ease-out;
 }
+
+
+/*.rw-ctable-simple tr:hover {
+    will-change: background;
+}*/
 
 .rw-ctable-simple tr.rw-ctable-thumbnail:hover {
     color: #c0c7da;
@@ -350,27 +572,12 @@ td.navbox-list {
     font-size: 14px;
 }
 
-.rw-ctable-simple th,
-.rw-ctable-simple td,
-.rw-navbox th,
-.rw-navbox td {
-    padding: 8px 20px;
-}
-
-.rw-ctable-simple th.rw-ctable-empty {
-    padding: 0;
-}
-
-.rw-navbox td.children {
-    padding: 0 2px;
-}
-
 .rw-ctable-simple td+td {
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(192, 199, 218, 0.2);
 }
 
 .rw-ctable-simple th+th {
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid rgba(192, 199, 218, 0.2);
 }
 
 .rw-navbox tr+tr>th,
@@ -384,41 +591,36 @@ td.navbox-list {
     padding-right: 8px;
 }
 
-
-/*.rw-ctable-simple .item+.item::before,
-.rw-navbox .item+.item::before {
-    content: " ";
-    opacity: 0.8;
-    margin: 0 4px;
-}*/
-
 @media screen and (max-width: 768px) {
     .rw-navbox th.rw-navbox-label,
     .rw-navbox td.rw-navbox-list {
         text-align: left;
         display: block !important;
         width: 100% !important;
-        border-top: 1px solid #282f44;
+        border-top: 1px #282f44;
     }
     .rw-navbox td.children {
         padding: 0 4px;
     }
 }
 
-.rw-ctable-simple a,
-.rw-navbox a {
-    color: #e6af2e;
+.rw-ctable-simple th,
+.rw-ctable-simple td,
+.rw-navbox th,
+.rw-navbox td {
+    padding: 8px 24px;
 }
 
-.rw-ctable-simple a:hover,
-.rw-navbox a:hover,
-.rw-ctable-simple .selflink,
-.rw-navbox .selflink {
-    color: #e5ca8a;
+.rw-ctable-simple th.rw-ctable-empty {
+    padding: 0;
+}
+
+.rw-navbox td.children {
+    padding: 0 2px;
 }
 
 
-/*Note*/
+/*RW Note*/
 
 .rw-note {
     overflow: hidden;
@@ -426,13 +628,24 @@ td.navbox-list {
     font-weight: 400;
     text-rendering: auto;
     line-height: 1.6em;
-    background-color: #ececec;
-    padding: 10px 15px 10px 32px;
+    color: #c0c7da;
+    background-color: #282f44;
+    padding: 12px 16px 12px 32px;
     border-left-width: 6px;
     border-left-style: solid;
+    border-radius: 0;
     margin: 30px 0;
-    -webkit-transition: .2s;
-    transition: .2s;
+}
+
+.rw-note:hover {
+    color: #f3f3f3;
+    box-shadow: 0 0 24px 3px rgba(0, 0, 0, 0.2);
+}
+
+.rw-note-inner {
+    border-color: rgba(192, 199, 218, 0.2);
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
 }
 
 .rw-note strong {
@@ -440,7 +653,7 @@ td.navbox-list {
 }
 
 .rw-note+.rw-note {
-    margin-top: -20px;
+    margin-top: -16px;
 }
 
 .rw-note:before {
@@ -458,23 +671,6 @@ td.navbox-list {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.quote-rimworld {
-    color: #c0c7da;
-    background-color: #282f44;
-}
-
-.quote-rimworld:hover {
-    color: #f3f3f3;
-}
-
-.quote-rimworld a {
-    color: #e6af2e;
-}
-
-.quote-rimworld a:hover {
-    color: #e5ca8a;
-}
-
 
 /*ECharts*/
 
@@ -485,11 +681,15 @@ td.navbox-list {
 }
 
 .echarts {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 }
 
 .echarts-loading {
+    display: flex;
     text-align: center;
     color: inherit;
     background-color: inherit;
@@ -502,10 +702,12 @@ td.navbox-list {
 }
 
 .echarts-loading>i {
-    position: absolute;
-    top: 40%;
-    left: 0;
-    width: 100%;
+    margin: auto;
+    text-shadow: 0 0 12px rgba(192, 199, 218, 0.3);
+}
+
+.echarts-loading:hover>i {
+    color: #f3f3f3;
 }
 
 .echarts-loading-hide {
@@ -522,9 +724,7 @@ td.navbox-list {
     height: 128px;
     position: relative;
     overflow: hidden;
-    padding: 10px 0;
-    -webkit-transition: .2s;
-    transition: .2s;
+    padding: 12px 8px;
     user-select: none!important;
     -moz-user-select: none!important;
     -ms-user-select: none!important;
@@ -532,7 +732,8 @@ td.navbox-list {
 }
 
 .rw-lbtn:hover {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, .1);
 }
 
 .rw-lbtn-icon {
@@ -546,11 +747,16 @@ td.navbox-list {
 
 .rw-lbtn-label {
     display: table-cell;
-    width: 128px;
-    height: 44px;
+    width: 88px;
+    height: 40px;
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
+    padding-top: 8px;
+}
+
+.rw-lbtn:hover .rw-lbtn-label {
+    color: #e6af2e;
 }
 
 .rw-lbtn-link,
@@ -614,11 +820,12 @@ td.navbox-list {
 
 .rw-capture {
     max-width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
 .rw-capture img {
     max-width: 100%;
     height: auto;
+    box-shadow: 0 0 16px 2px rgba(0, 0, 0, .15);
 }

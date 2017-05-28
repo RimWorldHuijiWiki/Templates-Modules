@@ -31,7 +31,7 @@ function TerrainButton.button(defName, texturePath, color, label)
         text = text
             .. "<div class=\"rw-lbtn-icon\">\n"
             .. "<div class=\"rw-terrain\">[[File:" .. Textures.getFileName(texturePath or SMW.show(data, "TerrainDef.texturePath")) .. "|link=]]</div>\n"
-            .. "<div class=\"rw-icon-blend\" style=\"" .. (color or Color.fromString(SMW.show(data, "TerrainDef.color"))):toBG() .. "\"></div>\n"
+            .. "<div class=\"rw-blend\" style=\"" .. (color or Color.fromString(SMW.show(data, "TerrainDef.color"))):toBG() .. "\"></div>\n"
             .. "</div>\n"
     end
     text = text
