@@ -33,27 +33,31 @@ function Biomes.view(frame)
         .. "<div class=\"row\">\n"
         .. "<div class=\"col-md-6\">\n"
         .. "<h2>干旱</h2>\n"
+        .. "<div class=\"rw-lbtn-container\">\n"
         .. AridShrubland:getButton()
         .. Desert:getButton()
         .. ExtremeDesert:getButton()
-        .. "</div>\n"
+        .. "</div>\n</div>\n"
         .. "<div class=\"col-md-6\">\n"
         .. "<h2>寒冷</h2>\n"
+        .. "<div class=\"rw-lbtn-container\">\n"
         .. BorealForest:getButton()
         .. Tundra:getButton()
         .. IceSheet:getButton()
         .. SeaIce:getButton()
-        .. "</div>\n"
+        .. "</div>\n</div>\n"
         .. "<div class=\"col-md-6\">\n"
         .. "<h2>中性</h2>\n"
+        .. "<div class=\"rw-lbtn-container\">\n"
         .. TemperateForest:getButton()
         .. TropicalRainforest:getButton()
-        .. "</div>\n"
+        .. "</div>\n</div>\n"
         .. "<div class=\"col-md-6\">\n"
         .. "<h2>无法着陆</h2>\n"
+        .. "<div class=\"rw-lbtn-container\">\n"
         .. Ocean:getButton()
         .. Lake:getButton()
-        .. "</div>\n"
+        .. "</div>\n</div>\n"
         .. "</div>\n"
         .. "<hr/>"
     
@@ -132,7 +136,6 @@ function Biomes.view(frame)
                 tempSpan = tempSpan
             },
             color = colors,
-            backgroundColor = Collapse.backgroundColor,
             tooltip = {
                 position = "top",
                 backgroundColor = Collapse.backgroundColor,
@@ -213,7 +216,6 @@ function Biomes.view(frame)
         option = {
             formatterStyle = "Normal",
             color = colors,
-            backgroundColor = Collapse.backgroundColor,
             tooltip = {
                 trigger = "axis",
                 backgroundColor = Collapse.backgroundColor,

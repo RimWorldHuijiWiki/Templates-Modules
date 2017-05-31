@@ -1,0 +1,9 @@
+{{#invoke:RW_WorksAndSkills|view}}
+{{DISPLAYTITLE:工作与技能}}
+{{#set:
+|viewType=Topic
+|path={{FULLPAGENAME}}
+|title=工作与技能
+}}
+__NOREC__
+[[Category:工作]][[Category:技能]]

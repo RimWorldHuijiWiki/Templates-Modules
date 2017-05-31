@@ -122,17 +122,22 @@ function Terrains.view(frame)
         .. Note.note("primary", "bar-chart", "属性", "不同的地面属性各不相同，较常用到的属性有：行走速度、肥沃度、美观度、清洁度和市场价值。[[Terrains/Compare|查看属性对比]]")
     
     for i, group in pairs(defs) do
-        text = text .. "<h2>" .. group.label .. "</h2>\n"
+        text = text.. "<h2>" .. group.label .. "</h2>\n"
         if group.list ~= nil then
+            text = text .. "<div class=\"rw-lbtn-container\">\n"
             for j, defName in pairs(group.list) do
                 text = text .. TerrainButton.button(defName)
             end
+            text = text .. "</div>\n"
         elseif group.children ~= nil then
             for j, child in pairs(group.children) do
-                text = text .. "<h3>" .. child.label .. "</h3>\n"
+                text = text
+                    .. "<h3>" .. child.label .. "</h3>\n"
+                    .. "<div class=\"rw-lbtn-container\">\n"
                 for k, defName in pairs(child.list) do
                     text = text .. TerrainButton.button(defName)
                 end
+                text = text .. "</div>\n"
             end
         end
     end

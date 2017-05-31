@@ -6,40 +6,40 @@ WorkGiverDef.__index = WorkGiverDef
 function WorkGiverDef:new(data)
     local def = base.ctor("WorkGiverDef", data, {
         texts = {
-            "giverClass",
+            -- "giverClass",
             "workType",
             "workTags",
-            "verb",
-            {"verb_zhcn", "verb.zh-cn"},
-            {"verb_zhtw", "verb.zh-tw"},
-            "gerund",
-            {"gerund_zhcn", "gerund.zh-cn"},
-            {"gerund_zhtw", "gerund.zh-tw"},
+            -- "verb",
+            -- {"verb_zhcn", "verb.zh-cn"},
+            -- {"verb_zhtw", "verb.zh-tw"},
+            -- "gerund",
+            -- {"gerund_zhcn", "gerund.zh-cn"},
+            -- {"gerund_zhtw", "gerund.zh-tw"},
             "requiredCapacities",
-            {"tagToGive", "tagToGive", "MiscWork"},
+            -- {"tagToGive", "tagToGive", "MiscWork"},
             "fixedBillGiverDefs"
         },
         numbers = {
             "priorityInType",
         },
-        booleans = {
-            {"scanThings", "scanThings", true},
-            "scanCells",
-            "emergency",
-            {"directOrderable", "directOrderable", true},
-            "prioritizeSustains",
-            "canBeDoneByNonColonists",
-		    "billGiversAllHumanlikes",
-		    "billGiversAllHumanlikesCorpses",
-		    "billGiversAllMechanoids",
-		    "billGiversAllMechanoidsCorpses",
-		    "billGiversAllAnimals",
-		    "billGiversAllAnimalsCorpses",
-		    'tendToHumanlikesOnly',
-		    "tendToAnimalsOnly",
-		    "feedHumanlikesOnly",
-		    "feedAnimalsOnly",
-        }
+        -- booleans = {
+        --     {"scanThings", "scanThings", true},
+        --     "scanCells",
+        --     "emergency",
+        --     {"directOrderable", "directOrderable", true},
+        --     "prioritizeSustains",
+        --     "canBeDoneByNonColonists",
+		--     "billGiversAllHumanlikes",
+		--     "billGiversAllHumanlikesCorpses",
+		--     "billGiversAllMechanoids",
+		--     "billGiversAllMechanoidsCorpses",
+		--     "billGiversAllAnimals",
+		--     "billGiversAllAnimalsCorpses",
+		--     'tendToHumanlikesOnly',
+		--     "tendToAnimalsOnly",
+		--     "feedHumanlikesOnly",
+		--     "feedAnimalsOnly",
+        -- }
     })
     setmetatable(def, self)
     def:postLoad()
@@ -49,30 +49,20 @@ end
 function WorkGiverDef:postLoad()
 
     if self.workTags then
-        local workTags = mw.text.split(self.workTags, ",")
-        for i, tag in pairs(workTags) do
-            workTags[i] = string.sub(tag, 2, -2)
-        end
-        self.workTags = workTags;
+        self.workTags = mw.text.split(string.gsub(self.workTags, '"', ""), ",");
     end
 
     if self.requiredCapacities then
-        local requiredCapacities = mw.text.split(self.requiredCapacities, ",")
-        for i, cap in pairs(requiredCapacities) do
-            requiredCapacities[i] = string.sub(cap, 2, -2)
-        end
-        self.requiredCapacities = requiredCapacities;
+        self.requiredCapacities = mw.text.split(string.gsub(self.requiredCapacities, '"', ""), ",");
     end
 
     if self.fixedBillGiverDefs then
-        local fixedBillGiverDefs = mw.text.split(self.fixedBillGiverDefs, ",")
-        for i, giverDef in pairs(fixedBillGiverDefs) do
-            fixedBillGiverDefs[i] = string.sub(giverDef, 2, -2)
-        end
-        self.fixedBillGiverDefs = fixedBillGiverDefs;
+        self.fixedBillGiverDefs = mw.text.split(string.gsub(self.fixedBillGiverDefs, '"', ""), ",");
     end
 
 end
+
+-- of
 
 WorkGiverDefOf = {}
 function WorkGiverDef.of(defName)

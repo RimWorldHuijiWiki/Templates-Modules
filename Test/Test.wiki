@@ -1,4 +1,1 @@
-{{#html:MathJax}}
-{{#invoke:RW_RoomNav|nav}}
-----
-<!--{{#invoke:RW_RoomStatDef|test}}-->
+{{#invoke:RW_WorksAndSkills|view}}

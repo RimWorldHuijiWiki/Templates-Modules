@@ -80,7 +80,6 @@ function Weathers.view(frame)
         option = {
             formatterStyle = "Normal",
             color = colors,
-            backgroundColor = Collapse.backgroundColor,
             tooltip = {
                 trigger = "axis",
                 backgroundColor = Collapse.backgroundColor,

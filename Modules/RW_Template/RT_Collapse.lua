@@ -5,13 +5,71 @@ ctable_ID = 1
 navbox_ID = 1
 echarts_ID = 1
 
+-- args = {{
+--     id = "",
+--     label = "",
+--     content = "",
+-- },{
+--     id = "",
+--     label = "",
+--     content = "",
+-- }}
+function Collapse.tab(args, minHeight, before, after)
+
+    minHeight = minHeight or 0
+
+    local text = '<div class="rw-tab" style="min-height:' .. minHeight .. ';">\n'
+        .. '<div class="acrylic"></div>\n'
+    
+    local tabList = '<ul class="nav nav-tabs rw-tab-list" role="tablist">\n'
+
+    local contentPanel = '<div class="tab-content rw-tab-content">\n'
+
+    if before then
+        contentPanel  = contentPanel .. before
+    end
+
+    local firstTab = args[1]
+    tabList = tabList
+        .. '<li class="active"><div class="rw-btn" type="button" role="tab" data-toggle="tab" data-target="#' .. firstTab.id .. '">'
+        .. firstTab.label
+        .. '</div></li>'
+    contentPanel = contentPanel
+        .. '<div role="tabpanel" class="tab-pane rw-tab-pane active" id="' .. firstTab.id .. '">\n'
+        .. firstTab.content
+        .. '</div>\n'
+
+    for i, tab in pairs(args) do
+        if i > 1 then
+            tabList = tabList
+                .. '<li><div class="rw-btn" type="button" role="tab" data-toggle="tab" data-target="#' .. tab.id .. '">'
+                .. tab.label
+                .. '</div></li>'
+            contentPanel = contentPanel
+                .. '<div role="tabpanel" class="tab-pane rw-tab-pane" id="' .. tab.id .. '">\n'
+                .. tab.content
+                .. '</div>\n'
+        end
+    end
+
+    if after then
+        contentPanel = contentPanel .. after
+    end
+
+    text = text
+        .. tabList .. '</ul>\n'
+        .. contentPanel .. '</div>\n'
+        .. '</div>\n'
+
+    return text
+end
+
 
 -- args = {
 --     id = "",
 --     parent = ""
 --     style = "",
 --     title = "",
---     barClass = "", -- default/primary/success/info/warning/danger default: primary
 --     contentShow = true/false, default: true
 --     contentStyle = "",
 --     content = ""
@@ -22,29 +80,12 @@ function Collapse.collapse(args)
         return ""
     end
 
-    local text = "<div class=\"panel rw-collapse\""
-        .. (args.style and (" style=\"" .. args.style .. "\"") or "")
-        .. ">\n<div class=\"bg-"
-
-    local barClass = args.barClass
-    if barClass == "default" then
-        text = text .. "default"
-    elseif barClass == "primary" then
-        text = text .. "primary"
-    elseif barClass == "success" then
-        text = text .. "success"
-    elseif barClass == "info" then
-        text = text .. "info"
-    elseif barClass == "warning" then
-        text = text .. "warning"
-    elseif barClass == "danger" then
-        text = text .. "danger"
-    else
-        text = text .. "primary"
-    end
-
     local parent = args.parent
-    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
+    local text = "<div class=\""
+        .. (panel and "panel " or "")
+        .. "rw-collapse\""
+        .. (args.style and (" style=\"" .. args.style .. "\"") or "")
+        .. ">\n<div class=\"acrylic\"></div>\n<div class=\"rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
         .. (parent and (" data-parent=\"#" .. parent .. "\"") or "")
         .. " data-target=\"#rw-collapse-"
     
@@ -89,7 +130,6 @@ Collapse.firstHeaderWidth = "144px"
 --     id = "",
 --     style = "",
 --     title = "",
---     barClass = "", -- default/primary/success/info/warning/danger default: primary
 --     headers = {{
 --         text = "",
 --         width = "60%"
@@ -118,29 +158,12 @@ function Collapse.ctable(args)
         return "generate ctable failure, parameter error."
     end
 
-    local text = "<div class=\"panel rw-collapse\""
-        .. (args.style and (" style=\"" .. args.style .. "\"") or "")
-        .. ">\n<div class=\"bg-"
-
-    local barClass = args.barClass
-    if barClass == "default" then
-        text = text .. "default"
-    elseif barClass == "primary" then
-        text = text .. "primary"
-    elseif barClass == "success" then
-        text = text .. "success"
-    elseif barClass == "info" then
-        text = text .. "info"
-    elseif barClass == "warning" then
-        text = text .. "warning"
-    elseif barClass == "danger" then
-        text = text .. "danger"
-    else
-        text = text .. "primary"
-    end
-
     local parent = args.parent
-    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
+    local text = "<div class=\""
+        .. (panel and "panel " or "")
+        .. "rw-collapse\""
+        .. (args.style and (" style=\"" .. args.style .. "\"") or "")
+        .. ">\n<div class=\"acrylic\"></div>\n<div class=\"rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
         .. (parent and (" data-parent=\"#" .. parent .. "\"") or "")
         .. " data-target=\"#rw-ctable-simple-"
 
@@ -253,7 +276,7 @@ function Collapse.navbox(args)
         return "generate navbox failure, parameter error."
     end
 
-    local text = "<div class=\"panel rw-collapse\">\n<div class=\"bg-primary rw-collapse-head rw-collapse-navbox\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-navbox-"
+    local text = "<div class=\"rw-collapse\">\n<div class=\"acrylic\"></div>\n<div class=\"rw-collapse-head rw-collapse-navbox\" type=\"button\" data-toggle=\"collapse\" data-target=\"#rw-navbox-"
 
     local id = args.id
     if id == nil or mw.text.trim(id) == "" then
@@ -325,7 +348,6 @@ end
 --     parent = "",
 --     style = "",
 --     title = "",
---     barClass = "", -- default/primary/success/info/warning/danger default: primary
 --     above = "",
 --     aboveExtraCssText = ""
 --     width = ""
@@ -338,29 +360,12 @@ function Collapse.echarts(args)
         return ""
     end
 
-    local text = "<div class=\"panel rw-collapse\""
-        .. (args.width and (" style=\"width:" .. args.width .. ";\"") or " style=\"width:809px;\"")
-        .. ">\n<div class=\"bg-"
-
-    local barClass = args.barClass
-    if barClass == "default" then
-        text = text .. "default"
-    elseif barClass == "primary" then
-        text = text .. "primary"
-    elseif barClass == "success" then
-        text = text .. "success"
-    elseif barClass == "info" then
-        text = text .. "info"
-    elseif barClass == "warning" then
-        text = text .. "warning"
-    elseif barClass == "danger" then
-        text = text .. "danger"
-    else
-        text = text .. "primary"
-    end
-
     local parent = args.parent
-    text = text .. " rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
+    local text = "<div class=\""
+        .. (panel and "panel " or "")
+        .. "rw-collapse\""
+        .. (args.width and (" style=\"width:" .. args.width .. ";\"") or " style=\"width:809px;\"")
+        .. ">\n<div class=\"acrylic\"></div>\n<div class=\"rw-collapse-head\" type=\"button\" data-toggle=\"collapse\""
         .. (parent and (" data-parent=\"#" .. parent .. "\"") or "")
         .. " data-target=\"#rw-collapse-echarts-"
     
@@ -402,7 +407,7 @@ function Collapse.echarts(args)
         .. "<div class=\"echarts\">"
         .. (args.option and mw.text.jsonEncode(args.option) or "{}")
         .. "</div>\n"
-        .. "<div class=\"echarts-loading\"><i class=\"fa fa-circle-o-notch fa-spin fa-4x fa-fw\"></i></div>"
+        .. "<div class=\"echarts-loading\"><div class=\"acrylic\"></div><div class=\"echarts-loading-cover\"><i class=\"fa fa-circle-o-notch fa-spin fa-4x fa-fw echarts-loading-icon\"></i></div></div>"
         .. "</div>\n"
 
     text = text .. "</div>\n</div>\n"
@@ -414,8 +419,10 @@ end
 
 -- Preset Colors
 
-Collapse.highlighting = "#e6af2e"
+-- Collapse.highlighting = "#e6af2e"
+Collapse.highlighting = "#f5b95f"
 Collapse.foregroundColor = "#c0c7da"
+Collapse.transparent = "transparent"
 Collapse.backgroundColor = "#282f44"
 Collapse.handleIcon = "path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z"
 
@@ -426,7 +433,7 @@ function Collapse.newOptionNormal(colors)
     return {
         formatterStyle = "Normal",
         color = colors or {Collapse.highlighting},
-        backgroundColor = Collapse.backgroundColor,
+        backgroundColor = Collapse.transparent,
         title = {
             top = "4%",
             left = "center",
@@ -523,7 +530,7 @@ function Collapse.newOptionCurve(colors)
     return {
         formatterStyle = "Curve",
         color = colors or {Collapse.highlighting},
-        backgroundColor = Collapse.backgroundColor,
+        backgroundColor = Collapse.transparent,
         title = {
             top = "4%",
             left = "center",
@@ -668,7 +675,7 @@ function Collapse.newOptionPlusminus(colors)
     return {
         formatterStyle = "Normal",
         color = colors or {Collapse.highlighting},
-        backgroundColor = Collapse.backgroundColor,
+        backgroundColor = Collapse.transparent,
         title = {
             top = "10",
             left = "center",
@@ -776,7 +783,7 @@ function Collapse.newOptionPie(colors)
     return {
         formatterStyle = "Pie",
         color = colors or {Collapse.highlighting},
-        backgroundColor = Collapse.backgroundColor,
+        -- backgroundColor = Collapse.transparent,
         title = {
             top = "center",
             left = "center",
