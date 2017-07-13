@@ -109,7 +109,7 @@ function WorksAndSkills.view(frame)
     text = text
         .. "<h2>工作类型</h2>\n"
         .. '<div class="rw-capture">[[File:Captures_WorkTypes.png]]</div>'
-        .. "<p>各种工作类型，由左至右优先级为由高至低。启用「自定义优先级」后，可通过数字设置优先级，数字越小，优先级越高。当优先级数字相同时，左侧的工作优先级更高。将鼠标悬停在表格头部的工作类型上时，可以查看其下的相关工作，这些相关工作的优先级也是由高至低的。</p>"
+        .. '<p>各种工作类型，由左至右优先级为由高至低。启用<span class="item">自定义优先级</span>后，可通过数字设置优先级，数字越小，优先级越高。当优先级数字相同时，左侧的工作优先级更高。将鼠标悬停在表格头部的工作类型上时，可以查看其下的相关工作，这些相关工作的优先级也是由高至低的。</p>'
     args = {}
     for i, workType in pairs(allWorkTypes) do
         local curWorkTypeDefName = workType.defName
@@ -131,7 +131,7 @@ function WorksAndSkills.view(frame)
     end
     text = text
         .. Collapse.tab(args)
-        .. Note.note("primary", "lightbulb-o", "注意", '研究工作的优先级比较特殊，需要将之设为最高优先级，并且只有在一天当中的早晨才能开始研究工作。')        
+        .. Note.note("primary", "lightbulb-o", "注意", '<span class="item">研究</span>工作的优先级比较特殊，需要将之设为最高优先级，并且只有在一天当中的<span class="item">上午</span>才能<span class="item">开始</span>研究工作。否则当你右键点击研究台时会提示「' .. Keyed_zhcn.trans("CannotPrioritizeResearch") .. '」。')        
 
     text = text
         .. "<h2>分类（标签）</h2>\n"
