@@ -75,7 +75,7 @@ function Weathers.view(frame)
     end
     text = text .. Collapse.echarts({
         id = "weathersComparision",
-        title = "<h2>生态区的数据对比</h2>",
+        title = "<h2>各种天气的数据对比</h2>",
         width = "100%",
         option = {
             formatterStyle = "Normal",
