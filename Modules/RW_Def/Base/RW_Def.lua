@@ -221,4 +221,20 @@ function Def:getInfoBase(thumbnail)
     })
 end
 
+function Def:getDetail()
+    return Collapse.ctable_simple({
+        headers = {{width = Collapse.firstHeaderWidth}, {}},
+        rows = {
+            {cols = {"defType", self.defType}},
+            {cols = {"defName", self.defName}},
+            {cols = {"名称（英文）", self.label}},
+            {cols = {"名称（简中）", self.label_zhcn}},
+            {cols = {"名稱（繁中）", self.label_zhtw}},
+            {cols = {"描述（英文）", self.description}},
+            {cols = {"描述（简中）", self.description_zhcn}},
+            {cols = {"描述（繁中）", self.description_zhtw}},
+        }
+    })
+end
+
 return Def
