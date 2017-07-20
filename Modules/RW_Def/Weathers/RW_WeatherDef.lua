@@ -11,7 +11,8 @@ end
 
 -- require
 
-local SMW = require("Module:SMW")
+local SMW = base.SMW
+local Collapse = base.Collapse
 
 -- WeatherDef
 
@@ -38,6 +39,31 @@ function WeatherDef:new(data)
     def.skyColorsDusk = SMW.show(data, "WeatherDef.skyColorsDusk")
     return def
 end
+
+function WeatherDef:getDetail()
+    return Collapse.ctable_simple({
+        headers = {{width = Collapse.firstHeaderWidth}, {}},
+        rows = {
+            {
+                cols = {{
+                    text = "[[File:Icons_Weathers_" .. self.defName .. ".svg|64px|link=]]",
+                    span = 2
+                }},
+                extraCssText = "rw-ctable-thumbnail"
+            },
+            {cols = {"defType", self.defType}},
+            {cols = {"defName", self.defName}},
+            {cols = {"名称（英文）", self.label}},
+            {cols = {"名称（简中）", self.label_zhcn}},
+            {cols = {"名稱（繁中）", self.label_zhtw}},
+            {cols = {"描述（英文）", self.description}},
+            {cols = {"描述（简中）", self.description_zhcn}},
+            {cols = {"描述（繁中）", self.description_zhtw}},
+        }
+    })
+end
+
+-- of
 
 WeatherDefOf = {}
 function WeatherDef.of(defName)

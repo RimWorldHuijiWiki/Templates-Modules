@@ -24,45 +24,16 @@ function Weathers.view(frame)
         WeatherDef.of("SnowHard"),
         WeatherDef.of("SnowGentle"),
     }
-
-    text = text
-        .. "<div class=\"panel-group rw-collapse-group\" id=\"weathers-group\" style=\"width: 890px;\">\n"
+    
+    local args = {}
     for i, weather in pairs(allWeathers) do
-        text = text .. Collapse.ctable({
-            id = weather.defName,
-            parent = "weathers-group",
-            title = "<h2>" .. weather.label_zhcn .. "</h2>",
-            headers = {{
-                width = "144px"
-            },{}},
-            rows = {{
-                cols = {{
-                    text = "[[File:Icons_Weathers_" .. weather.defName .. ".svg|64px|link=]]",
-                    span = 2
-                }},
-                extraCssText = "rw-ctable-thumbnail"
-            },{
-                cols = {"defType", "WeatherDef"}
-            },{
-                cols = {"defName", weather.defName}
-            },{
-                cols = {"名称（英文）", weather.label}
-            },{
-                cols = {"名称（简中）", weather.label_zhcn}
-            },{
-                cols = {"名稱（繁中）", weather.label_zhtw}
-            },{
-                cols = {"描述（英文）", weather.description}
-            },{
-                cols = {"描述（简中）", weather.description_zhcn}
-            },{
-                cols = {"描述（繁中）", weather.description_zhtw}
-            }}
-        })
+        args[i] = {
+            id = "WeatherDef-" .. weather.defName,
+            label = weather.label_zhcn,
+            content = weather:getDetail()
+        }
     end
-    text = text
-        .. "</div>\n"
-        .. "<hr/>"
+    text = text .. Collapse.tab(args)
     
     local colors = ColorUtility.colorSet(4)
     colors = {colors[1], colors[3]}
